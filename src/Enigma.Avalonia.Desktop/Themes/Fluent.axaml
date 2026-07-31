@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- The library's single public theme entry point:
+       avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml.
+
+       Empty by design at this phase — FEATURE-22A5 PHASE01 fills it with the Enigma* theme resource
+       keys (EnigmaBackground*, EnigmaSurface*, EnigmaBorder*, EnigmaForeground*, EnigmaAccent*,
+       EnigmaSuccess, EnigmaWarning, EnigmaError) and merges the per-control dictionaries.
+
+       It is a ResourceDictionary, not a Styles collection: consumers merge it into
+       Application.Resources with a ResourceInclude — a StyleInclude would be wrong. -->
+
+</ResourceDictionary>

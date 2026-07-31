@@ -1,6 +1,6 @@
 # FEATURE-28E8 — Repository & solution scaffolding
 
-**Status:** IN PROGRESS · 2 phases
+**Status:** DONE · 2 phases
 **Branches:** `feature/feature-28e8-phase01-root-config`, `feature/feature-28e8-phase02-project-skeletons`
 
 ## 1. Objective
@@ -132,7 +132,7 @@ than initialising it.
 - No build is expected to succeed yet (no projects). State that explicitly in the completion doc as
   the Definition-of-Done equivalent for criteria 1–2, and verify the config by inspection.
 
-## 4. PHASE02 — Three buildable project skeletons + smoke test — TODO
+## 4. PHASE02 — Three buildable project skeletons + smoke test — DONE
 
 ### Steps
 

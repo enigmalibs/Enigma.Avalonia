@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared settings (LangVersion, Nullable, ImplicitUsings, TreatWarningsAsErrors,
+       EnforceCodeStyleInBuild, Authors, Copyright) are inherited from Directory.Build.props and must
+       never be repeated here — plan FEATURE-28E8 §2.4.4. -->
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <!-- Plan §2.2: the current LTS pair, and no netstandard2.0 — Avalonia 12 ships lib/net8.0 and
+         lib/net10.0 assets only, so a netstandard2.0 target could not resolve the dependency. -->
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+
+    <!-- Plan §2.4.12: Avalonia's build targets default this to false and pass it to the XAML compiler
+         as DefaultCompileBindings. On, every {Binding} is verified against its x:DataType at build
+         time; off, x:DataType is decorative and bindings silently fall back to reflection. -->
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+
+    <!-- Plan §2.4.5: XML docs on every public member — with TreatWarningsAsErrors this makes CS1591
+         a build error, which is the point. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- The theme dictionary, addressable as avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml
+       (plan §2.5). The Avalonia targets also route .axaml files under AvaloniaResource through the
+       XAML compiler, so this dictionary is compiled, not just embedded. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Themes\**" />
+  </ItemGroup>
+
+  <!-- No Version= — Central Package Management (plan §2.3, §2.4.8). -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Enigma.Core" />
+  </ItemGroup>
+
+  <!-- Deliberately absent: the NuGet packaging metadata (PackageId, Version, Description,
+       PackageReadmeFile/PackageLicenseFile and their packing ItemGroup). It is added by
+       FEATURE-1702 PHASE01 at release time, and GeneratePackageOnBuild is never set. -->
+
+</Project>
