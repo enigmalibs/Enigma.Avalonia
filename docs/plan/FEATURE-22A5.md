@@ -1,6 +1,6 @@
 # FEATURE-22A5 — Control library: Enigma.Avalonia.Desktop
 
-**Status:** TODO · 8 phases
+**Status:** IN PROGRESS · 8 phases
 **Branches:** `feature/feature-22a5-phaseNN-<area>` (one per phase)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2 — that section wins over anything here.
 
@@ -71,7 +71,7 @@ continuing to pass. Verification per phase is: zero-warning build + the grep gat
 
 ---
 
-## PHASE01 — Theme foundation & `Enigma*` resource keys — TODO
+## PHASE01 — Theme foundation & `Enigma*` resource keys — DONE
 
 Port `Themes/Colors.axaml` (`ResourceDictionary.ThemeDictionaries` with `x:Key="Dark"` and
 `x:Key="Light"`), `Themes/Brushes.axaml` (brushes referencing colors via `DynamicResource`) and
@@ -87,6 +87,57 @@ Port `Themes/Colors.axaml` (`ResourceDictionary.ThemeDictionaries` with `x:Key="
 
 **Acceptance:** build clean; `Colors.axaml`/`Brushes.axaml`/`Fluent.axaml` present under
 `Themes/`; zero `Carbon` hits; both theme variants defined; the key map is recorded.
+
+### PHASE01 recorded output — the resource-key map (PHASE02–08 porting contract)
+
+Recorded here rather than in `docs/done/FEATURE-22A5-PHASE01.md` because §2.4.10 makes `docs/plan/*.md`
+the **only** artifact permitted to name the port source, and an old → new table necessarily names the
+old keys. Per §2 that rule wins over PHASE01's "record it in the completion doc" wording. The
+completion doc carries the equivalent new-key inventory.
+
+**The rule for every template ported in PHASE02–08:** a `{DynamicResource Carbon<Token>}` becomes
+`{DynamicResource Enigma<Token>}`. It stays a `DynamicResource` — never a `StaticResource`.
+
+**Colors** (`Themes/Colors.axaml`, same 29 keys in both `Dark` and `Light`) — `CarbonBackgroundColor`,
+`CarbonSurfaceColor`, `CarbonSurfaceHighColor`, `CarbonSurfaceLowColor`, `CarbonBorderColor`,
+`CarbonBorderSubtleColor`, `CarbonForegroundColor`, `CarbonForegroundSecondaryColor`,
+`CarbonForegroundTertiaryColor`, `CarbonAccentColor`, `CarbonAccentHoverColor`, `CarbonSelectionColor`,
+`CarbonInputBackgroundColor`, `CarbonInputBackgroundFocusedColor`, `CarbonInputBackgroundHoverColor`,
+`CarbonHoverColor`, `CarbonPressedColor`, `CarbonOverlayColor`, `CarbonSuccessColor`,
+`CarbonWarningColor`, `CarbonErrorColor`, `CarbonInfoBackgroundColor`, `CarbonInfoBorderColor`,
+`CarbonSuccessBackgroundColor`, `CarbonSuccessBorderColor`, `CarbonWarningBackgroundColor`,
+`CarbonWarningBorderColor`, `CarbonErrorBackgroundColor`, `CarbonErrorBorderColor` → each with
+`Carbon` replaced by `Enigma`.
+
+**Brushes** (`Themes/Brushes.axaml`, 26 keys) — the same tokens with a `Brush` suffix, minus the three
+`CarbonInputBackground*` colors (plain, `…Focused`, `…Hover`), which have no brush of their own and are
+consumed directly by the Fluent overrides below. Full list: `CarbonBackgroundBrush`,
+`CarbonSurfaceBrush`, `CarbonSurfaceLowBrush`, `CarbonSurfaceHighBrush`, `CarbonBorderBrush`,
+`CarbonBorderSubtleBrush`, `CarbonForegroundBrush`, `CarbonForegroundSecondaryBrush`,
+`CarbonForegroundTertiaryBrush`, `CarbonAccentBrush`, `CarbonAccentHoverBrush`, `CarbonSelectionBrush`,
+`CarbonHoverBrush`, `CarbonPressedBrush`, `CarbonOverlayBrush`, `CarbonSuccessBrush`,
+`CarbonWarningBrush`, `CarbonErrorBrush`, `CarbonInfoBackgroundBrush`, `CarbonInfoBorderBrush`,
+`CarbonSuccessBackgroundBrush`, `CarbonSuccessBorderBrush`, `CarbonWarningBackgroundBrush`,
+`CarbonWarningBorderBrush`, `CarbonErrorBackgroundBrush`, `CarbonErrorBorderBrush` → `Enigma…`.
+
+**Fluent override keys — 23, names unchanged.** `TextControlBackground`,
+`TextControlBackgroundPointerOver`, `TextControlBackgroundFocused`, `TextControlBorderBrush`,
+`TextControlBorderBrushPointerOver`, `TextControlBorderBrushFocused`, `TextControlForeground`,
+`TextControlForegroundPointerOver`, `TextControlForegroundFocused`,
+`TextControlPlaceholderForeground`, `TextControlPlaceholderForegroundPointerOver`,
+`TextControlPlaceholderForegroundFocused`, `TextControlSelectionHighlightColor`, `ComboBoxBackground`,
+`ComboBoxBackgroundPointerOver`, `ComboBoxBackgroundPressed`, `ComboBoxBackgroundDisabled`,
+`ComboBoxBorderBrush`, `ComboBoxBorderBrushPointerOver`, `ComboBoxBorderBrushPressed`,
+`ComboBoxForeground`, `ComboBoxForegroundPointerOver`, `ComboBoxPlaceholderTextForeground`. These are
+FluentTheme's own contract — renaming one silently stops the override applying.
+
+**Dropped — 12 keys, by decision taken during this phase.** The six `CarbonCalendar*Color`
+(`Today`, `Selected`, `OutOfMonth`, `Appointment`, `GridLine`, `CurrentTime`) and their six
+`CarbonCalendar*Brush` counterparts were **not** ported. Their sole consumer in the port source is
+`Controls/CalendarSchedule/CalendarSchedule.cs`, which §2 excludes — porting them would ship 12 theme
+keys no shipped control consumes, and FEATURE-2802 would have to document them. No template ported in
+PHASE02–08 references them (verified by grep against the port source). **If `CalendarSchedule` is ever
+revived, this decision must be reversed first.**
 
 ## PHASE02 — CollectionView data subsystem — TODO
 

@@ -1,0 +1,69 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- The brushes every control template binds to. This dictionary is deliberately *not* theme-scoped:
+       one brush instance per key, whose Color tracks the active variant through DynamicResource. That
+       indirection is what makes runtime theme switching work — a StaticResource here would bake in
+       whichever variant happened to be active at load time and never update again. -->
+
+  <SolidColorBrush x:Key="EnigmaBackgroundBrush" Color="{DynamicResource EnigmaBackgroundColor}" />
+  <SolidColorBrush x:Key="EnigmaSurfaceBrush" Color="{DynamicResource EnigmaSurfaceColor}" />
+  <SolidColorBrush x:Key="EnigmaSurfaceLowBrush" Color="{DynamicResource EnigmaSurfaceLowColor}" />
+  <SolidColorBrush x:Key="EnigmaSurfaceHighBrush" Color="{DynamicResource EnigmaSurfaceHighColor}" />
+  <SolidColorBrush x:Key="EnigmaBorderBrush" Color="{DynamicResource EnigmaBorderColor}" />
+  <SolidColorBrush x:Key="EnigmaBorderSubtleBrush" Color="{DynamicResource EnigmaBorderSubtleColor}" />
+  <SolidColorBrush x:Key="EnigmaForegroundBrush" Color="{DynamicResource EnigmaForegroundColor}" />
+  <SolidColorBrush x:Key="EnigmaForegroundSecondaryBrush" Color="{DynamicResource EnigmaForegroundSecondaryColor}" />
+  <SolidColorBrush x:Key="EnigmaForegroundTertiaryBrush" Color="{DynamicResource EnigmaForegroundTertiaryColor}" />
+  <SolidColorBrush x:Key="EnigmaAccentBrush" Color="{DynamicResource EnigmaAccentColor}" />
+  <SolidColorBrush x:Key="EnigmaAccentHoverBrush" Color="{DynamicResource EnigmaAccentHoverColor}" />
+  <SolidColorBrush x:Key="EnigmaSelectionBrush" Color="{DynamicResource EnigmaSelectionColor}" />
+  <SolidColorBrush x:Key="EnigmaHoverBrush" Color="{DynamicResource EnigmaHoverColor}" />
+  <SolidColorBrush x:Key="EnigmaPressedBrush" Color="{DynamicResource EnigmaPressedColor}" />
+  <SolidColorBrush x:Key="EnigmaOverlayBrush" Color="{DynamicResource EnigmaOverlayColor}" />
+  <SolidColorBrush x:Key="EnigmaSuccessBrush" Color="{DynamicResource EnigmaSuccessColor}" />
+  <SolidColorBrush x:Key="EnigmaWarningBrush" Color="{DynamicResource EnigmaWarningColor}" />
+  <SolidColorBrush x:Key="EnigmaErrorBrush" Color="{DynamicResource EnigmaErrorColor}" />
+  <SolidColorBrush x:Key="EnigmaInfoBackgroundBrush" Color="{DynamicResource EnigmaInfoBackgroundColor}" />
+  <SolidColorBrush x:Key="EnigmaInfoBorderBrush" Color="{DynamicResource EnigmaInfoBorderColor}" />
+  <SolidColorBrush x:Key="EnigmaSuccessBackgroundBrush" Color="{DynamicResource EnigmaSuccessBackgroundColor}" />
+  <SolidColorBrush x:Key="EnigmaSuccessBorderBrush" Color="{DynamicResource EnigmaSuccessBorderColor}" />
+  <SolidColorBrush x:Key="EnigmaWarningBackgroundBrush" Color="{DynamicResource EnigmaWarningBackgroundColor}" />
+  <SolidColorBrush x:Key="EnigmaWarningBorderBrush" Color="{DynamicResource EnigmaWarningBorderColor}" />
+  <SolidColorBrush x:Key="EnigmaErrorBackgroundBrush" Color="{DynamicResource EnigmaErrorBackgroundColor}" />
+  <SolidColorBrush x:Key="EnigmaErrorBorderBrush" Color="{DynamicResource EnigmaErrorBorderColor}" />
+
+  <!-- Below: FluentTheme's own resource keys, overridden so the framework's TextBox and ComboBox sit
+       in the same palette as this library's controls. The names are Fluent's contract, not ours —
+       they must stay verbatim or the override stops applying. The Editors (PHASE03) and every
+       template hosting a bare TextBox depend on these. -->
+
+  <!-- TextBox -->
+  <SolidColorBrush x:Key="TextControlBackground" Color="{DynamicResource EnigmaInputBackgroundColor}" />
+  <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{DynamicResource EnigmaInputBackgroundHoverColor}" />
+  <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{DynamicResource EnigmaInputBackgroundFocusedColor}" />
+  <SolidColorBrush x:Key="TextControlBorderBrush" Color="{DynamicResource EnigmaBorderSubtleColor}" />
+  <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{DynamicResource EnigmaBorderSubtleColor}" />
+  <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="{DynamicResource EnigmaAccentColor}" />
+  <SolidColorBrush x:Key="TextControlForeground" Color="{DynamicResource EnigmaForegroundColor}" />
+  <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="{DynamicResource EnigmaForegroundColor}" />
+  <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{DynamicResource EnigmaForegroundColor}" />
+  <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{DynamicResource EnigmaForegroundTertiaryColor}" />
+  <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="{DynamicResource EnigmaForegroundTertiaryColor}" />
+  <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="{DynamicResource EnigmaForegroundTertiaryColor}" />
+  <!-- Named "…Color" by Fluent but typed as a brush — that is Fluent's naming, kept as-is. -->
+  <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="{DynamicResource EnigmaSelectionColor}" />
+
+  <!-- ComboBox -->
+  <SolidColorBrush x:Key="ComboBoxBackground" Color="{DynamicResource EnigmaInputBackgroundColor}" />
+  <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="{DynamicResource EnigmaSurfaceHighColor}" />
+  <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="{DynamicResource EnigmaSurfaceLowColor}" />
+  <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="{DynamicResource EnigmaSurfaceLowColor}" />
+  <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="{DynamicResource EnigmaBorderSubtleColor}" />
+  <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="{DynamicResource EnigmaBorderSubtleColor}" />
+  <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="{DynamicResource EnigmaAccentColor}" />
+  <SolidColorBrush x:Key="ComboBoxForeground" Color="{DynamicResource EnigmaForegroundColor}" />
+  <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="{DynamicResource EnigmaForegroundColor}" />
+  <SolidColorBrush x:Key="ComboBoxPlaceholderTextForeground" Color="{DynamicResource EnigmaForegroundTertiaryColor}" />
+
+</ResourceDictionary>

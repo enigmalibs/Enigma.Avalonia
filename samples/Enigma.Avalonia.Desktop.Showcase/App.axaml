@@ -9,6 +9,7 @@
 
   <!-- FEATURE-57C8 PHASE01 merges the library's theme dictionary here as a ResourceInclude:
        avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml. It is a ResourceDictionary, so a
-       StyleInclude would be wrong. Nothing to merge yet — the dictionary is still empty. -->
+       StyleInclude would be wrong. The dictionary now carries the theme foundation; this window
+       shows no themed control yet, so nothing depends on the merge until then. -->
 
 </Application>

@@ -4,11 +4,19 @@
   <!-- The library's single public theme entry point:
        avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml.
 
-       Empty by design at this phase — FEATURE-22A5 PHASE01 fills it with the Enigma* theme resource
-       keys (EnigmaBackground*, EnigmaSurface*, EnigmaBorder*, EnigmaForeground*, EnigmaAccent*,
-       EnigmaSuccess, EnigmaWarning, EnigmaError) and merges the per-control dictionaries.
-
        It is a ResourceDictionary, not a Styles collection: consumers merge it into
-       Application.Resources with a ResourceInclude — a StyleInclude would be wrong. -->
+       Application.Resources with a ResourceInclude — a StyleInclude would be wrong.
+
+       Order matters. Colors.axaml must precede Brushes.axaml, and both must precede any control
+       template, because each layer resolves keys from the one above it.
+
+       The two foundation dictionaries are all there is for now; the control templates are added
+       below Brushes.axaml as each control family lands. Every dictionary merged here must
+       correspond to a control this library actually ships. -->
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Colors.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Brushes.axaml" />
+  </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
