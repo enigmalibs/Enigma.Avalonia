@@ -8,8 +8,8 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 
 | ID           | Title                                                                   | Status | Plan                      |
 |--------------|-------------------------------------------------------------------------|--------|---------------------------|
-| FEATURE-28E8 | Repository & solution scaffolding (root config, .slnx, project skeletons) | TODO   | docs/plan/FEATURE-28E8.md |
-| - PHASE01    | Root configuration & solution file                                       | TODO   | (in FEATURE-28E8.md)      |
+| FEATURE-28E8 | Repository & solution scaffolding (root config, .slnx, project skeletons) | IN PROGRESS | docs/plan/FEATURE-28E8.md |
+| - PHASE01    | Root configuration & solution file                                       | DONE   | (in FEATURE-28E8.md)      |
 | - PHASE02    | Three buildable project skeletons + smoke test                           | TODO   | (in FEATURE-28E8.md)      |
 | FEATURE-22A5 | Control library — Enigma.Avalonia.Desktop                                | TODO   | docs/plan/FEATURE-22A5.md |
 | - PHASE01    | Theme foundation & Enigma* resource keys                                 | TODO   | (in FEATURE-22A5.md)      |

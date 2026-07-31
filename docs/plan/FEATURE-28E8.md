@@ -1,6 +1,6 @@
 # FEATURE-28E8 — Repository & solution scaffolding
 
-**Status:** TODO · 2 phases
+**Status:** IN PROGRESS · 2 phases
 **Branches:** `feature/feature-28e8-phase01-root-config`, `feature/feature-28e8-phase02-project-skeletons`
 
 ## 1. Objective
@@ -95,7 +95,7 @@ There is no `Avalonia.Diagnostics` package for Avalonia 12 — never reintroduce
   `EnigmaError`.
 - Showcase pages: `{Name}PageView` in `Views/`, `{Name}PageViewModel` in `ViewModels/`.
 
-## 3. PHASE01 — Root configuration & solution file
+## 3. PHASE01 — Root configuration & solution file — DONE
 
 **Prerequisite, user-run (not an agent action):** `git init -b main` in `/home/jo/Dev/Enigma.Avalonia`,
 then commit the planning documents (`docs/roadmap.md`, `docs/plan/`, `docs/done/.gitkeep`). This phase
@@ -132,7 +132,7 @@ than initialising it.
 - No build is expected to succeed yet (no projects). State that explicitly in the completion doc as
   the Definition-of-Done equivalent for criteria 1–2, and verify the config by inspection.
 
-## 4. PHASE02 — Three buildable project skeletons + smoke test
+## 4. PHASE02 — Three buildable project skeletons + smoke test — TODO
 
 ### Steps
 
