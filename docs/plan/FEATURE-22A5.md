@@ -139,7 +139,7 @@ keys no shipped control consumes, and FEATURE-2802 would have to document them. 
 PHASE02–08 references them (verified by grep against the port source). **If `CalendarSchedule` is ever
 revived, this decision must be reversed first.**
 
-## PHASE02 — CollectionView data subsystem — TODO
+## PHASE02 — CollectionView data subsystem — DONE
 
 Port `Data/` verbatim: `CollectionView.cs`, `CollectionViewGroup.cs`, `CollectionViewSource.cs`,
 `FilterEventArgs.cs`, `PropertyGroupDescription.cs`, `SortDescription.cs`, `SortDirection.cs`.
