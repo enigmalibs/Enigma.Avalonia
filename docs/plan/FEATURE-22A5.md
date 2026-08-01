@@ -150,7 +150,7 @@ Port `Data/` verbatim: `CollectionView.cs`, `CollectionViewGroup.cs`, `Collectio
 (`CollectionViewSource`, filtering, `SortDescription`/`SortDirection`, grouping) is byte-for-byte
 equivalent in shape to the source; zero `Carbon` hits.
 
-## PHASE03 — Editors (16 controls, Enigma.Core encoding) — TODO
+## PHASE03 — Editors (16 controls, Enigma.Core encoding) — DONE
 
 Port `Controls/Editors/` (16 files): `BaseEditor.cs`, `BaseEditorOfT.cs`, `ByteArrayEditor.cs`,
 `TextEditor.cs`, `MultiLineTextEditor.cs`, `IntEditor.cs`, `ShortEditor.cs`, `LongEditor.cs`,

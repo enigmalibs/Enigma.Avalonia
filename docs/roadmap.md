@@ -14,7 +14,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-22A5 | Control library — Enigma.Avalonia.Desktop                                | IN PROGRESS | docs/plan/FEATURE-22A5.md |
 | - PHASE01    | Theme foundation & Enigma* resource keys                                 | DONE        | (in FEATURE-22A5.md)      |
 | - PHASE02    | CollectionView data subsystem                                            | DONE        | (in FEATURE-22A5.md)      |
-| - PHASE03    | Editors (16 controls, Enigma.Core encoding)                              | TODO        | (in FEATURE-22A5.md)      |
+| - PHASE03    | Editors (16 controls, Enigma.Core encoding)                              | DONE        | (in FEATURE-22A5.md)      |
 | - PHASE04    | Navigation controls & navigation service                                 | TODO        | (in FEATURE-22A5.md)      |
 | - PHASE05    | ContentDialog, Overlay, InfoBar + their services                         | TODO        | (in FEATURE-22A5.md)      |
 | - PHASE06    | Settings cards + file/folder dialog services                             | TODO        | (in FEATURE-22A5.md)      |

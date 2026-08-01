@@ -10,13 +10,18 @@
        Order matters. Colors.axaml must precede Brushes.axaml, and both must precede any control
        template, because each layer resolves keys from the one above it.
 
-       The two foundation dictionaries are all there is for now; the control templates are added
-       below Brushes.axaml as each control family lands. Every dictionary merged here must
+       The two foundation dictionaries come first; the control templates are added below
+       Brushes.axaml as each control family lands. Every dictionary merged here must
        correspond to a control this library actually ships. -->
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Colors.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Brushes.axaml" />
+
+    <!-- Editors. BaseEditor precedes MultiLineTextEditor because the latter's control is derived
+         from the former's; the ControlTheme keys are per-type, so this is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Editors/BaseEditor.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Editors/MultiLineTextEditor.axaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
