@@ -1,6 +1,6 @@
 # FEATURE-2802 — Documentation (guides, packed README, SECURITY.md, CLAUDE.md)
 
-**Status:** IN PROGRESS · 2 phases
+**Status:** DONE · 2 phases
 **Branches:** `feature/feature-2802-phase01-guides`, `feature/feature-2802-phase02-readme-community`
 **Depends on:** FEATURE-22A5 (the API being documented), FEATURE-57C8 (working snippets to draw on)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -71,7 +71,7 @@ per file: snippets · symbols · mismatches · uncertain, with totals.
 - Zero occurrences of the port source's name anywhere in `docs/guides/`.
 - Nothing to build or test in this phase beyond the solution staying green — state that explicitly.
 
-## 4. PHASE02 — Packed README, SECURITY.md, CLAUDE.md — TODO
+## 4. PHASE02 — Packed README, SECURITY.md, CLAUDE.md — DONE
 
 ### `README.md` (root, packed into the nupkg)
 

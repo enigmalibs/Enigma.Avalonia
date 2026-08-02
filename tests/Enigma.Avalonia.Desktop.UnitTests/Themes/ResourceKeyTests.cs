@@ -12,13 +12,46 @@ using Xunit;
 namespace Enigma.Avalonia.Desktop.UnitTests.Themes;
 
 /// <summary>
-/// The rename guard. Every key a control template names must resolve out of the merged
-/// <c>Fluent.axaml</c>, in both theme variants — the single most likely fallout of the theme-key
-/// rename is a template left pointing at a key the dictionary no longer defines, which Avalonia
-/// reports by silently rendering nothing rather than by throwing.
+/// The resource-key guard. Every key a control template names must resolve out of the merged
+/// <c>Fluent.axaml</c>, in both theme variants — the likeliest fallout of any theme-key edit is a
+/// template left pointing at a key the dictionary no longer defines, which Avalonia reports by
+/// silently rendering nothing rather than by throwing.
 /// </summary>
 public sealed class ResourceKeyTests
 {
+    /// <summary>
+    /// The standard Avalonia keys <c>Brushes.axaml</c> deliberately redefines, so the built-in
+    /// <c>TextBox</c> and <c>ComboBox</c> match this library's controls. They are the only keys in the
+    /// theme that are allowed not to carry the <c>Enigma</c> prefix; adding to this list is a decision,
+    /// which is why the list is explicit rather than a wildcard.
+    /// </summary>
+    private static readonly HashSet<string> AvaloniaOverrideKeys = new(StringComparer.Ordinal)
+    {
+        "ComboBoxBackground",
+        "ComboBoxBackgroundDisabled",
+        "ComboBoxBackgroundPointerOver",
+        "ComboBoxBackgroundPressed",
+        "ComboBoxBorderBrush",
+        "ComboBoxBorderBrushPointerOver",
+        "ComboBoxBorderBrushPressed",
+        "ComboBoxForeground",
+        "ComboBoxForegroundPointerOver",
+        "ComboBoxPlaceholderTextForeground",
+        "TextControlBackground",
+        "TextControlBackgroundFocused",
+        "TextControlBackgroundPointerOver",
+        "TextControlBorderBrush",
+        "TextControlBorderBrushFocused",
+        "TextControlBorderBrushPointerOver",
+        "TextControlForeground",
+        "TextControlForegroundFocused",
+        "TextControlForegroundPointerOver",
+        "TextControlPlaceholderForeground",
+        "TextControlPlaceholderForegroundFocused",
+        "TextControlPlaceholderForegroundPointerOver",
+        "TextControlSelectionHighlightColor",
+    };
+
     /// <summary>Gets the distinct keys the control templates reference, one per theory case.</summary>
     public static TheoryData<string> ReferencedKeys
     {
@@ -34,6 +67,12 @@ public sealed class ResourceKeyTests
     public static TheoryData<string> VariantNames => ["Dark", "Light"];
 
     private static ThemeVariant Variant(string name) => name == "Dark" ? ThemeVariant.Dark : ThemeVariant.Light;
+
+    /// <summary>Reports whether a defined key is neither ours nor a known Avalonia override.</summary>
+    /// <param name="key">The defined resource key.</param>
+    /// <returns><see langword="true"/> if the key belongs to neither group.</returns>
+    private static bool IsUnexpected(string key) =>
+        !key.StartsWith("Enigma", StringComparison.Ordinal) && !AvaloniaOverrideKeys.Contains(key);
 
     /// <summary>
     /// Every key a control template references resolves, under both variants.
@@ -99,28 +138,36 @@ public sealed class ResourceKeyTests
         Assert.IsAssignableFrom<IBrush>(value);
     }
 
-    /// <summary>No template still points at a pre-rename key.</summary>
+    /// <summary>
+    /// Every key a control template names belongs to this library. The prefix is the whole contract:
+    /// a template reaching for a key under any other prefix is either a typo or a leftover, and both
+    /// render as nothing rather than throwing.
+    /// </summary>
     [AvaloniaFact]
-    public void NoControlTemplate_ReferencesACarbonPrefixedKey()
+    public void EveryKeyAControlTemplateReferences_IsEnigmaPrefixed()
     {
-        var stale = ThemeSource.TemplateFiles
+        var foreign = ThemeSource.TemplateFiles
             .SelectMany(file => ThemeSource.ReferencedKeys(file).Select(key => $"{file} → {key}"))
-            .Where(entry => entry.Contains("→ Carbon", StringComparison.Ordinal))
+            .Where(entry => !entry.Contains("→ Enigma", StringComparison.Ordinal))
             .ToArray();
 
-        Assert.Empty(stale);
+        Assert.Empty(foreign);
     }
 
-    /// <summary>No dictionary still defines a pre-rename key.</summary>
+    /// <summary>
+    /// Every key the dictionaries define is either one of ours or a deliberate override of a standard
+    /// Avalonia key. Anything else is a key nothing can resolve on purpose — the failure mode this
+    /// whole class exists to catch, seen from the defining side.
+    /// </summary>
     [AvaloniaFact]
-    public void NoThemeDictionary_DefinesACarbonPrefixedKey()
+    public void EveryThemeDictionaryKey_IsEnigmaPrefixedOrAKnownAvaloniaOverride()
     {
-        List<string> stale = [];
-        stale.AddRange(ThemeSource.BrushKeys.Where(key => key.StartsWith("Carbon", StringComparison.Ordinal)));
-        stale.AddRange(ThemeSource.ColorKeys("Dark").Where(key => key.StartsWith("Carbon", StringComparison.Ordinal)));
-        stale.AddRange(ThemeSource.ColorKeys("Light").Where(key => key.StartsWith("Carbon", StringComparison.Ordinal)));
+        List<string> unexpected = [];
+        unexpected.AddRange(ThemeSource.BrushKeys.Where(IsUnexpected));
+        unexpected.AddRange(ThemeSource.ColorKeys("Dark").Where(IsUnexpected));
+        unexpected.AddRange(ThemeSource.ColorKeys("Light").Where(IsUnexpected));
 
-        Assert.Empty(stale);
+        Assert.Empty(unexpected);
     }
 
     /// <summary>
