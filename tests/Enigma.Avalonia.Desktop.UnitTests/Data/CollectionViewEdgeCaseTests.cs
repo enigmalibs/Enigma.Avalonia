@@ -30,12 +30,12 @@ public sealed class CollectionViewEdgeCaseTests
     {
         CollectionView view = new(new List<TestPerson> { new("Alice", 30, "Engineering") });
 
-        Assert.Equal(0, view.Count);
+        Assert.Empty(view);
         Assert.True(view.IsEmpty);
 
         view.Refresh();
 
-        Assert.Equal(1, view.Count);
+        Assert.Single(view);
         Assert.False(view.IsEmpty);
     }
 
@@ -46,7 +46,7 @@ public sealed class CollectionViewEdgeCaseTests
 
         view.Refresh();
 
-        Assert.Equal(0, view.Count);
+        Assert.Empty(view);
         Assert.True(view.IsEmpty);
         Assert.Empty(ViewProjection.Names(view));
     }

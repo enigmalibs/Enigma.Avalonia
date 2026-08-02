@@ -1,6 +1,6 @@
 # FEATURE-57C8 — Showcase app: Enigma.Avalonia.Desktop.Showcase
 
-**Status:** IN PROGRESS · 3 phases
+**Status:** DONE · 3 phases
 **Branches:** `feature/feature-57c8-phaseNN-showcase`
 **Depends on:** FEATURE-22A5 (all 8 phases)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -170,7 +170,7 @@ Full record in `docs/done/FEATURE-57C8-PHASE02.md`. The conventions PHASE03's se
 - Command properties are the concrete `AsyncRelayCommand`/`RelayCommand` with `On…Async` handlers, per
   the `communitytoolkit-mvvm` skill.
 
-## 6. PHASE03 — Pages: Ribbon, Docking, Navigation, CollectionView, Charts, Settings — TODO
+## 6. PHASE03 — Pages: Ribbon, Docking, Navigation, CollectionView, Charts, Settings — DONE
 
 Port the remaining 7 page pairs: `RibbonTestingPage*`, `DockingTestingPage*`, `NavigationDemoPage*`,
 `DummyPage*` (the navigation target stub), `CollectionViewPage*` (sort/filter/group over a sample
@@ -186,3 +186,23 @@ collection), `ChartsPage*` (LiveCharts line/column/pie with theme-reactive axes)
 **Acceptance:** build clean; all 11 pages reachable; ribbon tabs switch and its drop-down opens;
 panes dock, split and tab; the CollectionView page sorts, filters and groups live; charts render and
 follow a runtime Dark↔Light switch along with every control on screen; zero `Carbon` hits.
+
+### As built — the one scope change
+
+Full record in `docs/done/FEATURE-57C8-PHASE03.md`. This phase was scoped to `samples/` only, and did
+not stay there:
+
+- **`CollectionView` could not be bound to any control.** Avalonia 12's `ItemsSourceView` rejects a
+  collection that raises `INotifyCollectionChanged` without implementing `IList`, so the library's
+  data-layer type — faithfully ported from Carbon, which has the same defect — produced an empty
+  `ListBox` and a binding error. That is exactly the criterion above, so with the user's agreement the
+  fix landed **in this phase**: `CollectionView` now implements a read-only `IList`
+  (`src/Enigma.Avalonia.Desktop/Data/CollectionView.cs`), covered by a new
+  `CollectionViewBindingTests` that binds a real `ItemsControl` to a real view. FEATURE-22A5 stays
+  `DONE`; this is the correction, not a reopening.
+- The port source's filter box was inert (`FilterText` was bound to nothing). The page wires
+  `CollectionViewSource.Filter` for real, and adds live sort-property, sort-direction and grouping
+  controls, because "sorts, filters and groups live" is the acceptance criterion.
+- The rail label for that page is **"Collections"**, not "CollectionView": the rail wraps on
+  whitespace, so a fourteen-character single word breaks mid-word. The page heading still names the
+  type; the `appsettings.json` key is still `collection-view`.

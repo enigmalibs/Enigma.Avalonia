@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.ChartsPageView"
+             x:DataType="vm:ChartsPageViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="TextBlock.hint">
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+    <Style Selector="TextBlock.section">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundBrush}" />
+    </Style>
+    <!-- The card each chart sits in, so a chart's own background never has to match the page's. -->
+    <Style Selector="Border.chart">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaBorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="12" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="Charts"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <TextBlock Classes="hint"
+                 Text="LiveCharts2 is not part of this library — it is here because a desktop application usually needs it, and because it is the one thing on screen that a theme switch does not reach on its own. Flip the theme on the Settings page and these redraw with everything else: the ViewModel reconfigures LiveCharts and rebuilds the series." />
+
+      <TextBlock Classes="section" Text="Line" />
+      <Border Classes="chart">
+        <lvc:CartesianChart Series="{Binding LineSeries}"
+                            XAxes="{Binding LineXAxes}"
+                            Height="280" />
+      </Border>
+
+      <TextBlock Classes="section" Text="Column" />
+      <Border Classes="chart">
+        <lvc:CartesianChart Series="{Binding ColumnSeries}"
+                            XAxes="{Binding ColumnXAxes}"
+                            YAxes="{Binding ColumnYAxes}"
+                            Height="280" />
+      </Border>
+
+      <TextBlock Classes="section" Text="Pie" />
+      <Border Classes="chart">
+        <lvc:PieChart Series="{Binding PieSeries}"
+                      Height="280" />
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

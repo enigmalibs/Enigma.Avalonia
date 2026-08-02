@@ -42,6 +42,16 @@ public static class ServiceCollectionExtensions
             services.AddTransient<EditorsTestingPageView>();
             services.AddTransient<DialogsTestingPageView>();
             services.AddTransient<ServicesTestingPageView>();
+            services.AddTransient<RibbonTestingPageView>();
+            services.AddTransient<DockingTestingPageView>();
+            services.AddTransient<NavigationDemoPageView>();
+            services.AddTransient<CollectionViewPageView>();
+            services.AddTransient<ChartsPageView>();
+            services.AddTransient<SettingsPageView>();
+
+            // Reachable only from the Navigation page, so it has no rail item — but it is resolved the
+            // same way, which is what makes NavigateToAsync work for a page the rail never lists.
+            services.AddTransient<DummyPageView>();
 
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<HomePageViewModel>();
@@ -49,6 +59,13 @@ public static class ServiceCollectionExtensions
             services.AddSingleton<EditorsTestingPageViewModel>();
             services.AddSingleton<DialogsTestingPageViewModel>();
             services.AddSingleton<ServicesTestingPageViewModel>();
+            services.AddSingleton<RibbonTestingPageViewModel>();
+            services.AddSingleton<DockingTestingPageViewModel>();
+            services.AddSingleton<NavigationDemoPageViewModel>();
+            services.AddSingleton<CollectionViewPageViewModel>();
+            services.AddSingleton<ChartsPageViewModel>();
+            services.AddSingleton<SettingsPageViewModel>();
+            services.AddSingleton<DummyPageViewModel>();
         }
     }
 }

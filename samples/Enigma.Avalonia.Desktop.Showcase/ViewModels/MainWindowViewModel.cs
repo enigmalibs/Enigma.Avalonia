@@ -66,6 +66,17 @@ public class MainWindowViewModel : ObservableObject
         AddPage("editors", "Editors", PhosphorIcon.PencilSimple, typeof(EditorsTestingPageView), typeof(EditorsTestingPageViewModel));
         AddPage("dialogs", "Dialogs", PhosphorIcon.Files, typeof(DialogsTestingPageView), typeof(DialogsTestingPageViewModel));
         AddPage("services", "Services", PhosphorIcon.ChatCircleText, typeof(ServicesTestingPageView), typeof(ServicesTestingPageViewModel));
+        AddPage("ribbon", "Ribbon", PhosphorIcon.Toolbox, typeof(RibbonTestingPageView), typeof(RibbonTestingPageViewModel));
+        AddPage("docking", "Docking", PhosphorIcon.SquareSplitHorizontal, typeof(DockingTestingPageView), typeof(DockingTestingPageViewModel));
+        AddPage("navigation", "Navigation", PhosphorIcon.Compass, typeof(NavigationDemoPageView), typeof(NavigationDemoPageViewModel));
+        // "Collections", not "CollectionView": the rail is narrow and wraps on whitespace, so a
+        // fourteen-character single word breaks mid-word. The page's own heading names the type.
+        AddPage("collection-view", "Collections", PhosphorIcon.Funnel, typeof(CollectionViewPageView), typeof(CollectionViewPageViewModel));
+        AddPage("charts", "Charts", PhosphorIcon.ChartLine, typeof(ChartsPageView), typeof(ChartsPageViewModel));
+
+        // The footer item, and the last one registered: the rail draws FooterItems pinned to the
+        // bottom, so its position here only decides the key map's order, not where it appears.
+        AddPage("settings", "Settings", PhosphorIcon.Gear, typeof(SettingsPageView), typeof(SettingsPageViewModel), footer: true);
 
         NavigateToInitialPage(settings.InitialPage);
     }
