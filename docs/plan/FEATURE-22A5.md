@@ -170,7 +170,7 @@ Port `Controls/Editors/` (16 files): `BaseEditor.cs`, `BaseEditorOfT.cs`, `ByteA
 FEATURE-6EB0 — say which in the completion doc); zero `Carbon` hits; the `:error` pseudo-class
 styling still resolves.
 
-## PHASE04 — Navigation controls & navigation service — TODO
+## PHASE04 — Navigation controls & navigation service — DONE
 
 Port `Controls/Navigation/` (`NavigationView.cs`, `NavigationItem.cs`, `NavigationOrientation.cs`),
 `Themes/Controls/Navigation/NavigationView.axaml` + `NavigationItem.axaml`, and the navigation

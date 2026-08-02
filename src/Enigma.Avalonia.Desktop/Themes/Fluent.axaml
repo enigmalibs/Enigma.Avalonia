@@ -22,6 +22,12 @@
          from the former's; the ControlTheme keys are per-type, so this is for readability. -->
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Editors/BaseEditor.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Editors/MultiLineTextEditor.axaml" />
+
+    <!-- Navigation. NavigationItem precedes NavigationView because the view's two ListBoxes render
+         items with the item theme; as with the editors, the ControlTheme keys are per-type, so this
+         is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Navigation/NavigationItem.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Navigation/NavigationView.axaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
