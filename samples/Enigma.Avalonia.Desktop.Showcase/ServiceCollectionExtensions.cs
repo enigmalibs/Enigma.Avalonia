@@ -38,9 +38,17 @@ public static class ServiceCollectionExtensions
             services.AddSingleton<MainWindow>();
 
             services.AddTransient<HomePageView>();
+            services.AddTransient<BaseControlsPageView>();
+            services.AddTransient<EditorsTestingPageView>();
+            services.AddTransient<DialogsTestingPageView>();
+            services.AddTransient<ServicesTestingPageView>();
 
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<HomePageViewModel>();
+            services.AddSingleton<BaseControlsPageViewModel>();
+            services.AddSingleton<EditorsTestingPageViewModel>();
+            services.AddSingleton<DialogsTestingPageViewModel>();
+            services.AddSingleton<ServicesTestingPageViewModel>();
         }
     }
 }

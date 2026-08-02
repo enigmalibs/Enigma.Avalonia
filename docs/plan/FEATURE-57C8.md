@@ -139,7 +139,7 @@ account for it (full record in `docs/done/FEATURE-57C8-PHASE01.md`):
 - `Assets/app.ico` is generated placeholder art (a white "E" on the accent) — replace it with real
   artwork before FEATURE-1702.
 
-## 5. PHASE02 — Pages: Base controls, Editors, Dialogs, Services — TODO
+## 5. PHASE02 — Pages: Base controls, Editors, Dialogs, Services — DONE
 
 Port 4 page pairs: `BaseControlsPage*` (standard Avalonia controls restyled by the theme),
 `EditorsTestingPage*` (all 14 typed editors incl. Base64/Hex), `DialogsTestingPage*` (ContentDialog
@@ -152,6 +152,23 @@ Register each View (Transient) and ViewModel (Singleton), and add its `Navigatio
 **Acceptance:** build clean; all four pages navigate, render and interact correctly by eye — a dialog
 opens and returns a result, an InfoBar of each severity appears, a file picker opens, every editor
 accepts and rejects input with the `:error` state visible.
+
+### As built — what PHASE03 inherits
+
+Full record in `docs/done/FEATURE-57C8-PHASE02.md`. The conventions PHASE03's seven pages follow:
+
+- The rail reads Home · Base Controls · Editors · Dialogs · Services. PHASE03 appends its six main
+  items and the `SettingsPage` footer item; keys are lowercase-hyphenated (`base-controls`).
+- §5's parenthetical page descriptions have `DialogsTestingPage*` and `ServicesTestingPage*` the wrong
+  way round versus the port source. The source's names were kept: `DialogsTestingPage*` is the
+  file/folder pickers, `ServicesTestingPage*` is ContentDialog + Overlay + InfoBar.
+- Repeated per-row chrome inside a page goes in a `UserControl.Styles` class (`.readout`, `.result`,
+  `.hint`), not on every element.
+- **Content built in C# takes theme brushes as dynamic resources, never literal colours** — the port
+  source's hardcoded hex would not survive PHASE03's own runtime Dark↔Light criterion. The pattern is
+  `control[!SomeProperty] = new DynamicResourceExtension("EnigmaX")`.
+- Command properties are the concrete `AsyncRelayCommand`/`RelayCommand` with `On…Async` handlers, per
+  the `communitytoolkit-mvvm` skill.
 
 ## 6. PHASE03 — Pages: Ribbon, Docking, Navigation, CollectionView, Charts, Settings — TODO
 

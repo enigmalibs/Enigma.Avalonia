@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.BaseControlsPageView"
+             x:DataType="vm:BaseControlsPageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="Base Controls"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <!-- Not one of the library's own controls: every control below is stock Avalonia. They look
+           like this because Brushes.axaml overrides Fluent's own TextControl* and ComboBox* resource
+           keys, so merging the theme restyles a consumer's existing views for free. -->
+      <TextBlock Text="Stock Avalonia controls, restyled by the theme's overrides of Fluent's resource keys."
+                 TextWrapping="Wrap"
+                 Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+
+      <TextBlock Text="TextBox"
+                 FontSize="16"
+                 FontWeight="SemiBold"
+                 Margin="0,8,0,0"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+      <TextBox PlaceholderText="Default TextBox" />
+      <TextBox Text="TextBox with text" />
+      <TextBox PlaceholderText="Disabled TextBox" IsEnabled="False" />
+
+      <TextBlock Text="CheckBox"
+                 FontSize="16"
+                 FontWeight="SemiBold"
+                 Margin="0,8,0,0"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+      <CheckBox Content="Unchecked" />
+      <CheckBox Content="Checked" IsChecked="True" />
+      <CheckBox Content="Indeterminate" IsChecked="{x:Null}" IsThreeState="True" />
+      <CheckBox Content="Disabled" IsEnabled="False" />
+
+      <TextBlock Text="RadioButton"
+                 FontSize="16"
+                 FontWeight="SemiBold"
+                 Margin="0,8,0,0"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+      <StackPanel Spacing="4">
+        <RadioButton Content="Option A" GroupName="Group1" IsChecked="True" />
+        <RadioButton Content="Option B" GroupName="Group1" />
+        <RadioButton Content="Option C" GroupName="Group1" />
+        <RadioButton Content="Disabled" GroupName="Group2" IsEnabled="False" />
+      </StackPanel>
+
+      <TextBlock Text="ComboBox"
+                 FontSize="16"
+                 FontWeight="SemiBold"
+                 Margin="0,8,0,0"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+      <ComboBox PlaceholderText="Select an item" MinWidth="200" HorizontalAlignment="Left">
+        <ComboBoxItem Content="Item 1" />
+        <ComboBoxItem Content="Item 2" />
+        <ComboBoxItem Content="Item 3" />
+      </ComboBox>
+      <ComboBox PlaceholderText="Disabled" IsEnabled="False" MinWidth="200" HorizontalAlignment="Left" />
+
+      <TextBlock Text="ListBox"
+                 FontSize="16"
+                 FontWeight="SemiBold"
+                 Margin="0,8,0,0"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+      <ListBox MaxHeight="160" MinWidth="200" HorizontalAlignment="Left">
+        <ListBoxItem Content="Item 1" />
+        <ListBoxItem Content="Item 2" />
+        <ListBoxItem Content="Item 3" />
+        <ListBoxItem Content="Item 4" />
+        <ListBoxItem Content="Item 5" />
+      </ListBox>
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

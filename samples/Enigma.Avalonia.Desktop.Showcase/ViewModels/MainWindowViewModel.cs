@@ -59,7 +59,13 @@ public class MainWindowViewModel : ObservableObject
 
         Navigation.PageFactory = CreatePage;
 
+        // Rail order is registration order. Each phase of the showcase appends its pages here; the
+        // page's View and ViewModel must also be registered in AddPagesAndViewModels().
         AddPage("home", "Home", PhosphorIcon.House, typeof(HomePageView), typeof(HomePageViewModel));
+        AddPage("base-controls", "Base Controls", PhosphorIcon.SquaresFour, typeof(BaseControlsPageView), typeof(BaseControlsPageViewModel));
+        AddPage("editors", "Editors", PhosphorIcon.PencilSimple, typeof(EditorsTestingPageView), typeof(EditorsTestingPageViewModel));
+        AddPage("dialogs", "Dialogs", PhosphorIcon.Files, typeof(DialogsTestingPageView), typeof(DialogsTestingPageViewModel));
+        AddPage("services", "Services", PhosphorIcon.ChatCircleText, typeof(ServicesTestingPageView), typeof(ServicesTestingPageViewModel));
 
         NavigateToInitialPage(settings.InitialPage);
     }

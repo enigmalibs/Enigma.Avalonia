@@ -1,0 +1,226 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:controls="using:Enigma.Avalonia.Desktop.Controls"
+             xmlns:editors="using:Enigma.Avalonia.Desktop.Controls.Editors"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.EditorsTestingPageView"
+             x:DataType="vm:EditorsTestingPageViewModel">
+
+  <UserControl.Styles>
+    <!-- The live readout beside each editor. A page-local style rather than five attributes on
+         nineteen TextBlocks: the readouts are one thing repeated, so they are described once. -->
+    <Style Selector="TextBlock.readout">
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Margin" Value="12,0,0,0" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="24" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="Editors"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <!-- Every editor below binds a typed value, not a string. The text beside each one is the value
+           the ViewModel actually holds: it changes only when a value is accepted, so an editor showing
+           its :error state still reads out the last good value. -->
+      <TextBlock Text="Typed editor controls with input validation, formatting, and action areas."
+                 TextWrapping="Wrap"
+                 Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+
+      <controls:SettingsCardExpander Header="Integer Types"
+                                     Description="ShortEditor, UShortEditor, IntEditor, UIntEditor, LongEditor, ULongEditor"
+                                     IconData="{ei:IconGeometry Hash}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:ShortEditor Title="Temperature (short, -1000..1000)"
+                                 PlaceholderText="Enter short integer..."
+                                 Value="{Binding ShortValue}"
+                                 Unit="°C" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding ShortValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <!-- NullWhenEmpty: clearing this editor commits null rather than 0, which is what a
+                 nullable value type is for. Every other numeric editor here leaves it off. -->
+            <editors:UShortEditor Title="Port (ushort, 1..65535)"
+                                  PlaceholderText="Enter port number..."
+                                  Value="{Binding UshortValue}"
+                                  NullWhenEmpty="True"
+                                  Unit="port" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding UshortValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:IntEditor Title="Size (int, 0..10000)"
+                               PlaceholderText="Enter integer..."
+                               Value="{Binding IntValue}"
+                               Unit="px" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding IntValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:UIntEditor Title="Count (uint, 1..999999)"
+                                PlaceholderText="Enter unsigned integer..."
+                                Value="{Binding UintValue}"
+                                Unit="items" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding UintValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:LongEditor Title="Timestamp (long, ≥0)"
+                                PlaceholderText="Enter long integer..."
+                                Value="{Binding LongValue}"
+                                Unit="ticks" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding LongValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:ULongEditor Title="File size (ulong, 1..1048576)"
+                                 PlaceholderText="Enter unsigned integer..."
+                                 Value="{Binding UlongValue}"
+                                 Unit="bytes" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding UlongValueInfo}" />
+          </Grid>
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Floating Point Types"
+                                     Description="SingleEditor, DoubleEditor, DecimalEditor"
+                                     IconData="{ei:IconGeometry Sigma}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:SingleEditor Title="Ratio (float, 0..100)"
+                                  PlaceholderText="Enter float..."
+                                  Value="{Binding SingleValue}"
+                                  FormatString="N3" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding SingleValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:DoubleEditor Title="Distance (double, 0..99999.99)"
+                                  PlaceholderText="Enter decimal..."
+                                  Value="{Binding DoubleValue}"
+                                  FormatString="N2"
+                                  Unit="mm" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding DoubleValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <!-- The same value as the editor above, with no FormatString: the pair shows what
+                 FormatString does, since only one of the two reformats on focus loss. -->
+            <editors:DoubleEditor Title="Speed (double, unformatted)"
+                                  PlaceholderText="No format string"
+                                  Value="{Binding DoubleValue}"
+                                  Unit="m/s" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding DoubleValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:DecimalEditor Title="Price (decimal, 0.01..99999.99)"
+                                   PlaceholderText="Enter price..."
+                                   Value="{Binding DecimalValue}"
+                                   FormatString="N2"
+                                   Unit="USD" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding DecimalValueInfo}" />
+          </Grid>
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Text Types"
+                                     Description="TextEditor, MultiLineTextEditor"
+                                     IconData="{ei:IconGeometry TextAa}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:TextEditor Title="Label (string, required, max 100)"
+                                PlaceholderText="Enter text..."
+                                Text="{Binding TextValue}"
+                                Unit="txt" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding TextValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:TextEditor Title="With action (string, required, max 100)"
+                                PlaceholderText="Type something..."
+                                Text="{Binding TextValue}">
+              <editors:TextEditor.ActionContent>
+                <Button Content="Go" Padding="6,2" FontSize="12" />
+              </editors:TextEditor.ActionContent>
+            </editors:TextEditor>
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding TextValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <!-- No Title: the editor collapses its label row rather than reserving empty space. -->
+            <editors:TextEditor PlaceholderText="No title" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding TextValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:TextEditor Title="Search (with leading icon)"
+                                PlaceholderText="Search..."
+                                Text="{Binding TextValue}">
+              <editors:TextEditor.LeadingContent>
+                <!-- ei:Icon rather than a PathIcon with {ei:IconGeometry}: the control re-resolves at
+                     render time, so it follows a theme switch inside the editor's chrome. -->
+                <ei:Icon Kind="MagnifyingGlass"
+                         Size="16"
+                         Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+              </editors:TextEditor.LeadingContent>
+            </editors:TextEditor>
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding TextValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:TextEditor Title="Password (with leading icon)"
+                                PlaceholderText="Enter password..."
+                                PasswordChar="*">
+              <editors:TextEditor.LeadingContent>
+                <ei:Icon Kind="Lock"
+                         Size="16"
+                         Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+              </editors:TextEditor.LeadingContent>
+            </editors:TextEditor>
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding TextValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:MultiLineTextEditor Title="Notes (string, required, min 5)"
+                                         PlaceholderText="Enter multi-line text..."
+                                         Text="{Binding MultiLineTextValue}" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding MultiLineTextValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:MultiLineTextEditor Title="With action (string, required, min 5)"
+                                         PlaceholderText="Type something..."
+                                         Text="{Binding MultiLineTextValue}"
+                                         Unit="md">
+              <editors:MultiLineTextEditor.ActionContent>
+                <Button Content="Format" Padding="6,2" FontSize="12" />
+              </editors:MultiLineTextEditor.ActionContent>
+            </editors:MultiLineTextEditor>
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding MultiLineTextValueInfo}" />
+          </Grid>
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Binary Types"
+                                     Description="HexadecimalEditor, Base64Editor"
+                                     IconData="{ei:IconGeometry Binary}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="8">
+          <!-- Both editors are bound to the same byte[]: type hex into one and the other re-renders
+               the same bytes as Base64. Neither holds a string — the encoding is the control's job. -->
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:HexadecimalEditor Title="Raw bytes (byte[])"
+                                       PlaceholderText="Enter hex bytes (e.g. 0A FF 1B)..."
+                                       Value="{Binding BytesValue}" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding BytesValueInfo}" />
+          </Grid>
+          <Grid ColumnDefinitions="*,Auto">
+            <editors:Base64Editor Title="Encoded data (byte[])"
+                                  PlaceholderText="Enter Base64 string..."
+                                  Value="{Binding BytesValue}" />
+            <TextBlock Grid.Column="1" Classes="readout" Text="{Binding BytesValueInfo}" />
+          </Grid>
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

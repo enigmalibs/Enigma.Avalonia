@@ -25,7 +25,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | - PHASE02    | Headless control smoke & resource-key tests                              | DONE        | (in FEATURE-6EB0.md)      |
 | FEATURE-57C8 | Showcase app — Enigma.Avalonia.Desktop.Showcase                          | IN PROGRESS | docs/plan/FEATURE-57C8.md |
 | - PHASE01    | App shell & host wiring                                                  | DONE        | (in FEATURE-57C8.md)      |
-| - PHASE02    | Pages: Base controls, Editors, Dialogs, Services                         | TODO        | (in FEATURE-57C8.md)      |
+| - PHASE02    | Pages: Base controls, Editors, Dialogs, Services                         | DONE        | (in FEATURE-57C8.md)      |
 | - PHASE03    | Pages: Ribbon, Docking, Navigation, CollectionView, Charts, Settings     | TODO        | (in FEATURE-57C8.md)      |
 | FEATURE-2802 | Documentation (guides, packed README, SECURITY.md, CLAUDE.md)            | TODO        | docs/plan/FEATURE-2802.md |
 | - PHASE01    | Per-family guides + index                                                | TODO        | (in FEATURE-2802.md)      |

@@ -1,0 +1,100 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:controls="using:Enigma.Avalonia.Desktop.Controls"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.ServicesTestingPageView"
+             x:DataType="vm:ServicesTestingPageViewModel">
+
+  <UserControl.Styles>
+    <!-- The line each section prints its last result into. -->
+    <Style Selector="TextBlock.result">
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundBrush}" />
+    </Style>
+    <Style Selector="TextBlock.hint">
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="Services"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <!-- Nothing on this page hosts the surfaces it shows: the dialog, the overlay and the info bar
+           all live in MainWindow, registered with their services at startup. The page only asks. -->
+      <TextBlock Classes="hint"
+                 Text="The content dialog, overlay and info bar services. Each surface is hosted once by the window and driven from here." />
+
+      <controls:SettingsCardExpander Header="Content Dialogs"
+                                     Description="Modal dialogs that return the user's decision"
+                                     IconData="{ei:IconGeometry ChatCircleText}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="hint"
+                     Text="A content dialog blocks interaction and its ShowAsync completes with the button that closed it." />
+
+          <WrapPanel Orientation="Horizontal" ItemSpacing="8" LineSpacing="8">
+            <Button Content="Simple Message" Command="{Binding ShowSimpleDialogCommand}" />
+            <Button Content="Complex Dialog" Command="{Binding ShowComplexDialogCommand}" />
+            <Button Content="Password Dialog" Command="{Binding ShowPasswordDialogCommand}" />
+            <Button Content="Wide Dialog" Command="{Binding ShowWideDialogCommand}" />
+            <Button Content="Tall Dialog" Command="{Binding ShowTallDialogCommand}" />
+          </WrapPanel>
+
+          <TextBlock Classes="result"
+                     Text="{Binding LastDialogResult}"
+                     IsVisible="{Binding LastDialogResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Overlay"
+                                     Description="A blocking surface hosting any control while work runs"
+                                     IconData="{ei:IconGeometry CheckCircle}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="hint"
+                     Text="The overlay hosts the showcase's own ProgressOverlayCard — the demonstration that it takes any consumer control. Both buttons disable while a task runs." />
+
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="Simple Task" Command="{Binding RunSimpleTaskCommand}" />
+            <Button Content="Complex Task" Command="{Binding RunComplexTaskCommand}" />
+          </StackPanel>
+
+          <TextBlock Classes="result"
+                     Text="{Binding LastOverlayResult}"
+                     IsVisible="{Binding LastOverlayResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="InfoBar"
+                                     Description="Non-blocking notifications, one per severity"
+                                     IconData="{ei:IconGeometry Info}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="hint"
+                     Text="An info bar notifies without blocking; its severity selects the icon and the colours. Awaiting ShowAsync completes when the bar closes." />
+
+          <WrapPanel Orientation="Horizontal" ItemSpacing="8" LineSpacing="8">
+            <Button Content="Info" Command="{Binding ShowInfoCommand}" />
+            <Button Content="Success" Command="{Binding ShowSuccessCommand}" />
+            <Button Content="Warning" Command="{Binding ShowWarningCommand}" />
+            <Button Content="Error" Command="{Binding ShowErrorCommand}" />
+            <Button Content="Close" Command="{Binding CloseInfoBarCommand}" />
+          </WrapPanel>
+
+          <TextBlock Classes="result"
+                     Text="{Binding LastInfoBarResult}"
+                     IsVisible="{Binding LastInfoBarResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>
