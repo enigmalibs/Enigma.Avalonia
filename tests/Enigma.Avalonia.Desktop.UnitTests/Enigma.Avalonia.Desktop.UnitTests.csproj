@@ -29,4 +29,18 @@
     <ProjectReference Include="..\..\src\Enigma.Avalonia.Desktop\Enigma.Avalonia.Desktop.csproj" />
   </ItemGroup>
 
+  <!-- The library's theme XAML, embedded verbatim so the resource-key tests can read what the
+       templates actually reference. It cannot come from the library assembly: the Avalonia XAML
+       compiler replaces every AvaloniaResource .axaml with compiled IL, so AssetLoader.Open on one
+       throws FileNotFoundException. Embedding the source here keeps the tests free of any
+       filesystem lookup at run time while still reading the real, current files.
+       LogicalName is set explicitly — the default manifest name for an item outside the project
+       directory is not stable across SDKs or path separators. -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\src\Enigma.Avalonia.Desktop\Themes\**\*.axaml">
+      <LogicalName>ThemeSource/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+      <Visible>false</Visible>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
