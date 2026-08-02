@@ -1,6 +1,6 @@
 # FEATURE-2802 — Documentation (guides, packed README, SECURITY.md, CLAUDE.md)
 
-**Status:** TODO · 2 phases
+**Status:** IN PROGRESS · 2 phases
 **Branches:** `feature/feature-2802-phase01-guides`, `feature/feature-2802-phase02-readme-community`
 **Depends on:** FEATURE-22A5 (the API being documented), FEATURE-57C8 (working snippets to draw on)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -22,7 +22,7 @@ subject to FEATURE-28E8 §2.4.10: **no reference to the port source, in any form
 "supersedes", not a migration note, not a lineage aside. The library is documented purely on its own
 terms. (`docs/plan/*.md` remains the sole exception.)
 
-## 3. PHASE01 — Per-family guides + index — TODO
+## 3. PHASE01 — Per-family guides + index — DONE
 
 ### Deliverables — `docs/guides/`
 
