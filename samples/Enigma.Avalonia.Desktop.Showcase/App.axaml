@@ -1,0 +1,15 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+
+  <!-- FEATURE-57C8 PHASE01 merges the library's theme dictionary here as a ResourceInclude:
+       avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml. It is a ResourceDictionary, so a
+       StyleInclude would be wrong. The dictionary now carries the theme foundation; this window
+       shows no themed control yet, so nothing depends on the merge until then. -->
+
+</Application>

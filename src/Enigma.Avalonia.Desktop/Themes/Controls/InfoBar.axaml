@@ -1,0 +1,105 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.InfoBar">
+
+  <ControlTheme x:Key="{x:Type controls:InfoBar}" TargetType="controls:InfoBar">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="IsVisible" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <!-- Outer Border for shadow -->
+        <Border CornerRadius="8"
+                Margin="24"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                BoxShadow="0 8 32 0 #66000000">
+          <!-- Inner Border for content -->
+          <Border Name="PART_Card"
+                  Background="{DynamicResource EnigmaInfoBackgroundBrush}"
+                  BorderBrush="{DynamicResource EnigmaInfoBorderBrush}"
+                  BorderThickness="1"
+                  CornerRadius="8"
+                  ClipToBounds="True">
+            <Grid ColumnDefinitions="Auto,*,Auto" Margin="16">
+              <!-- Icon -->
+              <PathIcon Name="PART_Icon"
+                        Grid.Column="0"
+                        Width="24" Height="24"
+                        Margin="0,0,12,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource EnigmaForegroundBrush}"
+                        Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z" />
+
+              <!-- Text -->
+              <StackPanel Grid.Column="1"
+                          Orientation="Vertical"
+                          Spacing="4"
+                          VerticalAlignment="Center">
+                <TextBlock Text="{TemplateBinding Title}"
+                           FontWeight="SemiBold"
+                           IsVisible="{TemplateBinding Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                <TextBlock Text="{TemplateBinding Message}"
+                           Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                           TextWrapping="Wrap"
+                           IsVisible="{TemplateBinding Message, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+              </StackPanel>
+
+              <!-- Close Button -->
+              <Button Name="PART_CloseButton"
+                      Grid.Column="2"
+                      Margin="12,0,0,0"
+                      VerticalAlignment="Center"
+                      Classes="transparent">
+                <PathIcon Width="12" Height="12"
+                          Data="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42L10.59 12l-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0L12 13.41l4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42Z" />
+              </Button>
+            </Grid>
+          </Border>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+
+    <!-- Show when IsOpen is true -->
+    <Style Selector="^[IsOpen=True]">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <!-- Severity: Info -->
+    <Style Selector="^[Severity=Info] /template/ Border#PART_Card">
+      <Setter Property="Background" Value="{DynamicResource EnigmaInfoBackgroundBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaInfoBorderBrush}" />
+    </Style>
+    <Style Selector="^[Severity=Info] /template/ PathIcon#PART_Icon">
+      <Setter Property="Data" Value="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z" />
+    </Style>
+
+    <!-- Severity: Success -->
+    <Style Selector="^[Severity=Success] /template/ Border#PART_Card">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSuccessBackgroundBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaSuccessBorderBrush}" />
+    </Style>
+    <Style Selector="^[Severity=Success] /template/ PathIcon#PART_Icon">
+      <Setter Property="Data" Value="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z" />
+    </Style>
+
+    <!-- Severity: Warning -->
+    <Style Selector="^[Severity=Warning] /template/ Border#PART_Card">
+      <Setter Property="Background" Value="{DynamicResource EnigmaWarningBackgroundBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaWarningBorderBrush}" />
+    </Style>
+    <Style Selector="^[Severity=Warning] /template/ PathIcon#PART_Icon">
+      <Setter Property="Data" Value="M1 21h22L12 2 1 21Zm12-3h-2v-2h2v2Zm0-4h-2v-4h2v4Z" />
+    </Style>
+
+    <!-- Severity: Error -->
+    <Style Selector="^[Severity=Error] /template/ Border#PART_Card">
+      <Setter Property="Background" Value="{DynamicResource EnigmaErrorBackgroundBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaErrorBorderBrush}" />
+    </Style>
+    <Style Selector="^[Severity=Error] /template/ PathIcon#PART_Icon">
+      <Setter Property="Data" Value="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2Zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59Z" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

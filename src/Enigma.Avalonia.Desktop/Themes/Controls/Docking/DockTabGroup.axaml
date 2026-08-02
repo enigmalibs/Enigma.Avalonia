@@ -1,0 +1,82 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Docking">
+
+    <ControlTheme x:Key="{x:Type controls:DockTabGroup}" TargetType="controls:DockTabGroup">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel>
+                    <!-- Tab strip -->
+                    <ListBox x:Name="PART_TabStrip"
+                             DockPanel.Dock="Top"
+                             ItemsSource="{Binding Panes, RelativeSource={RelativeSource TemplatedParent}}"
+                             SelectedItem="{Binding SelectedPane, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                             Background="{DynamicResource EnigmaSurfaceBrush}"
+                             BorderThickness="0"
+                             Padding="0">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="controls:DockPane">
+                                <StackPanel Orientation="Horizontal" Spacing="2">
+                                    <TextBlock Text="{Binding Header}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center"
+                                               Padding="8,6" />
+                                    <Button Classes="dock-pane-close"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Padding="4,2"
+                                            Margin="0,0,4,0"
+                                            MinWidth="0"
+                                            MinHeight="0"
+                                            VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            IsVisible="{Binding CanClose}">
+                                        <PathIcon Width="10" Height="10"
+                                                   Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                                                   Data="M18.36 5.64l-1.41-1.41L12 9.17 7.05 4.22 5.64 5.64 10.59 10.59l-4.95 4.95 1.41 1.41L12 12l4.95 4.95 1.41-1.41-4.95-4.95z" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="MinHeight" Value="0" />
+                            </Style>
+                            <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource EnigmaHoverBrush}" />
+                            </Style>
+                            <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource EnigmaBackgroundBrush}" />
+                            </Style>
+                            <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource EnigmaBackgroundBrush}" />
+                            </Style>
+                            <Style Selector="Button.dock-pane-close">
+                                <Setter Property="CornerRadius" Value="4" />
+                            </Style>
+                            <Style Selector="Button.dock-pane-close /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Style>
+                            <Style Selector="Button.dock-pane-close:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource EnigmaHoverBrush}" />
+                            </Style>
+                        </ListBox.Styles>
+                    </ListBox>
+
+                    <!-- Content area: bind to PaneContent to avoid DockPane having two logical parents
+                         (ListBoxItem + this ContentPresenter) which causes crashes on tree restructuring -->
+                    <Border Background="{DynamicResource EnigmaBackgroundBrush}" Padding="0">
+                        <ContentPresenter Content="{Binding SelectedPane.PaneContent, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

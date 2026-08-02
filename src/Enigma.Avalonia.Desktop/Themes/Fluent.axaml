@@ -1,0 +1,65 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- The library's single public theme entry point:
+       avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml.
+
+       It is a ResourceDictionary, not a Styles collection: consumers merge it into
+       Application.Resources with a ResourceInclude — a StyleInclude would be wrong.
+
+       Order matters. Colors.axaml must precede Brushes.axaml, and both must precede any control
+       template, because each layer resolves keys from the one above it.
+
+       The two foundation dictionaries come first; the control templates are added below
+       Brushes.axaml as each control family lands. Every dictionary merged here must
+       correspond to a control this library actually ships. -->
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Colors.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Brushes.axaml" />
+
+    <!-- Editors. BaseEditor precedes MultiLineTextEditor because the latter's control is derived
+         from the former's; the ControlTheme keys are per-type, so this is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Editors/BaseEditor.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Editors/MultiLineTextEditor.axaml" />
+
+    <!-- Navigation. NavigationItem precedes NavigationView because the view's two ListBoxes render
+         items with the item theme; as with the editors, the ControlTheme keys are per-type, so this
+         is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Navigation/NavigationItem.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Navigation/NavigationView.axaml" />
+
+    <!-- Modal and notification surfaces. Each is a host control that its matching service
+         (IContentDialogService / IOverlayService / IInfoBarService) drives after RegisterHost;
+         the three are independent, so this order is presentation-only. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/ContentDialog.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Overlay.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/InfoBar.axaml" />
+
+    <!-- Settings cards. Two independent ControlThemes with no shared key, so this order is
+         presentation-only; the plain card is listed first because the expander is its variant. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/SettingsCard.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/SettingsCardExpander.axaml" />
+
+    <!-- Ribbon. The family nests — Ribbon hosts RibbonTab, which hosts RibbonGroup, which hosts the
+         three button types — so the dictionaries are listed outermost-first; RibbonMenuItem has no
+         theme of its own because RibbonDropDownButton renders its items with an inline DataTemplate.
+         As elsewhere, the ControlTheme keys are per-type, so this order is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/Ribbon.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonTab.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonGroup.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonButton.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonToggleButton.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonDropDownButton.axaml" />
+
+    <!-- Docking. Listed innermost-first, the reverse of the Ribbon block above, because that is the
+         order in which the family composes at runtime: DockingHost builds a tree of
+         DockSplitContainers and DockTabGroups, and a DockTabGroup renders DockPanes. As elsewhere,
+         the ControlTheme keys are per-type, so this order is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockPane.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockTabGroup.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockSplitContainer.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockingHost.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

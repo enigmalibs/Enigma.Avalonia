@@ -1,0 +1,29 @@
+# Normalize every text file to LF in the repository.
+# text=auto lets git auto-detect binaries and leave them untouched.
+* text=auto eol=lf
+
+# Explicit for your main file types (optional, but documents intent):
+*.cs    text eol=lf
+*.txt   text eol=lf
+*.csv   text eol=lf
+*.json  text eol=lf
+*.xml   text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+*.yml   text eol=lf
+
+# Windows-only scripts stay CRLF:
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# Belt-and-suspenders: force known binaries so git never converts them.
+*.bin binary
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.dll binary
+*.exe binary
+*.snk binary

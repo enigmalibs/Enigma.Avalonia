@@ -1,0 +1,37 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Navigation">
+
+  <Design.PreviewWith>
+    <Border Padding="20" Width="100" Height="100">
+      <controls:NavigationItem Header="Keys"
+                               IconData="M7,14A2,2 0 0,1 5,12A2,2 0 0,1 7,10A2,2 0 0,1 9,12A2,2 0 0,1 7,14M12.65,10C11.83,7.67 9.61,6 7,6A6,6 0 0,0 1,12A6,6 0 0,0 7,18C9.61,18 11.83,16.33 12.65,14H17V18H21V14H23V10H12.65Z" />
+    </Border>
+  </Design.PreviewWith>
+
+  <ControlTheme x:Key="{x:Type controls:NavigationItem}" TargetType="controls:NavigationItem">
+    <Setter Property="Margin" Value="1" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    Spacing="4"
+                    Margin="{TemplateBinding Margin}">
+          <PathIcon Data="{TemplateBinding IconData}"
+                    Width="24"
+                    Height="24"
+                    Foreground="{DynamicResource EnigmaForegroundBrush}" />
+          <TextBlock Text="{TemplateBinding Header}"
+                     FontSize="11"
+                     TextAlignment="Center"
+                     TextWrapping="Wrap"
+                     Foreground="{DynamicResource EnigmaForegroundBrush}" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:horizontal /template/ StackPanel">
+      <Setter Property="MaxWidth" Value="{Binding LabelMaxWidth, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

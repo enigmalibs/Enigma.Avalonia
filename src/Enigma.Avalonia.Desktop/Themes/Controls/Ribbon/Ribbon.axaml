@@ -1,0 +1,59 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Ribbon">
+
+  <ControlTheme x:Key="{x:Type controls:Ribbon}" TargetType="controls:Ribbon">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border BorderBrush="{DynamicResource EnigmaBorderSubtleBrush}"
+                BorderThickness="0,0,0,1">
+          <DockPanel>
+            <!-- Tab strip -->
+            <ListBox x:Name="PART_TabStrip"
+                     DockPanel.Dock="Top"
+                     ItemsSource="{Binding Tabs, RelativeSource={RelativeSource TemplatedParent}}"
+                     SelectedItem="{Binding SelectedTab, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                     Background="{DynamicResource EnigmaSurfaceBrush}"
+                     BorderThickness="0"
+                     Padding="4,0">
+              <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ListBox.ItemsPanel>
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="controls:RibbonTab">
+                  <TextBlock Text="{Binding Header}"
+                             FontSize="12"
+                             Padding="12,6" />
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+              <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                  <Setter Property="Padding" Value="0" />
+                  <Setter Property="MinHeight" Value="0" />
+                </Style>
+                <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                  <Setter Property="Background" Value="{DynamicResource EnigmaHoverBrush}" />
+                </Style>
+                <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+                  <Setter Property="Background" Value="{DynamicResource EnigmaBackgroundBrush}" />
+                </Style>
+                <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                  <Setter Property="Background" Value="{DynamicResource EnigmaBackgroundBrush}" />
+                </Style>
+              </ListBox.Styles>
+            </ListBox>
+
+            <!-- Content area -->
+            <Border Background="{DynamicResource EnigmaBackgroundBrush}"
+                    Padding="4,2">
+              <ContentControl Content="{Binding SelectedTab, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Border>
+          </DockPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

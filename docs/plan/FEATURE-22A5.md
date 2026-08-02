@@ -1,6 +1,6 @@
 # FEATURE-22A5 — Control library: Enigma.Avalonia.Desktop
 
-**Status:** TODO · 8 phases
+**Status:** DONE · 8 phases
 **Branches:** `feature/feature-22a5-phaseNN-<area>` (one per phase)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2 — that section wins over anything here.
 
@@ -71,7 +71,7 @@ continuing to pass. Verification per phase is: zero-warning build + the grep gat
 
 ---
 
-## PHASE01 — Theme foundation & `Enigma*` resource keys — TODO
+## PHASE01 — Theme foundation & `Enigma*` resource keys — DONE
 
 Port `Themes/Colors.axaml` (`ResourceDictionary.ThemeDictionaries` with `x:Key="Dark"` and
 `x:Key="Light"`), `Themes/Brushes.axaml` (brushes referencing colors via `DynamicResource`) and
@@ -88,7 +88,58 @@ Port `Themes/Colors.axaml` (`ResourceDictionary.ThemeDictionaries` with `x:Key="
 **Acceptance:** build clean; `Colors.axaml`/`Brushes.axaml`/`Fluent.axaml` present under
 `Themes/`; zero `Carbon` hits; both theme variants defined; the key map is recorded.
 
-## PHASE02 — CollectionView data subsystem — TODO
+### PHASE01 recorded output — the resource-key map (PHASE02–08 porting contract)
+
+Recorded here rather than in `docs/done/FEATURE-22A5-PHASE01.md` because §2.4.10 makes `docs/plan/*.md`
+the **only** artifact permitted to name the port source, and an old → new table necessarily names the
+old keys. Per §2 that rule wins over PHASE01's "record it in the completion doc" wording. The
+completion doc carries the equivalent new-key inventory.
+
+**The rule for every template ported in PHASE02–08:** a `{DynamicResource Carbon<Token>}` becomes
+`{DynamicResource Enigma<Token>}`. It stays a `DynamicResource` — never a `StaticResource`.
+
+**Colors** (`Themes/Colors.axaml`, same 29 keys in both `Dark` and `Light`) — `CarbonBackgroundColor`,
+`CarbonSurfaceColor`, `CarbonSurfaceHighColor`, `CarbonSurfaceLowColor`, `CarbonBorderColor`,
+`CarbonBorderSubtleColor`, `CarbonForegroundColor`, `CarbonForegroundSecondaryColor`,
+`CarbonForegroundTertiaryColor`, `CarbonAccentColor`, `CarbonAccentHoverColor`, `CarbonSelectionColor`,
+`CarbonInputBackgroundColor`, `CarbonInputBackgroundFocusedColor`, `CarbonInputBackgroundHoverColor`,
+`CarbonHoverColor`, `CarbonPressedColor`, `CarbonOverlayColor`, `CarbonSuccessColor`,
+`CarbonWarningColor`, `CarbonErrorColor`, `CarbonInfoBackgroundColor`, `CarbonInfoBorderColor`,
+`CarbonSuccessBackgroundColor`, `CarbonSuccessBorderColor`, `CarbonWarningBackgroundColor`,
+`CarbonWarningBorderColor`, `CarbonErrorBackgroundColor`, `CarbonErrorBorderColor` → each with
+`Carbon` replaced by `Enigma`.
+
+**Brushes** (`Themes/Brushes.axaml`, 26 keys) — the same tokens with a `Brush` suffix, minus the three
+`CarbonInputBackground*` colors (plain, `…Focused`, `…Hover`), which have no brush of their own and are
+consumed directly by the Fluent overrides below. Full list: `CarbonBackgroundBrush`,
+`CarbonSurfaceBrush`, `CarbonSurfaceLowBrush`, `CarbonSurfaceHighBrush`, `CarbonBorderBrush`,
+`CarbonBorderSubtleBrush`, `CarbonForegroundBrush`, `CarbonForegroundSecondaryBrush`,
+`CarbonForegroundTertiaryBrush`, `CarbonAccentBrush`, `CarbonAccentHoverBrush`, `CarbonSelectionBrush`,
+`CarbonHoverBrush`, `CarbonPressedBrush`, `CarbonOverlayBrush`, `CarbonSuccessBrush`,
+`CarbonWarningBrush`, `CarbonErrorBrush`, `CarbonInfoBackgroundBrush`, `CarbonInfoBorderBrush`,
+`CarbonSuccessBackgroundBrush`, `CarbonSuccessBorderBrush`, `CarbonWarningBackgroundBrush`,
+`CarbonWarningBorderBrush`, `CarbonErrorBackgroundBrush`, `CarbonErrorBorderBrush` → `Enigma…`.
+
+**Fluent override keys — 23, names unchanged.** `TextControlBackground`,
+`TextControlBackgroundPointerOver`, `TextControlBackgroundFocused`, `TextControlBorderBrush`,
+`TextControlBorderBrushPointerOver`, `TextControlBorderBrushFocused`, `TextControlForeground`,
+`TextControlForegroundPointerOver`, `TextControlForegroundFocused`,
+`TextControlPlaceholderForeground`, `TextControlPlaceholderForegroundPointerOver`,
+`TextControlPlaceholderForegroundFocused`, `TextControlSelectionHighlightColor`, `ComboBoxBackground`,
+`ComboBoxBackgroundPointerOver`, `ComboBoxBackgroundPressed`, `ComboBoxBackgroundDisabled`,
+`ComboBoxBorderBrush`, `ComboBoxBorderBrushPointerOver`, `ComboBoxBorderBrushPressed`,
+`ComboBoxForeground`, `ComboBoxForegroundPointerOver`, `ComboBoxPlaceholderTextForeground`. These are
+FluentTheme's own contract — renaming one silently stops the override applying.
+
+**Dropped — 12 keys, by decision taken during this phase.** The six `CarbonCalendar*Color`
+(`Today`, `Selected`, `OutOfMonth`, `Appointment`, `GridLine`, `CurrentTime`) and their six
+`CarbonCalendar*Brush` counterparts were **not** ported. Their sole consumer in the port source is
+`Controls/CalendarSchedule/CalendarSchedule.cs`, which §2 excludes — porting them would ship 12 theme
+keys no shipped control consumes, and FEATURE-2802 would have to document them. No template ported in
+PHASE02–08 references them (verified by grep against the port source). **If `CalendarSchedule` is ever
+revived, this decision must be reversed first.**
+
+## PHASE02 — CollectionView data subsystem — DONE
 
 Port `Data/` verbatim: `CollectionView.cs`, `CollectionViewGroup.cs`, `CollectionViewSource.cs`,
 `FilterEventArgs.cs`, `PropertyGroupDescription.cs`, `SortDescription.cs`, `SortDirection.cs`.
@@ -99,7 +150,7 @@ Port `Data/` verbatim: `CollectionView.cs`, `CollectionViewGroup.cs`, `Collectio
 (`CollectionViewSource`, filtering, `SortDescription`/`SortDirection`, grouping) is byte-for-byte
 equivalent in shape to the source; zero `Carbon` hits.
 
-## PHASE03 — Editors (16 controls, Enigma.Core encoding) — TODO
+## PHASE03 — Editors (16 controls, Enigma.Core encoding) — DONE
 
 Port `Controls/Editors/` (16 files): `BaseEditor.cs`, `BaseEditorOfT.cs`, `ByteArrayEditor.cs`,
 `TextEditor.cs`, `MultiLineTextEditor.cs`, `IntEditor.cs`, `ShortEditor.cs`, `LongEditor.cs`,
@@ -119,7 +170,7 @@ Port `Controls/Editors/` (16 files): `BaseEditor.cs`, `BaseEditorOfT.cs`, `ByteA
 FEATURE-6EB0 — say which in the completion doc); zero `Carbon` hits; the `:error` pseudo-class
 styling still resolves.
 
-## PHASE04 — Navigation controls & navigation service — TODO
+## PHASE04 — Navigation controls & navigation service — DONE
 
 Port `Controls/Navigation/` (`NavigationView.cs`, `NavigationItem.cs`, `NavigationOrientation.cs`),
 `Themes/Controls/Navigation/NavigationView.axaml` + `NavigationItem.axaml`, and the navigation
@@ -137,7 +188,7 @@ services: `INavigationService.cs`, `NavigationService.cs`, `INavigationViewModel
 **Acceptance:** build clean; the 7 files present; `PaneSize`/`LabelMaxWidth` defaults unchanged;
 `OnApplyTemplate` still detaches old handlers before attaching new ones; zero `Carbon` hits.
 
-## PHASE05 — ContentDialog, Overlay, InfoBar + their services — TODO
+## PHASE05 — ContentDialog, Overlay, InfoBar + their services — DONE
 
 Port `Controls/ContentDialog/` (`ContentDialog.cs`, `DefaultButton.cs`, `DialogResult.cs`),
 `Controls/Overlay.cs`, `Controls/InfoBar/` (`InfoBar.cs`, `InfoBarSeverity.cs`), their three
@@ -162,7 +213,7 @@ Append the three includes to `Fluent.axaml`.
 **Acceptance:** build clean; 11 files present; the pre-`RegisterHost` throw is intact on all three
 services; dialog size defaults unchanged; zero `Carbon` hits.
 
-## PHASE06 — Settings cards + file/folder dialog services — TODO
+## PHASE06 — Settings cards + file/folder dialog services — DONE
 
 Port `Controls/SettingsCard.cs`, `Controls/SettingsCardExpander.cs`, their two templates, and the
 picker services: `IFileDialogService.cs`, `FileDialogService.cs`, `FileDialogServiceExtensions.cs`,
@@ -177,7 +228,7 @@ Append both includes to `Fluent.axaml`.
 
 **Acceptance:** build clean; 8 files present; zero `Carbon` hits.
 
-## PHASE07 — Ribbon — TODO
+## PHASE07 — Ribbon — DONE
 
 Port `Controls/Ribbon/` (7 files: `Ribbon.cs`, `RibbonTab.cs`, `RibbonGroup.cs`, `RibbonButton.cs`,
 `RibbonToggleButton.cs`, `RibbonDropDownButton.cs`, `RibbonMenuItem.cs`) and all 6
@@ -189,7 +240,7 @@ Port `Controls/Ribbon/` (7 files: `Ribbon.cs`, `RibbonTab.cs`, `RibbonGroup.cs`,
 popup all still template correctly (verified by eye once FEATURE-57C8 PHASE03 exists, or in a scratch
 harness — say which); zero `Carbon` hits.
 
-## PHASE08 — Docking — TODO
+## PHASE08 — Docking — DONE
 
 Port `Controls/Docking/` (6 files: `DockingHost.cs`, `DockPane.cs`, `DockTabGroup.cs`,
 `DockSplitContainer.cs`, `DockLayoutNode.cs`, `DockPosition.cs`) and all 4
@@ -201,16 +252,27 @@ one sweep.
 
 Append all four includes to `Fluent.axaml`.
 
-**Acceptance:** build clean; 10 files present; `Fluent.axaml` now merges exactly 22 dictionaries
-(2 foundation + 20 control templates) and none of them is a `CalendarSchedule` or `Displayer2D`
+**Acceptance:** build clean; 10 files present; `Fluent.axaml` now merges exactly 21 dictionaries
+(2 foundation + 19 control templates) and none of them is a `CalendarSchedule` or `Displayer2D`
 entry; zero `Carbon` hits anywhere under `src/`.
+
+> **Count corrected during PHASE08** (arithmetic only — no scope change; first flagged in
+> `docs/done/FEATURE-22A5-PHASE07.md`). This criterion originally read "merges exactly 22
+> dictionaries (2 foundation + 20 control templates)". **22** is the `.axaml` **file** count, which
+> is correct and includes `Fluent.axaml` itself; the number of dictionaries it *merges* is **21**.
+> Verified on completion: 21 `<ResourceInclude>` elements, 22 `.axaml` files.
 
 ---
 
 ## 5. Item-level acceptance criteria
 
-- `src/Enigma.Avalonia.Desktop/` contains **62 `.cs`** files (40 controls + 7 data + 15 services) and
+- `src/Enigma.Avalonia.Desktop/` contains **63 `.cs`** files (40 controls + 7 data + 16 services) and
   **22 `.axaml`** files.
+
+  > **Count corrected during PHASE08** (arithmetic only — no scope change; first flagged in
+  > `docs/done/FEATURE-22A5-PHASE07.md`). This originally read "62 `.cs` (40 controls + 7 data +
+  > 15 services)". The control count (40) and data count (7) were right; the service count is **16**
+  > in the port source and on disk, so the total is **63**. No file was added or dropped to reach it.
 - `dotnet build Enigma.Avalonia.slnx -c Release` succeeds for `net8.0` and `net10.0` with zero
   warnings, XAML `AVLN*` diagnostics included.
 - `grep -ri carbon src/` returns nothing.
