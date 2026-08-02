@@ -1,6 +1,6 @@
 # FEATURE-57C8 — Showcase app: Enigma.Avalonia.Desktop.Showcase
 
-**Status:** TODO · 3 phases
+**Status:** IN PROGRESS · 3 phases
 **Branches:** `feature/feature-57c8-phaseNN-showcase`
 **Depends on:** FEATURE-22A5 (all 8 phases)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -59,7 +59,7 @@ is deliberately not ported** — see PHASE01.
 6. **Clean-slate sweep:** zero occurrences of the literal string `Carbon` anywhere under `samples/`.
 7. Every view root and `DataTemplate` using `{Binding}` declares `x:DataType` (`AVLN2100` otherwise).
 
-## 4. PHASE01 — App shell & host wiring — TODO
+## 4. PHASE01 — App shell & host wiring — DONE
 
 New code, written to the house pattern rather than ported.
 
@@ -120,6 +120,24 @@ New code, written to the house pattern rather than ported.
   before `desktop.MainWindow` is assigned.
 - No `Host.CreateDefaultBuilder`, no `ConfigureServices` callback anywhere.
 - Zero `Carbon` hits under `samples/`.
+
+### As built — what PHASE02 and PHASE03 inherit
+
+Step 6's "populates `Items` (10 pages)" could not hold at PHASE01: those View and ViewModel types are
+PHASE02/PHASE03 deliverables. The shell was built to grow instead, and the two later phases must
+account for it (full record in `docs/done/FEATURE-57C8-PHASE01.md`):
+
+- The rail ships **one** item, a new showcase-local `HomePageView` / `HomePageViewModel` landing page —
+  written for this library, not ported. It stays; later phases **append** their items rather than
+  replacing it, which makes the total 12 pages (Home + the 10 nav pages + `DummyPage`).
+- `MainWindowViewModel.AddPage(key, header, icon, viewType, viewModelType, footer)` is the single place
+  a page is registered on the rail. `SettingsPage` passes `footer: true`.
+- Each page also needs its View registered **transient** and its ViewModel **singleton** in
+  `AddPagesAndViewModels()`.
+- `ShowcaseOptions.InitialPage` names a page by the `key` passed to `AddPage`; unknown keys fall back to
+  the first item. `appsettings.json` ships `"InitialPage": "home"`.
+- `Assets/app.ico` is generated placeholder art (a white "E" on the accent) — replace it with real
+  artwork before FEATURE-1702.
 
 ## 5. PHASE02 — Pages: Base controls, Editors, Dialogs, Services — TODO
 

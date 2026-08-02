@@ -7,9 +7,16 @@
     <FluentTheme />
   </Application.Styles>
 
-  <!-- FEATURE-57C8 PHASE01 merges the library's theme dictionary here as a ResourceInclude:
-       avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml. It is a ResourceDictionary, so a
-       StyleInclude would be wrong. The dictionary now carries the theme foundation; this window
-       shows no themed control yet, so nothing depends on the merge until then. -->
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!-- The library's single public theme entry point. It is a ResourceDictionary, so it is
+             merged as a ResourceInclude — a StyleInclude would be wrong. -->
+        <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml" />
+        <!-- Showcase-local control themes, merged after the library's so they can read its brushes. -->
+        <ResourceInclude Source="avares://Enigma.Avalonia.Desktop.Showcase/Controls/ProgressOverlayCard.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 
 </Application>
