@@ -28,6 +28,13 @@
          is for readability. -->
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Navigation/NavigationItem.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Navigation/NavigationView.axaml" />
+
+    <!-- Modal and notification surfaces. Each is a host control that its matching service
+         (IContentDialogService / IOverlayService / IInfoBarService) drives after RegisterHost;
+         the three are independent, so this order is presentation-only. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/ContentDialog.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Overlay.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/InfoBar.axaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

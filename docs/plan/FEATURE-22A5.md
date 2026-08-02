@@ -188,7 +188,7 @@ services: `INavigationService.cs`, `NavigationService.cs`, `INavigationViewModel
 **Acceptance:** build clean; the 7 files present; `PaneSize`/`LabelMaxWidth` defaults unchanged;
 `OnApplyTemplate` still detaches old handlers before attaching new ones; zero `Carbon` hits.
 
-## PHASE05 — ContentDialog, Overlay, InfoBar + their services — TODO
+## PHASE05 — ContentDialog, Overlay, InfoBar + their services — DONE
 
 Port `Controls/ContentDialog/` (`ContentDialog.cs`, `DefaultButton.cs`, `DialogResult.cs`),
 `Controls/Overlay.cs`, `Controls/InfoBar/` (`InfoBar.cs`, `InfoBarSeverity.cs`), their three
