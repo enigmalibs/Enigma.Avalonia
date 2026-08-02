@@ -30,8 +30,8 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-2802 | Documentation (guides, packed README, SECURITY.md, CLAUDE.md)            | DONE        | docs/plan/FEATURE-2802.md |
 | - PHASE01    | Per-family guides + index                                                | DONE        | (in FEATURE-2802.md)      |
 | - PHASE02    | Packed README, SECURITY.md, CLAUDE.md                                    | DONE        | (in FEATURE-2802.md)      |
-| FEATURE-1702 | Release preparation & NuGet publish runbook (1.0.0)                      | TODO        | docs/plan/FEATURE-1702.md |
-| - PHASE01    | Package metadata & third-party license audit                             | TODO        | (in FEATURE-1702.md)      |
+| FEATURE-1702 | Release preparation & NuGet publish runbook (1.0.0)                      | IN PROGRESS | docs/plan/FEATURE-1702.md |
+| - PHASE01    | Package metadata & third-party license audit                             | DONE        | (in FEATURE-1702.md)      |
 | - PHASE02    | RELEASENOTES, PackageReleaseNotes, README what's-new callout             | TODO        | (in FEATURE-1702.md)      |
 | - PHASE03    | docs/RELEASE.md, pre-flight, pack-verify, printed runbook                | TODO        | (in FEATURE-1702.md)      |
 | FEATURE-16A9 | `enigma-avalonia-desktop` house skill (target is outside this repo)      | TODO        | docs/plan/FEATURE-16A9.md |

@@ -1,6 +1,6 @@
 # FEATURE-1702 — Release preparation & NuGet publish runbook (1.0.0)
 
-**Status:** TODO · 3 phases
+**Status:** IN PROGRESS · 3 phases
 **Branches:** `feature/feature-1702-phaseNN-release`
 **Depends on:** FEATURE-22A5, FEATURE-6EB0, FEATURE-57C8, FEATURE-2802
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -33,7 +33,7 @@ remote** — say so in the completion doc; the publish path cannot run until one
 No MSI profile: profiles are apps-only and this item releases a library. The showcase is a
 non-packable sample and is not released.
 
-## 3. PHASE01 — Package metadata & third-party licence audit — TODO
+## 3. PHASE01 — Package metadata & third-party licence audit — DONE
 
 ### Metadata — all 12 properties in `src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj`
 
