@@ -1,0 +1,125 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls">
+
+  <ControlTheme x:Key="{x:Type controls:SettingsCardExpander}" TargetType="controls:SettingsCardExpander">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border x:Name="PART_Root"
+                Background="{DynamicResource EnigmaSurfaceBrush}"
+                BorderBrush="{DynamicResource EnigmaBorderSubtleBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                ClipToBounds="True"
+                Padding="0">
+          <StackPanel>
+
+            <!-- Header row -->
+            <Border x:Name="PART_Header" Padding="16" Background="Transparent">
+              <Grid ColumnDefinitions="Auto,*,Auto">
+
+                <!-- Icon container -->
+                <Border Grid.Column="0"
+                        Width="40" Height="40"
+                        VerticalAlignment="Center"
+                        IsVisible="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
+                  <PathIcon Data="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}}"
+                            Width="20" Height="20"
+                            Foreground="{DynamicResource EnigmaForegroundBrush}" />
+                </Border>
+
+                <!-- Header + Description -->
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Margin="12,0,12,0">
+                  <TextBlock Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
+                             FontSize="14"
+                             FontWeight="SemiBold"
+                             Foreground="{DynamicResource EnigmaForegroundBrush}" />
+                  <TextBlock Text="{Binding Description, RelativeSource={RelativeSource TemplatedParent}}"
+                             FontSize="12"
+                             TextWrapping="Wrap"
+                             Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                             IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                </StackPanel>
+
+                <!-- Chevron -->
+                <PathIcon x:Name="PART_Chevron"
+                          Grid.Column="2"
+                          Width="12" Height="12"
+                          VerticalAlignment="Center"
+                          Data="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"
+                          Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+              </Grid>
+            </Border>
+
+            <!-- Separator -->
+            <Border x:Name="PART_Separator"
+                    Height="1"
+                    Margin="0"
+                    Background="{DynamicResource EnigmaBorderSubtleBrush}"
+                    IsVisible="False" />
+
+            <!-- Expandable content -->
+            <Border x:Name="PART_Content"
+                    Padding="16,12,16,16"
+                    Background="{DynamicResource EnigmaSurfaceLowBrush}"
+                    IsVisible="False">
+              <ContentPresenter Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Border>
+
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+
+    <!-- Collapsed: hover/press on the whole card (like SettingsCardControl) -->
+    <Style Selector="^:pointerover /template/ Border#PART_Root">
+      <Setter Property="Background" Value="{DynamicResource EnigmaHoverBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaBorderBrush}" />
+    </Style>
+
+    <Style Selector="^:pressed /template/ Border#PART_Root">
+      <Setter Property="Background" Value="{DynamicResource EnigmaPressedBrush}" />
+    </Style>
+
+    <!-- Expanded: restore root background so only the header highlights -->
+    <Style Selector="^:expanded /template/ Border#PART_Root">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceBrush}" />
+    </Style>
+
+    <Style Selector="^:expanded:pointerover /template/ Border#PART_Root">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceBrush}" />
+    </Style>
+
+    <Style Selector="^:expanded /template/ Border#PART_Header">
+      <Setter Property="CornerRadius" Value="7,7,0,0" />
+    </Style>
+
+    <Style Selector="^:expanded /template/ Border#PART_Header:pointerover">
+      <Setter Property="Background" Value="{DynamicResource EnigmaHoverBrush}" />
+    </Style>
+
+
+    <Style Selector="^:expanded:pressed /template/ Border#PART_Header">
+      <Setter Property="Background" Value="{DynamicResource EnigmaPressedBrush}" />
+    </Style>
+
+    <Style Selector="^:expanded /template/ PathIcon#PART_Chevron">
+      <Setter Property="RenderTransform">
+        <RotateTransform Angle="90" />
+      </Setter>
+    </Style>
+
+    <Style Selector="^:expanded /template/ Border#PART_Separator">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <Style Selector="^:expanded /template/ Border#PART_Content">
+      <Setter Property="IsVisible" Value="True" />
+      <Setter Property="CornerRadius" Value="0,0,7,7" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

@@ -213,7 +213,7 @@ Append the three includes to `Fluent.axaml`.
 **Acceptance:** build clean; 11 files present; the pre-`RegisterHost` throw is intact on all three
 services; dialog size defaults unchanged; zero `Carbon` hits.
 
-## PHASE06 — Settings cards + file/folder dialog services — TODO
+## PHASE06 — Settings cards + file/folder dialog services — DONE
 
 Port `Controls/SettingsCard.cs`, `Controls/SettingsCardExpander.cs`, their two templates, and the
 picker services: `IFileDialogService.cs`, `FileDialogService.cs`, `FileDialogServiceExtensions.cs`,

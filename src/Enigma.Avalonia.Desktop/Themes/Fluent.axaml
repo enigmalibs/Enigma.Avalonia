@@ -35,6 +35,11 @@
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/ContentDialog.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Overlay.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/InfoBar.axaml" />
+
+    <!-- Settings cards. Two independent ControlThemes with no shared key, so this order is
+         presentation-only; the plain card is listed first because the expander is its variant. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/SettingsCard.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/SettingsCardExpander.axaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
