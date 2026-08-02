@@ -88,7 +88,7 @@ third-party code or assets, so the expected answer is *no* — but state the rea
 **Acceptance:** all 12 properties present and correct; packing `ItemGroup` present; the five forbidden
 properties absent; build clean in Release; audit table recorded.
 
-## 4. PHASE02 — RELEASENOTES, PackageReleaseNotes, README callout — TODO
+## 4. PHASE02 — RELEASENOTES, PackageReleaseNotes, README callout — DONE
 
 ### `RELEASENOTES.md` (root) — first-release variant
 

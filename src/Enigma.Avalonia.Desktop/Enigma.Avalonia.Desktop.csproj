@@ -38,8 +38,9 @@
     <RepositoryUrl>https://github.com/enigmalibs/Enigma.Avalonia</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/enigmalibs/Enigma.Avalonia</PackageProjectUrl>
-    <!-- Refined in PHASE02 to mirror the top of RELEASENOTES.md; the closing sentence is fixed. -->
-    <PackageReleaseNotes>First release of Enigma.Avalonia.Desktop: navigation, docking, ribbon, typed editors, dialogs, overlay and info bar, settings cards, file and folder pickers, the CollectionView data subsystem and the Fluent Dark/Light theme, for Avalonia 12 on net8.0 and net10.0. See RELEASENOTES.md for the full details.</PackageReleaseNotes>
+    <!-- Mirrors the top of RELEASENOTES.md; the closing sentence is fixed by the house standard and
+         must stay exactly "See RELEASENOTES.md for the full details." -->
+    <PackageReleaseNotes>First release of Enigma.Avalonia.Desktop, a control library for Avalonia 12 desktop applications. Everything it ships is one of two things: a control — a TemplatedControl styled by the one theme dictionary you merge into Application.Resources — or a service you register as a singleton and inject. That covers a navigation shell, a docking host, a ribbon, fourteen typed editors, a content dialog, an overlay and an info bar, settings cards, file and folder pickers, and the CollectionView sorting, filtering and grouping subsystem, all under a Fluent theme with Dark and Light variants. Targets net8.0 and net10.0. See RELEASENOTES.md for the full details.</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- PackageReadmeFile and PackageLicenseFile only name the files; this is what actually puts them
