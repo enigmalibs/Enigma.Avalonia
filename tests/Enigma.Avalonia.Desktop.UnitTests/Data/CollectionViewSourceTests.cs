@@ -78,12 +78,12 @@ public sealed class CollectionViewSourceTests
         ObservableCollection<TestPerson> firstSource = [new("Alice", 30, "Engineering")];
         CollectionViewSource source = new() { Source = firstSource };
         CollectionView oldView = ViewOf(source);
-        Assert.Equal(1, oldView.Count);
+        Assert.Single(oldView);
 
         source.Source = new List<TestPerson> { new("Zoe", 44, "Support") };
         firstSource.Add(new TestPerson("Bob", 25, "Sales"));
 
-        Assert.Equal(1, oldView.Count);
+        Assert.Single(oldView);
     }
 
     [Fact]

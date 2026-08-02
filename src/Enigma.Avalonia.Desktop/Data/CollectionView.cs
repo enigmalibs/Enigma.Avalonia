@@ -15,7 +15,15 @@ namespace Enigma.Avalonia.Desktop.Data;
 /// Implements <see cref="INotifyCollectionChanged"/> and <see cref="INotifyPropertyChanged"/> so
 /// that bound controls update automatically when the view is refreshed.
 /// </summary>
-public class CollectionView : IEnumerable, INotifyCollectionChanged, INotifyPropertyChanged
+/// <remarks>
+/// The view is also a read-only <see cref="IList"/>. That is not decoration: Avalonia's
+/// <c>ItemsSourceView</c> rejects any collection that raises <see cref="INotifyCollectionChanged"/>
+/// without implementing <see cref="IList"/>, so without it a view could never be assigned to
+/// <c>ItemsControl.ItemsSource</c> — the one thing it exists for. Every mutating member throws
+/// <see cref="NotSupportedException"/>: a view is projected from its source, and the way to change
+/// it is to change the source or the filter, sort and group descriptions.
+/// </remarks>
+public class CollectionView : IList, INotifyCollectionChanged, INotifyPropertyChanged
 {
     private static readonly ConcurrentDictionary<(Type, string), Func<object, object?>> _accessorCache = new();
 
@@ -71,6 +79,32 @@ public class CollectionView : IEnumerable, INotifyCollectionChanged, INotifyProp
 
     /// <summary>Gets a value indicating whether the view contains no items.</summary>
     public bool IsEmpty => _view.Count == 0;
+
+    /// <summary>Gets a value indicating whether the view can be modified. Always <see langword="true"/>.</summary>
+    public bool IsReadOnly => true;
+
+    /// <summary>Gets a value indicating whether the view has a fixed size. Always <see langword="false"/>.</summary>
+    /// <remarks>
+    /// A view's length follows its source and its filter, so it is not fixed — but it is still not
+    /// the caller's to change, which <see cref="IsReadOnly"/> is what states.
+    /// </remarks>
+    public bool IsFixedSize => false;
+
+    /// <summary>Gets a value indicating whether access to the view is synchronized. Always <see langword="false"/>.</summary>
+    public bool IsSynchronized => false;
+
+    /// <summary>Gets an object that can be used to synchronize access to the view.</summary>
+    public object SyncRoot { get; } = new();
+
+    /// <summary>Gets the item at the given position in the view.</summary>
+    /// <param name="index">The zero-based position, in the view's filtered and sorted order.</param>
+    /// <returns>The item at that position.</returns>
+    /// <exception cref="NotSupportedException">Thrown on any attempt to set an item.</exception>
+    public object? this[int index]
+    {
+        get => _view[index];
+        set => throw new NotSupportedException("A CollectionView is a read-only projection of its source.");
+    }
 
     /// <summary>
     /// Reapplies filtering, sorting, and grouping to the source collection and raises
@@ -168,6 +202,52 @@ public class CollectionView : IEnumerable, INotifyCollectionChanged, INotifyProp
     /// <summary>Returns an enumerator that iterates over the filtered and sorted items in the view.</summary>
     /// <returns>An enumerator for the current view.</returns>
     public IEnumerator GetEnumerator() => _view.GetEnumerator();
+
+    /// <summary>Determines whether the given item is currently in the view.</summary>
+    /// <param name="value">The item to look for.</param>
+    /// <returns><see langword="true"/> when the item survived the current filter.</returns>
+    public bool Contains(object? value) => value is not null && _view.Contains(value);
+
+    /// <summary>Returns the position of the given item in the view.</summary>
+    /// <param name="value">The item to look for.</param>
+    /// <returns>The zero-based position, or -1 when the item is not in the view.</returns>
+    public int IndexOf(object? value) => value is null ? -1 : _view.IndexOf(value);
+
+    /// <summary>Copies the view's items into an array.</summary>
+    /// <param name="array">The destination array.</param>
+    /// <param name="index">The position in <paramref name="array"/> to start writing at.</param>
+    public void CopyTo(Array array, int index) => ((ICollection)_view).CopyTo(array, index);
+
+    /// <summary>Not supported: a view is projected from its source.</summary>
+    /// <param name="value">Ignored.</param>
+    /// <returns>Never returns.</returns>
+    /// <exception cref="NotSupportedException">Always thrown. Add to the source collection instead.</exception>
+    public int Add(object? value) =>
+        throw new NotSupportedException("Add to the source collection; the view follows it.");
+
+    /// <summary>Not supported: a view is projected from its source.</summary>
+    /// <exception cref="NotSupportedException">Always thrown. Clear the source collection instead.</exception>
+    public void Clear() =>
+        throw new NotSupportedException("Clear the source collection; the view follows it.");
+
+    /// <summary>Not supported: the view's order comes from its sort descriptions.</summary>
+    /// <param name="index">Ignored.</param>
+    /// <param name="value">Ignored.</param>
+    /// <exception cref="NotSupportedException">Always thrown. Insert into the source collection instead.</exception>
+    public void Insert(int index, object? value) =>
+        throw new NotSupportedException("Insert into the source collection; the view follows it.");
+
+    /// <summary>Not supported: a view is projected from its source.</summary>
+    /// <param name="value">Ignored.</param>
+    /// <exception cref="NotSupportedException">Always thrown. Remove from the source collection, or filter it out.</exception>
+    public void Remove(object? value) =>
+        throw new NotSupportedException("Remove from the source collection, or exclude the item with Filter.");
+
+    /// <summary>Not supported: a view is projected from its source.</summary>
+    /// <param name="index">Ignored.</param>
+    /// <exception cref="NotSupportedException">Always thrown. Remove from the source collection, or filter it out.</exception>
+    public void RemoveAt(int index) =>
+        throw new NotSupportedException("Remove from the source collection, or exclude the item with Filter.");
 
     private void OnSourceCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => Refresh();
 

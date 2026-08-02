@@ -66,7 +66,7 @@ public sealed class CollectionViewNotificationTests
         source.Clear();
 
         Assert.True(view.IsEmpty);
-        Assert.Equal(0, view.Count);
+        Assert.Empty(view);
     }
 
     /// <summary>

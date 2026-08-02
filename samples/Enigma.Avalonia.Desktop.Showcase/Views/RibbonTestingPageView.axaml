@@ -1,0 +1,164 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:ribbon="using:Enigma.Avalonia.Desktop.Controls.Ribbon"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.RibbonTestingPageView"
+             x:DataType="vm:RibbonTestingPageViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="TextBlock.hint">
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+    <!-- One state line per tracked value, under the status readout. -->
+    <Style Selector="TextBlock.state">
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+  </UserControl.Styles>
+
+  <!-- The ribbon docks to the top and the page content takes what is left, which is how a ribbon is
+       meant to sit in a window: it spans the full width and never scrolls with the content. -->
+  <DockPanel>
+
+    <ribbon:Ribbon DockPanel.Dock="Top"
+                   SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+
+      <ribbon:RibbonTab Header="Home">
+        <ribbon:RibbonGroup Header="File">
+          <ribbon:RibbonButton Header="New"
+                               IconData="{ei:IconGeometry FileText}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="New file created" />
+          <ribbon:RibbonButton Header="Open"
+                               IconData="{ei:IconGeometry FolderOpen}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Open file dialog" />
+          <ribbon:RibbonButton Header="Save"
+                               IconData="{ei:IconGeometry FloppyDisk}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="File saved" />
+        </ribbon:RibbonGroup>
+
+        <ribbon:RibbonGroup Header="Clipboard">
+          <ribbon:RibbonButton Header="Cut"
+                               IconData="{ei:IconGeometry Scissors}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Cut to clipboard" />
+          <ribbon:RibbonButton Header="Copy"
+                               IconData="{ei:IconGeometry Copy}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Copied to clipboard" />
+          <!-- A drop-down button holds RibbonMenuItems rather than Controls: the menu is built by the
+               control's own template, so the items are plain AvaloniaObjects with a command each. -->
+          <ribbon:RibbonDropDownButton Header="Paste"
+                                       IconData="{ei:IconGeometry Clipboard}">
+            <ribbon:RibbonMenuItem Header="Paste"
+                                   IconData="{ei:IconGeometry Clipboard}"
+                                   Command="{Binding RecordActionCommand}"
+                                   CommandParameter="Pasted from clipboard" />
+            <ribbon:RibbonMenuItem Header="Paste Special"
+                                   IconData="{ei:IconGeometry ClipboardText}"
+                                   Command="{Binding RecordActionCommand}"
+                                   CommandParameter="Pasted without formatting" />
+          </ribbon:RibbonDropDownButton>
+        </ribbon:RibbonGroup>
+
+        <ribbon:RibbonGroup Header="Edit">
+          <ribbon:RibbonButton Header="Undo"
+                               IconData="{ei:IconGeometry ArrowArcLeft}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Undo" />
+          <ribbon:RibbonButton Header="Redo"
+                               IconData="{ei:IconGeometry ArrowArcRight}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Redo" />
+        </ribbon:RibbonGroup>
+
+        <ribbon:RibbonGroup Header="Format">
+          <!-- IsChecked is TwoWay by default on RibbonToggleButton, and the control writes it before
+               it invokes Command — so the handler reads the new state rather than computing it. -->
+          <ribbon:RibbonToggleButton Header="Bold"
+                                     IconData="{ei:IconGeometry TextB}"
+                                     IsChecked="{Binding IsBoldActive}"
+                                     Command="{Binding ToggleBoldCommand}" />
+          <ribbon:RibbonToggleButton Header="Italic"
+                                     IconData="{ei:IconGeometry TextItalic}"
+                                     IsChecked="{Binding IsItalicActive}"
+                                     Command="{Binding ToggleItalicCommand}" />
+        </ribbon:RibbonGroup>
+      </ribbon:RibbonTab>
+
+      <ribbon:RibbonTab Header="Insert">
+        <ribbon:RibbonGroup Header="Elements">
+          <ribbon:RibbonButton Header="Image"
+                               IconData="{ei:IconGeometry Image}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Insert image" />
+          <ribbon:RibbonButton Header="Table"
+                               IconData="{ei:IconGeometry GridNine}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Insert table" />
+          <ribbon:RibbonButton Header="Link"
+                               IconData="{ei:IconGeometry Link}"
+                               Command="{Binding RecordActionCommand}"
+                               CommandParameter="Insert link" />
+        </ribbon:RibbonGroup>
+      </ribbon:RibbonTab>
+
+      <ribbon:RibbonTab Header="Export">
+        <ribbon:RibbonGroup Header="Export">
+          <ribbon:RibbonDropDownButton Header="Export As"
+                                       IconData="{ei:IconGeometry Download}">
+            <ribbon:RibbonMenuItem Header="Export as PDF"
+                                   IconData="{ei:IconGeometry FilePdf}"
+                                   Command="{Binding RecordActionCommand}"
+                                   CommandParameter="Exported as PDF" />
+            <ribbon:RibbonMenuItem Header="Export as CSV"
+                                   IconData="{ei:IconGeometry FileCsv}"
+                                   Command="{Binding RecordActionCommand}"
+                                   CommandParameter="Exported as CSV" />
+            <ribbon:RibbonMenuItem Header="Export as JSON"
+                                   IconData="{ei:IconGeometry FileCode}"
+                                   Command="{Binding RecordActionCommand}"
+                                   CommandParameter="Exported as JSON" />
+          </ribbon:RibbonDropDownButton>
+        </ribbon:RibbonGroup>
+      </ribbon:RibbonTab>
+
+    </ribbon:Ribbon>
+
+    <ScrollViewer>
+      <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+        <TextBlock Text="Ribbon"
+                   FontSize="24"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource EnigmaForegroundBrush}" />
+        <TextBlock Classes="hint"
+                   Text="Three tabs of grouped commands. Buttons and menu items share one command and identify themselves through CommandParameter; the two toggles own their state and bind IsChecked two-way." />
+
+        <Border Background="{DynamicResource EnigmaSurfaceBrush}"
+                BorderBrush="{DynamicResource EnigmaBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="16">
+          <StackPanel Spacing="8">
+            <TextBlock Text="{Binding StatusText, StringFormat='Last action: {0}'}"
+                       FontWeight="SemiBold"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource EnigmaForegroundBrush}" />
+            <StackPanel Orientation="Horizontal" Spacing="20">
+              <TextBlock Classes="state" Text="{Binding IsBoldActive, StringFormat='Bold: {0}'}" />
+              <TextBlock Classes="state" Text="{Binding IsItalicActive, StringFormat='Italic: {0}'}" />
+              <TextBlock Classes="state" Text="{Binding SelectedTabIndex, StringFormat='Tab index: {0}'}" />
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+  </DockPanel>
+
+</UserControl>

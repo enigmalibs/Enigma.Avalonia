@@ -17,15 +17,20 @@
 
     <!-- Deliberately NOT set: GenerateDocumentationFile. CS1591 exists to cover packed API surface
          and this project packs nothing; enabling it would demand XML docs on every page ViewModel. -->
+
+    <!-- Gives the built Windows .exe its icon in Explorer and the taskbar, even when the app is not
+         running. It is Windows-only and covers a different surface from the window's own
+         Icon="/Assets/app.ico" — that one is what every platform shows at run time. Same file, both
+         places. -->
+    <ApplicationIcon>Assets/app.ico</ApplicationIcon>
   </PropertyGroup>
 
-  <!-- FEATURE-57C8 adds the app's art assets here. The glob is declared now so the assets land in a
-       project that already routes them correctly; an empty glob is a no-op. -->
+  <!-- The app's art assets, addressable as avares:// URIs and as /Assets/... window icons. -->
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
-  <!-- Read by the generic host that FEATURE-57C8 PHASE01 wires up (ShowcaseOptions). -->
+  <!-- Read by the generic host at startup and bound to ShowcaseOptions. -->
   <ItemGroup>
     <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

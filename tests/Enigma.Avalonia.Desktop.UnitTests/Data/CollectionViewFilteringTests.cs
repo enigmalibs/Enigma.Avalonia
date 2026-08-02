@@ -95,7 +95,7 @@ public sealed class CollectionViewFilteringTests
 
         view.Refresh();
 
-        Assert.Equal(0, view.Count);
+        Assert.Empty(view);
         Assert.True(view.IsEmpty);
         Assert.Empty(ViewProjection.Names(view));
     }
