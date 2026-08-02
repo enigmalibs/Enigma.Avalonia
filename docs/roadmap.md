@@ -11,7 +11,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-28E8 | Repository & solution scaffolding (root config, .slnx, project skeletons) | DONE        | docs/plan/FEATURE-28E8.md |
 | - PHASE01    | Root configuration & solution file                                       | DONE        | (in FEATURE-28E8.md)      |
 | - PHASE02    | Three buildable project skeletons + smoke test                           | DONE        | (in FEATURE-28E8.md)      |
-| FEATURE-22A5 | Control library — Enigma.Avalonia.Desktop                                | IN PROGRESS | docs/plan/FEATURE-22A5.md |
+| FEATURE-22A5 | Control library — Enigma.Avalonia.Desktop                                | DONE        | docs/plan/FEATURE-22A5.md |
 | - PHASE01    | Theme foundation & Enigma* resource keys                                 | DONE        | (in FEATURE-22A5.md)      |
 | - PHASE02    | CollectionView data subsystem                                            | DONE        | (in FEATURE-22A5.md)      |
 | - PHASE03    | Editors (16 controls, Enigma.Core encoding)                              | DONE        | (in FEATURE-22A5.md)      |
@@ -19,7 +19,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | - PHASE05    | ContentDialog, Overlay, InfoBar + their services                         | DONE        | (in FEATURE-22A5.md)      |
 | - PHASE06    | Settings cards + file/folder dialog services                             | DONE        | (in FEATURE-22A5.md)      |
 | - PHASE07    | Ribbon                                                                   | DONE        | (in FEATURE-22A5.md)      |
-| - PHASE08    | Docking                                                                  | TODO        | (in FEATURE-22A5.md)      |
+| - PHASE08    | Docking                                                                  | DONE        | (in FEATURE-22A5.md)      |
 | FEATURE-6EB0 | Test suite (headless + unit)                                             | TODO        | docs/plan/FEATURE-6EB0.md |
 | - PHASE01    | CollectionView & service-contract unit tests                             | TODO        | (in FEATURE-6EB0.md)      |
 | - PHASE02    | Headless control smoke & resource-key tests                              | TODO        | (in FEATURE-6EB0.md)      |

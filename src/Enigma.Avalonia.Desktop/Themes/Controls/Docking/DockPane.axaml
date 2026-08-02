@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Docking">
+
+    <ControlTheme x:Key="{x:Type controls:DockPane}" TargetType="controls:DockPane">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Content="{Binding PaneContent, RelativeSource={RelativeSource TemplatedParent}}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

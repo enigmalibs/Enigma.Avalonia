@@ -51,6 +51,15 @@
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonButton.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonToggleButton.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonDropDownButton.axaml" />
+
+    <!-- Docking. Listed innermost-first, the reverse of the Ribbon block above, because that is the
+         order in which the family composes at runtime: DockingHost builds a tree of
+         DockSplitContainers and DockTabGroups, and a DockTabGroup renders DockPanes. As elsewhere,
+         the ControlTheme keys are per-type, so this order is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockPane.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockTabGroup.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockSplitContainer.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Docking/DockingHost.axaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

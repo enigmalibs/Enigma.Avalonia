@@ -1,6 +1,6 @@
 # FEATURE-22A5 — Control library: Enigma.Avalonia.Desktop
 
-**Status:** IN PROGRESS · 8 phases
+**Status:** DONE · 8 phases
 **Branches:** `feature/feature-22a5-phaseNN-<area>` (one per phase)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2 — that section wins over anything here.
 
@@ -240,7 +240,7 @@ Port `Controls/Ribbon/` (7 files: `Ribbon.cs`, `RibbonTab.cs`, `RibbonGroup.cs`,
 popup all still template correctly (verified by eye once FEATURE-57C8 PHASE03 exists, or in a scratch
 harness — say which); zero `Carbon` hits.
 
-## PHASE08 — Docking — TODO
+## PHASE08 — Docking — DONE
 
 Port `Controls/Docking/` (6 files: `DockingHost.cs`, `DockPane.cs`, `DockTabGroup.cs`,
 `DockSplitContainer.cs`, `DockLayoutNode.cs`, `DockPosition.cs`) and all 4
@@ -252,16 +252,27 @@ one sweep.
 
 Append all four includes to `Fluent.axaml`.
 
-**Acceptance:** build clean; 10 files present; `Fluent.axaml` now merges exactly 22 dictionaries
-(2 foundation + 20 control templates) and none of them is a `CalendarSchedule` or `Displayer2D`
+**Acceptance:** build clean; 10 files present; `Fluent.axaml` now merges exactly 21 dictionaries
+(2 foundation + 19 control templates) and none of them is a `CalendarSchedule` or `Displayer2D`
 entry; zero `Carbon` hits anywhere under `src/`.
+
+> **Count corrected during PHASE08** (arithmetic only — no scope change; first flagged in
+> `docs/done/FEATURE-22A5-PHASE07.md`). This criterion originally read "merges exactly 22
+> dictionaries (2 foundation + 20 control templates)". **22** is the `.axaml` **file** count, which
+> is correct and includes `Fluent.axaml` itself; the number of dictionaries it *merges* is **21**.
+> Verified on completion: 21 `<ResourceInclude>` elements, 22 `.axaml` files.
 
 ---
 
 ## 5. Item-level acceptance criteria
 
-- `src/Enigma.Avalonia.Desktop/` contains **62 `.cs`** files (40 controls + 7 data + 15 services) and
+- `src/Enigma.Avalonia.Desktop/` contains **63 `.cs`** files (40 controls + 7 data + 16 services) and
   **22 `.axaml`** files.
+
+  > **Count corrected during PHASE08** (arithmetic only — no scope change; first flagged in
+  > `docs/done/FEATURE-22A5-PHASE07.md`). This originally read "62 `.cs` (40 controls + 7 data +
+  > 15 services)". The control count (40) and data count (7) were right; the service count is **16**
+  > in the port source and on disk, so the total is **63**. No file was added or dropped to reach it.
 - `dotnet build Enigma.Avalonia.slnx -c Release` succeeds for `net8.0` and `net10.0` with zero
   warnings, XAML `AVLN*` diagnostics included.
 - `grep -ri carbon src/` returns nothing.
