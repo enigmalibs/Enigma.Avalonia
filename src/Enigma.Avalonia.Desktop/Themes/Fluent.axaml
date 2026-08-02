@@ -40,6 +40,17 @@
          presentation-only; the plain card is listed first because the expander is its variant. -->
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/SettingsCard.axaml" />
     <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/SettingsCardExpander.axaml" />
+
+    <!-- Ribbon. The family nests — Ribbon hosts RibbonTab, which hosts RibbonGroup, which hosts the
+         three button types — so the dictionaries are listed outermost-first; RibbonMenuItem has no
+         theme of its own because RibbonDropDownButton renders its items with an inline DataTemplate.
+         As elsewhere, the ControlTheme keys are per-type, so this order is for readability. -->
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/Ribbon.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonTab.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonGroup.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonButton.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonToggleButton.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Controls/Ribbon/RibbonDropDownButton.axaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

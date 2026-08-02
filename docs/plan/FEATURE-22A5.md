@@ -228,7 +228,7 @@ Append both includes to `Fluent.axaml`.
 
 **Acceptance:** build clean; 8 files present; zero `Carbon` hits.
 
-## PHASE07 — Ribbon — TODO
+## PHASE07 — Ribbon — DONE
 
 Port `Controls/Ribbon/` (7 files: `Ribbon.cs`, `RibbonTab.cs`, `RibbonGroup.cs`, `RibbonButton.cs`,
 `RibbonToggleButton.cs`, `RibbonDropDownButton.cs`, `RibbonMenuItem.cs`) and all 6
