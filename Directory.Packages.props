@@ -1,0 +1,54 @@
+<Project>
+
+  <!-- Central Package Management: every PackageReference version in the solution is pinned here,
+       so shared dependencies cannot drift between projects. Projects reference packages WITHOUT a
+       Version attribute (<PackageReference Include="Foo" />); the version comes from the matching
+       <PackageVersion> below. -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!-- Avalonia ecosystem — version-coupled: ALWAYS bumped together, never one package at a time.
+       Mixing versions within the set breaks the build, so the whole group moves as a unit.
+       12.1.1 is the current stable release and satisfies Enigma.Icons.Avalonia 1.0.0's published
+       floor of Avalonia 12.1.0.
+       AvaloniaUI.DiagnosticsSupport is versioned independently of Avalonia but belongs to the same
+       coupled set. There is NO Avalonia.Diagnostics package for Avalonia 12 — never reintroduce
+       that id. -->
+  <ItemGroup>
+    <PackageVersion Include="Avalonia" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.1" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
+  </ItemGroup>
+
+  <!-- Control library (src/Enigma.Avalonia.Desktop). These two flow transitively to every consumer
+       of the published package, so a change here is a compatibility decision, not housekeeping.
+       Enigma.Core brings BouncyCastle.Cryptography with it; it backs the Base64 and hexadecimal
+       byte-array editors. -->
+  <ItemGroup>
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="Enigma.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <!-- Showcase only (samples/Enigma.Avalonia.Desktop.Showcase) — the sample app is not packable, so
+       nothing here reaches a consumer of the control library.
+       LiveChartsCore is pinned to the exact prerelease the Charts page is written against; bumping
+       it is a deliberate decision, not a routine refresh. -->
+  <ItemGroup>
+    <PackageVersion Include="Enigma.Icons.Avalonia" Version="1.0.0" />
+    <PackageVersion Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.1.0-dev-365" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.10" />
+  </ItemGroup>
+
+  <!-- Tests — MTP-native. The runner comes from global.json; there is deliberately no
+       Microsoft.NET.Test.Sdk and no xunit.runner.visualstudio (VSTest-era boilerplate that breaks
+       the Microsoft Testing Platform). Avalonia.Headless.XUnit is xUnit v3-native and lives in the
+       coupled Avalonia group above. -->
+  <ItemGroup>
+    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+<Project>
+
+  <!-- Shared settings for every project in the solution. Package versions are
+       centralized separately in Directory.Packages.props (Central Package Management).
+       These properties must NOT be repeated in any .csproj. -->
+  <PropertyGroup>
+    <Authors>Josué Clément</Authors>
+    <Copyright>Copyright © 2026 Josué Clément</Copyright>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <!-- Explicit usings everywhere: every file declares its own using directives. -->
+    <ImplicitUsings>disable</ImplicitUsings>
+    <!-- Warnings are treated as errors across the whole solution (library, showcase, tests).
+         Caveat worth knowing: Avalonia's XAML compiler emits its AVLN* diagnostics from an
+         MSBuild task, and TreatWarningsAsErrors does NOT promote those — a build can report
+         "Build succeeded" with AVLN warnings. Always read the warning count on a project that
+         compiles .axaml; never trust the exit code alone. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Enforce the .editorconfig code-style rules (the warning-level subset) at build time. -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+</Project>

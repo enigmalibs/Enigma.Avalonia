@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.DummyPageView"
+             x:DataType="vm:DummyPageViewModel">
+
+  <StackPanel Margin="32" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+    <StackPanel Orientation="Horizontal" Spacing="14">
+      <ei:Icon Kind="Question"
+               Size="30"
+               VerticalAlignment="Center"
+               Foreground="{DynamicResource EnigmaAccentBrush}" />
+      <TextBlock Text="Unlisted page"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 VerticalAlignment="Center"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+    </StackPanel>
+
+    <TextBlock TextWrapping="Wrap"
+               Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+               Text="This Control has no navigation item. NavigateToAsync looked for one matching its type, found none, and cleared the rail's selection — so nothing on the left is highlighted while you are here." />
+
+    <TextBlock TextWrapping="Wrap"
+               Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+               Text="Pick any rail item to go back." />
+
+  </StackPanel>
+
+</UserControl>

@@ -1,6 +1,6 @@
 # FEATURE-6EB0 — Test suite (headless + unit)
 
-**Status:** TODO · 2 phases
+**Status:** DONE · 2 phases
 **Branches:** `feature/feature-6eb0-phase01-unit-tests`, `feature/feature-6eb0-phase02-headless-tests`
 **Depends on:** FEATURE-22A5 (all 8 phases)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -30,7 +30,7 @@ this item; it is not a port.
 - Pass `TestContext.Current.CancellationToken` into anything async; never write `async void` tests.
 - `ITestOutputHelper` comes from `Xunit` (there is no `Xunit.Abstractions` in v3).
 
-## 3. PHASE01 — CollectionView & service-contract unit tests — TODO
+## 3. PHASE01 — CollectionView & service-contract unit tests — DONE
 
 ### Steps
 
@@ -71,7 +71,7 @@ this item; it is not a port.
   against the port, the **test** is wrong, not the port. Record any such discovery in the completion
   doc instead of changing library code.
 
-## 4. PHASE02 — Headless control smoke & resource-key tests — TODO
+## 4. PHASE02 — Headless control smoke & resource-key tests — DONE
 
 ### Steps
 

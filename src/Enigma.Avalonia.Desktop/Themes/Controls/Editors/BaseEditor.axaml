@@ -1,0 +1,157 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:editors="using:Enigma.Avalonia.Desktop.Controls.Editors">
+
+  <ControlTheme x:Key="{x:Type editors:BaseEditor}" TargetType="editors:BaseEditor">
+    <Setter Property="FocusAdorner" Value="{x:Null}" />
+    <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundBrush}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource EnigmaForegroundBrush}" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource EnigmaSelectionBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource EnigmaBorderSubtleBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,6" />
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel>
+          <!-- Title above the border -->
+          <TextBlock x:Name="PART_Title"
+                     Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                     Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                     FontSize="12"
+                     Margin="0,0,0,4"
+                     IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+          <Border x:Name="PART_Border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}"
+                  Margin="1">
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+              <!-- Leading content -->
+              <ContentPresenter Grid.Column="0"
+                                x:Name="PART_LeadingContent"
+                                Content="{Binding LeadingContent, RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalAlignment="Center"
+                                Margin="8,0,0,0"
+                                IsVisible="{Binding LeadingContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+              <!-- Text area -->
+              <ScrollViewer Grid.Column="1"
+                            Cursor="IBeam"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Disabled">
+                <Panel Margin="{TemplateBinding Padding}">
+                  <TextBlock x:Name="PART_Watermark"
+                             Text="{TemplateBinding PlaceholderText}"
+                             Foreground="{DynamicResource EnigmaForegroundTertiaryBrush}"
+                             IsVisible="False"
+                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                             IsHitTestVisible="False" />
+                  <TextPresenter x:Name="PART_TextPresenter"
+                                 Text="{TemplateBinding Text, Mode=TwoWay}"
+                                 CaretBrush="{TemplateBinding CaretBrush}"
+                                 CaretIndex="{TemplateBinding CaretIndex}"
+                                 SelectionStart="{TemplateBinding SelectionStart}"
+                                 SelectionEnd="{TemplateBinding SelectionEnd}"
+                                 SelectionBrush="{TemplateBinding SelectionBrush}"
+                                 SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                                 TextAlignment="{TemplateBinding TextAlignment}"
+                                 TextWrapping="{TemplateBinding TextWrapping}"
+                                 PasswordChar="{TemplateBinding PasswordChar}"
+                                 RevealPassword="{TemplateBinding RevealPassword}"
+                                 LetterSpacing="{TemplateBinding LetterSpacing}"
+                                 LineHeight="{TemplateBinding LineHeight}"
+                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Panel>
+              </ScrollViewer>
+
+              <!-- Unit separator -->
+              <Rectangle Grid.Column="2"
+                         Width="1"
+                         VerticalAlignment="Stretch"
+                         Margin="0"
+                         Fill="{DynamicResource EnigmaBorderSubtleBrush}"
+                         IsVisible="{Binding Unit, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+              <!-- Unit label -->
+              <TextBlock Grid.Column="3"
+                         x:Name="PART_UnitLabel"
+                         Text="{Binding Unit, RelativeSource={RelativeSource TemplatedParent}}"
+                         Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                         FontSize="12"
+                         VerticalAlignment="Center"
+                         Margin="8,0,8,0"
+                         IsVisible="{Binding Unit, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+              <!-- Action content -->
+              <ContentPresenter Grid.Column="4"
+                                x:Name="PART_ActionContent"
+                                Cursor="Arrow"
+                                Content="{Binding ActionContent, RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalAlignment="Center"
+                                Margin="0,0,6,0"
+                                IsVisible="{Binding ActionContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            </Grid>
+          </Border>
+
+          <TextBlock x:Name="PART_ErrorMessage"
+                     Text="{Binding ValidationErrorMessage, RelativeSource={RelativeSource TemplatedParent}}"
+                     Foreground="{DynamicResource EnigmaErrorBrush}"
+                     FontSize="12"
+                     Margin="2,4,0,0"
+                     IsVisible="False" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+
+    <!-- Watermark visible when empty and not focused -->
+    <Style Selector="^:empty /template/ TextBlock#PART_Watermark">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <!-- Pointer over -->
+    <Style Selector="^:pointerover /template/ Border#PART_Border">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceHighBrush}" />
+    </Style>
+
+    <!-- Focus state (after pointerover so it wins) -->
+    <Style Selector="^:focus /template/ Border#PART_Border">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceLowBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaAccentBrush}" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="Margin" Value="0" />
+    </Style>
+    <Style Selector="^:focus-within /template/ Border#PART_Border">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceLowBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaAccentBrush}" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <!-- Error state -->
+    <Style Selector="^:error /template/ Border#PART_Border">
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaErrorBrush}" />
+    </Style>
+    <Style Selector="^:focus:error /template/ Border#PART_Border">
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaErrorBrush}" />
+    </Style>
+    <Style Selector="^:focus-within:error /template/ Border#PART_Border">
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaErrorBrush}" />
+    </Style>
+    <Style Selector="^:error /template/ TextBlock#PART_ErrorMessage">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <!-- Disabled state -->
+    <Style Selector="^:disabled">
+      <Setter Property="Opacity" Value="0.5" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

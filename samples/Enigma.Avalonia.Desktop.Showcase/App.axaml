@@ -1,0 +1,22 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!-- The library's single public theme entry point. It is a ResourceDictionary, so it is
+             merged as a ResourceInclude — a StyleInclude would be wrong. -->
+        <ResourceInclude Source="avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml" />
+        <!-- Showcase-local control themes, merged after the library's so they can read its brushes. -->
+        <ResourceInclude Source="avares://Enigma.Avalonia.Desktop.Showcase/Controls/ProgressOverlayCard.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

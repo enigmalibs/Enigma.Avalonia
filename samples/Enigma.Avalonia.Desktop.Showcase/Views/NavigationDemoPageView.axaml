@@ -1,0 +1,139 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:controls="using:Enigma.Avalonia.Desktop.Controls"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.NavigationDemoPageView"
+             x:DataType="vm:NavigationDemoPageViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="TextBlock.hint">
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+    <!-- The explanatory panels: a surface a step above the page background, with a border. -->
+    <Style Selector="Border.panel">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaBorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="12" />
+    </Style>
+    <!-- A fallback chain rather than one family: the showcase runs on all three desktop platforms
+         and none of them ships the same monospace font. -->
+    <Style Selector="Run.code">
+      <Setter Property="FontFamily" Value="Cascadia Mono,Consolas,SF Mono,Menlo,DejaVu Sans Mono,monospace" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaAccentBrush}" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="Navigation"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <TextBlock Classes="hint"
+                 Text="Changing page from code, and refusing to leave one. Both go through the same navigation service the rail uses." />
+
+      <controls:SettingsCardExpander Header="Navigating from code"
+                                     Description="NavigateToAsync takes any Control, listed on the rail or not"
+                                     IconData="{ei:IconGeometry Compass}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="hint"
+                     Text="After the page changes, the service looks for a navigation item whose PageType matches the Control. Watch the rail on the left as each of these runs." />
+
+          <controls:SettingsCard Header="Go to Settings"
+                                 Description="On the rail's footer — its item becomes the selected one"
+                                 IconData="{ei:IconGeometry Gear}"
+                                 Command="{Binding NavigateToSettingsCommand}" />
+
+          <controls:SettingsCard Header="Go to the unlisted page"
+                                 Description="No navigation item matches it — the rail's selection clears"
+                                 IconData="{ei:IconGeometry Question}"
+                                 Command="{Binding NavigateToUnlistedCommand}" />
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Cancelling a navigation"
+                                     Description="INavigationViewModel.OnDisappearingAsync guards unsaved work"
+                                     IconData="{ei:IconGeometry FileX}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="16">
+
+          <Border Classes="panel">
+            <StackPanel Spacing="8">
+              <TextBlock Text="Try it"
+                         FontWeight="SemiBold"
+                         Foreground="{DynamicResource EnigmaForegroundBrush}" />
+              <TextBlock Classes="hint">
+                <Run Text="1. Type something into the editor below." />
+                <LineBreak />
+                <Run Text="2. Pick any other page — from the rail, or with the buttons above." />
+                <LineBreak />
+                <Run Text="3. Choose " /><Run Text="Keep editing" FontWeight="SemiBold" /><Run Text=" and you stay here, with the rail snapped back to Navigation." />
+                <LineBreak />
+                <Run Text="4. Choose " /><Run Text="Discard changes" FontWeight="SemiBold" /><Run Text=" and the navigation completes." />
+              </TextBlock>
+            </StackPanel>
+          </Border>
+
+          <!-- The warning banner uses the theme's warning background and border, not the solid
+               warning brush: solid accent behind body text fails to stay readable in both variants. -->
+          <Border Background="{DynamicResource EnigmaWarningBackgroundBrush}"
+                  BorderBrush="{DynamicResource EnigmaWarningBorderBrush}"
+                  BorderThickness="1"
+                  CornerRadius="8"
+                  Padding="12"
+                  IsVisible="{Binding HasUnsavedChanges}">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <ei:Icon Kind="Warning"
+                       Size="18"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource EnigmaWarningBrush}" />
+              <TextBlock Text="This document has unsaved changes."
+                         FontWeight="SemiBold"
+                         VerticalAlignment="Center"
+                         Foreground="{DynamicResource EnigmaForegroundBrush}" />
+            </StackPanel>
+          </Border>
+
+          <StackPanel Spacing="8">
+            <TextBlock Text="Document"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource EnigmaForegroundBrush}" />
+            <TextBox Text="{Binding DocumentText, Mode=TwoWay}"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     MinHeight="120"
+                     PlaceholderText="Start typing to create unsaved changes..." />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <Button Content="Save" Command="{Binding SaveCommand}" />
+              <Button Content="Discard" Command="{Binding DiscardCommand}" />
+            </StackPanel>
+          </StackPanel>
+
+          <Border Classes="panel">
+            <StackPanel Spacing="8">
+              <TextBlock Text="How it works"
+                         FontWeight="SemiBold"
+                         Foreground="{DynamicResource EnigmaForegroundBrush}" />
+              <TextBlock Classes="hint">
+                <Run Text="This ViewModel implements " /><Run Classes="code" Text="INavigationViewModel" /><Run Text="." />
+                <LineBreak />
+                <Run Text="The service awaits " /><Run Classes="code" Text="OnDisappearingAsync()" /><Run Text=" before every departure and cancels the navigation when it returns " /><Run Classes="code" Text="false" /><Run Text=", restoring the previous rail selection." />
+                <LineBreak />
+                <Run Text="The matching " /><Run Classes="code" Text="OnAppearingAsync(parameter)" /><Run Text=" runs after the page is on screen, which is where a page would load what it needs." />
+              </TextBlock>
+            </StackPanel>
+          </Border>
+
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

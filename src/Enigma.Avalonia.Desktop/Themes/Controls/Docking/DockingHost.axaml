@@ -1,0 +1,24 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Docking">
+
+    <ControlTheme x:Key="{x:Type controls:DockingHost}" TargetType="controls:DockingHost">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel x:Name="PART_RootPanel" Background="Transparent">
+                    <ContentControl x:Name="PART_RootHost" />
+                    <Border x:Name="PART_DropOverlay"
+                            Background="#40007ACC"
+                            BorderBrush="#80007ACC"
+                            BorderThickness="2"
+                            CornerRadius="4"
+                            IsVisible="False"
+                            IsHitTestVisible="False"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

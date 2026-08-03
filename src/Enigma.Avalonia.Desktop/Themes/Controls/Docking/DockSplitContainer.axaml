@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Docking">
+
+    <ControlTheme x:Key="{x:Type controls:DockSplitContainer}" TargetType="controls:DockSplitContainer">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid x:Name="PART_Grid">
+                    <ContentControl x:Name="PART_First"
+                                    Content="{Binding First, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <GridSplitter x:Name="PART_Splitter"
+                                  Background="{DynamicResource EnigmaBorderSubtleBrush}"
+                                  MinWidth="4"
+                                  MinHeight="4" />
+                    <ContentControl x:Name="PART_Second"
+                                    Content="{Binding Second, RelativeSource={RelativeSource TemplatedParent}}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

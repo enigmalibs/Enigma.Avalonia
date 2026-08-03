@@ -1,0 +1,32 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Enigma.Avalonia.Desktop.Controls.Ribbon">
+
+  <ControlTheme x:Key="{x:Type controls:RibbonGroup}" TargetType="controls:RibbonGroup">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border BorderBrush="{DynamicResource EnigmaBorderSubtleBrush}"
+                BorderThickness="0,0,1,0"
+                Padding="6,4,6,2">
+          <DockPanel>
+            <TextBlock DockPanel.Dock="Bottom"
+                       Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
+                       FontSize="10"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource EnigmaForegroundTertiaryBrush}"
+                       Margin="0,2,0,0"
+                       IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource TemplatedParent}}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" Spacing="2" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+          </DockPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

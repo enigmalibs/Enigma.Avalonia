@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:docking="using:Enigma.Avalonia.Desktop.Controls.Docking"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.DockingTestingPageView"
+             x:DataType="vm:DockingTestingPageViewModel">
+
+  <UserControl.DataTemplates>
+    <!-- A pane's Content is plain object?, so this template is the only thing that knows what is in
+         one. The docking controls carry it around unchanged as the pane is dragged between groups. -->
+    <DataTemplate DataType="vm:PaneContent">
+      <ScrollViewer>
+        <StackPanel Margin="16" Spacing="10">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <ei:Icon Kind="{Binding Icon}"
+                     Size="18"
+                     VerticalAlignment="Center"
+                     Foreground="{DynamicResource EnigmaAccentBrush}" />
+            <TextBlock Text="{Binding Title}"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource EnigmaForegroundBrush}" />
+          </StackPanel>
+          <TextBlock Text="{Binding Description}"
+                     TextWrapping="Wrap"
+                     Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+        </StackPanel>
+      </ScrollViewer>
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <DockPanel>
+
+    <StackPanel DockPanel.Dock="Top" Margin="24,24,24,16" Spacing="6">
+      <TextBlock Text="Docking"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <TextBlock TextWrapping="Wrap"
+                 Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                 Text="Drag a pane's tab over another group: the drop overlay shows where it will land — an edge splits that group, the centre joins its tabs. Drag the splitters to resize. The whole layout below came from a model the ViewModel built, not from XAML." />
+    </StackPanel>
+
+    <!-- The host fills the rest of the page: a docking layout needs room, and it manages its own
+         internal scrolling per pane. -->
+    <Border Margin="24,0,24,24"
+            BorderBrush="{DynamicResource EnigmaBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            ClipToBounds="True">
+      <docking:DockingHost LayoutRoot="{Binding RootLayout}" />
+    </Border>
+
+  </DockPanel>
+
+</UserControl>

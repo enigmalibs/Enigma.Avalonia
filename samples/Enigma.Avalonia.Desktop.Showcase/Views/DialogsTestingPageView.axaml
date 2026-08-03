@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:controls="using:Enigma.Avalonia.Desktop.Controls"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.DialogsTestingPageView"
+             x:DataType="vm:DialogsTestingPageViewModel">
+
+  <UserControl.Styles>
+    <!-- The result panel each section prints its paths into. -->
+    <Style Selector="Border.result">
+      <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EnigmaBorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="Padding" Value="12" />
+      <Setter Property="Margin" Value="0,8,0,0" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="File and Folder Dialogs"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <!-- The pickers are the platform's own; what the library adds is reaching them from a ViewModel
+           that never sees the window. -->
+      <TextBlock Text="The file and folder picker services, driven from a ViewModel with no reference to the window."
+                 TextWrapping="Wrap"
+                 Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+
+      <controls:SettingsCardExpander Header="File Dialogs"
+                                     Description="Open and save file dialogs"
+                                     IconData="{ei:IconGeometry File}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="12">
+          <TextBlock Text="File dialogs allow users to select or save files with optional filters."
+                     TextWrapping="Wrap"
+                     Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+
+          <TextBlock Text="Open Files"
+                     FontWeight="SemiBold"
+                     Margin="0,8,0,0" />
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="Open Single File" Command="{Binding OpenSingleFileCommand}" />
+            <Button Content="Open Multiple Files" Command="{Binding OpenMultipleFilesCommand}" />
+            <Button Content="Open Text Files (.txt, .md)" Command="{Binding OpenTextFilesCommand}" />
+          </StackPanel>
+
+          <TextBlock Text="Save Files"
+                     FontWeight="SemiBold"
+                     Margin="0,8,0,0" />
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="Save File" Command="{Binding SaveFileCommand}" />
+            <Button Content="Save with File Type" Command="{Binding SaveFileWithExtensionCommand}" />
+          </StackPanel>
+
+          <Border Classes="result"
+                  IsVisible="{Binding FileDialogResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <TextBlock Text="{Binding FileDialogResult}"
+                       TextWrapping="Wrap"
+                       FontFamily="monospace"
+                       FontSize="12" />
+          </Border>
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Folder Dialogs"
+                                     Description="Select folders for various operations"
+                                     IconData="{ei:IconGeometry Folder}"
+                                     IsExpanded="True">
+        <StackPanel Spacing="12">
+          <TextBlock Text="Folder dialogs allow users to select directories."
+                     TextWrapping="Wrap"
+                     Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="Open Single Folder" Command="{Binding OpenSingleFolderCommand}" />
+            <Button Content="Open Multiple Folders" Command="{Binding OpenMultipleFoldersCommand}" />
+          </StackPanel>
+
+          <Border Classes="result"
+                  IsVisible="{Binding FolderDialogResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <TextBlock Text="{Binding FolderDialogResult}"
+                       TextWrapping="Wrap"
+                       FontFamily="monospace"
+                       FontSize="12" />
+          </Border>
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

@@ -1,0 +1,128 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ei="https://github.com/josueclement/Enigma.Icons"
+             xmlns:vm="using:Enigma.Avalonia.Desktop.Showcase.ViewModels"
+             xmlns:controls="using:Enigma.Avalonia.Desktop.Controls"
+             x:Class="Enigma.Avalonia.Desktop.Showcase.Views.SettingsPageView"
+             x:DataType="vm:SettingsPageViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="TextBlock.hint">
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundSecondaryBrush}" />
+    </Style>
+    <Style Selector="TextBlock.section">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Margin" Value="0,8,0,0" />
+      <Setter Property="Foreground" Value="{DynamicResource EnigmaForegroundBrush}" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer>
+    <StackPanel Margin="24" Spacing="16" MaxWidth="840" HorizontalAlignment="Left">
+
+      <TextBlock Text="Settings"
+                 FontSize="24"
+                 FontWeight="SemiBold"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+      <TextBlock Classes="hint"
+                 Text="Settings cards, and the switch that changes the whole application's theme. Flip it and watch every page — including the charts — follow." />
+
+      <TextBlock Classes="section" Text="Appearance" />
+
+      <!-- The one card that matters: every Enigma* brush is defined per theme variant, so assigning
+           RequestedThemeVariant re-resolves the entire window in one step. -->
+      <controls:SettingsCard Header="Theme"
+                             Description="Switch the application between its dark and light variants"
+                             IconData="{ei:IconGeometry Moon}">
+        <ToggleSwitch IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                      OnContent="Dark"
+                      OffContent="Light" />
+      </controls:SettingsCard>
+
+      <controls:SettingsCard Header="Region"
+                             Description="A card hosting a combo box"
+                             IconData="{ei:IconGeometry Globe}">
+        <ComboBox ItemsSource="{Binding Regions}"
+                  SelectedItem="{Binding SelectedRegion, Mode=TwoWay}"
+                  PlaceholderText="Select a region"
+                  MinWidth="170" />
+      </controls:SettingsCard>
+
+      <controls:SettingsCard Header="Notifications"
+                             Description="A card hosting a button"
+                             IconData="{ei:IconGeometry Bell}">
+        <Button Content="Configure" Command="{Binding ConfigureNotificationsCommand}" />
+      </controls:SettingsCard>
+
+      <controls:SettingsCard Header="Auto-save"
+                             Description="A card hosting a toggle button whose label follows its state"
+                             IconData="{ei:IconGeometry FloppyDisk}">
+        <ToggleButton Content="{Binding AutoSaveButtonText}"
+                      IsChecked="{Binding IsAutoSaveEnabled, Mode=TwoWay}"
+                      MinWidth="100" />
+      </controls:SettingsCard>
+
+      <TextBlock Classes="section" Text="Clickable rows" />
+      <TextBlock Classes="hint"
+                 Text="A card with a Command and no content is the whole row: it takes the pointer, shows a chevron, and invokes on click." />
+
+      <controls:SettingsCard Header="Language"
+                             Description="Set your preferred language"
+                             IconData="{ei:IconGeometry Translate}"
+                             Command="{Binding CardClickedCommand}"
+                             CommandParameter="Language" />
+
+      <controls:SettingsCard Header="Keyboard shortcuts"
+                             Description="Review and rebind the application's shortcuts"
+                             IconData="{ei:IconGeometry Keyboard}"
+                             Command="{Binding CardClickedCommand}"
+                             CommandParameter="Keyboard shortcuts" />
+
+      <controls:SettingsCard Header="Updates"
+                             Description="Check for application updates"
+                             IconData="{ei:IconGeometry ArrowClockwise}"
+                             Command="{Binding CardClickedCommand}"
+                             CommandParameter="Updates" />
+
+      <TextBlock Classes="section" Text="Expanding rows" />
+
+      <controls:SettingsCardExpander Header="About this showcase"
+                                     Description="What this application is"
+                                     IconData="{ei:IconGeometry Info}">
+        <StackPanel Spacing="8">
+          <TextBlock Classes="hint"
+                     Text="Enigma.Avalonia.Desktop is a control library for Avalonia 12 desktop applications: typed editors, a navigation rail, a ribbon, dockable panes, settings cards, content dialogs, overlays, info bars, and a CollectionView data layer — each with a control theme that ships in the package." />
+          <TextBlock Classes="hint"
+                     Text="This application is the library's showcase. Every page is a worked example, and its source is the reference for wiring the library into your own application: merge one resource dictionary, register the services, and bind." />
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Preferences"
+                                     Description="An expander holding a small form"
+                                     IconData="{ei:IconGeometry Gear}">
+        <StackPanel Spacing="12">
+          <TextBox PlaceholderText="Display name" />
+          <CheckBox Content="Show notifications on the desktop" />
+          <CheckBox Content="Restore the last page at startup" />
+        </StackPanel>
+      </controls:SettingsCardExpander>
+
+      <controls:SettingsCardExpander Header="Advanced"
+                                     Description="An expander with no icon, for comparison">
+        <TextBlock Classes="hint"
+                   Text="IconData is optional on both card types — the row simply reclaims the space." />
+      </controls:SettingsCardExpander>
+
+      <TextBlock Text="{Binding LastAction}"
+                 IsVisible="{Binding LastAction, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                 FontWeight="SemiBold"
+                 TextWrapping="Wrap"
+                 Margin="0,8,0,0"
+                 Foreground="{DynamicResource EnigmaForegroundBrush}" />
+
+    </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

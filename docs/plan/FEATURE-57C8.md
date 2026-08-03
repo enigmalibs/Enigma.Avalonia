@@ -1,6 +1,6 @@
 # FEATURE-57C8 — Showcase app: Enigma.Avalonia.Desktop.Showcase
 
-**Status:** TODO · 3 phases
+**Status:** DONE · 3 phases
 **Branches:** `feature/feature-57c8-phaseNN-showcase`
 **Depends on:** FEATURE-22A5 (all 8 phases)
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -59,7 +59,7 @@ is deliberately not ported** — see PHASE01.
 6. **Clean-slate sweep:** zero occurrences of the literal string `Carbon` anywhere under `samples/`.
 7. Every view root and `DataTemplate` using `{Binding}` declares `x:DataType` (`AVLN2100` otherwise).
 
-## 4. PHASE01 — App shell & host wiring — TODO
+## 4. PHASE01 — App shell & host wiring — DONE
 
 New code, written to the house pattern rather than ported.
 
@@ -121,7 +121,25 @@ New code, written to the house pattern rather than ported.
 - No `Host.CreateDefaultBuilder`, no `ConfigureServices` callback anywhere.
 - Zero `Carbon` hits under `samples/`.
 
-## 5. PHASE02 — Pages: Base controls, Editors, Dialogs, Services — TODO
+### As built — what PHASE02 and PHASE03 inherit
+
+Step 6's "populates `Items` (10 pages)" could not hold at PHASE01: those View and ViewModel types are
+PHASE02/PHASE03 deliverables. The shell was built to grow instead, and the two later phases must
+account for it (full record in `docs/done/FEATURE-57C8-PHASE01.md`):
+
+- The rail ships **one** item, a new showcase-local `HomePageView` / `HomePageViewModel` landing page —
+  written for this library, not ported. It stays; later phases **append** their items rather than
+  replacing it, which makes the total 12 pages (Home + the 10 nav pages + `DummyPage`).
+- `MainWindowViewModel.AddPage(key, header, icon, viewType, viewModelType, footer)` is the single place
+  a page is registered on the rail. `SettingsPage` passes `footer: true`.
+- Each page also needs its View registered **transient** and its ViewModel **singleton** in
+  `AddPagesAndViewModels()`.
+- `ShowcaseOptions.InitialPage` names a page by the `key` passed to `AddPage`; unknown keys fall back to
+  the first item. `appsettings.json` ships `"InitialPage": "home"`.
+- `Assets/app.ico` is generated placeholder art (a white "E" on the accent) — replace it with real
+  artwork before FEATURE-1702.
+
+## 5. PHASE02 — Pages: Base controls, Editors, Dialogs, Services — DONE
 
 Port 4 page pairs: `BaseControlsPage*` (standard Avalonia controls restyled by the theme),
 `EditorsTestingPage*` (all 14 typed editors incl. Base64/Hex), `DialogsTestingPage*` (ContentDialog
@@ -135,7 +153,24 @@ Register each View (Transient) and ViewModel (Singleton), and add its `Navigatio
 opens and returns a result, an InfoBar of each severity appears, a file picker opens, every editor
 accepts and rejects input with the `:error` state visible.
 
-## 6. PHASE03 — Pages: Ribbon, Docking, Navigation, CollectionView, Charts, Settings — TODO
+### As built — what PHASE03 inherits
+
+Full record in `docs/done/FEATURE-57C8-PHASE02.md`. The conventions PHASE03's seven pages follow:
+
+- The rail reads Home · Base Controls · Editors · Dialogs · Services. PHASE03 appends its six main
+  items and the `SettingsPage` footer item; keys are lowercase-hyphenated (`base-controls`).
+- §5's parenthetical page descriptions have `DialogsTestingPage*` and `ServicesTestingPage*` the wrong
+  way round versus the port source. The source's names were kept: `DialogsTestingPage*` is the
+  file/folder pickers, `ServicesTestingPage*` is ContentDialog + Overlay + InfoBar.
+- Repeated per-row chrome inside a page goes in a `UserControl.Styles` class (`.readout`, `.result`,
+  `.hint`), not on every element.
+- **Content built in C# takes theme brushes as dynamic resources, never literal colours** — the port
+  source's hardcoded hex would not survive PHASE03's own runtime Dark↔Light criterion. The pattern is
+  `control[!SomeProperty] = new DynamicResourceExtension("EnigmaX")`.
+- Command properties are the concrete `AsyncRelayCommand`/`RelayCommand` with `On…Async` handlers, per
+  the `communitytoolkit-mvvm` skill.
+
+## 6. PHASE03 — Pages: Ribbon, Docking, Navigation, CollectionView, Charts, Settings — DONE
 
 Port the remaining 7 page pairs: `RibbonTestingPage*`, `DockingTestingPage*`, `NavigationDemoPage*`,
 `DummyPage*` (the navigation target stub), `CollectionViewPage*` (sort/filter/group over a sample
@@ -151,3 +186,23 @@ collection), `ChartsPage*` (LiveCharts line/column/pie with theme-reactive axes)
 **Acceptance:** build clean; all 11 pages reachable; ribbon tabs switch and its drop-down opens;
 panes dock, split and tab; the CollectionView page sorts, filters and groups live; charts render and
 follow a runtime Dark↔Light switch along with every control on screen; zero `Carbon` hits.
+
+### As built — the one scope change
+
+Full record in `docs/done/FEATURE-57C8-PHASE03.md`. This phase was scoped to `samples/` only, and did
+not stay there:
+
+- **`CollectionView` could not be bound to any control.** Avalonia 12's `ItemsSourceView` rejects a
+  collection that raises `INotifyCollectionChanged` without implementing `IList`, so the library's
+  data-layer type — faithfully ported from Carbon, which has the same defect — produced an empty
+  `ListBox` and a binding error. That is exactly the criterion above, so with the user's agreement the
+  fix landed **in this phase**: `CollectionView` now implements a read-only `IList`
+  (`src/Enigma.Avalonia.Desktop/Data/CollectionView.cs`), covered by a new
+  `CollectionViewBindingTests` that binds a real `ItemsControl` to a real view. FEATURE-22A5 stays
+  `DONE`; this is the correction, not a reopening.
+- The port source's filter box was inert (`FilterText` was bound to nothing). The page wires
+  `CollectionViewSource.Filter` for real, and adds live sort-property, sort-direction and grouping
+  controls, because "sorts, filters and groups live" is the acceptance criterion.
+- The rail label for that page is **"Collections"**, not "CollectionView": the rail wraps on
+  whitespace, so a fourteen-character single word breaks mid-word. The page heading still names the
+  type; the `appsettings.json` key is still `collection-view`.

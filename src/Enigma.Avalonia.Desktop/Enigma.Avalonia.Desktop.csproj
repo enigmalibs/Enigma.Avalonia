@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared settings (LangVersion, Nullable, ImplicitUsings, TreatWarningsAsErrors,
+       EnforceCodeStyleInBuild, Authors, Copyright) are inherited from Directory.Build.props and must
+       never be repeated here — plan FEATURE-28E8 §2.4.4. -->
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <!-- Plan §2.2: the current LTS pair, and no netstandard2.0 — Avalonia 12 ships lib/net8.0 and
+         lib/net10.0 assets only, so a netstandard2.0 target could not resolve the dependency. -->
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+
+    <!-- Plan §2.4.12: Avalonia's build targets default this to false and pass it to the XAML compiler
+         as DefaultCompileBindings. On, every {Binding} is verified against its x:DataType at build
+         time; off, x:DataType is decorative and bindings silently fall back to reflection. -->
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+
+    <!-- Plan §2.4.5: XML docs on every public member — with TreatWarningsAsErrors this makes CS1591
+         a build error, which is the point. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- NuGet packaging metadata — plan FEATURE-1702 §3. The twelve properties the house release
+       standard requires; GenerateDocumentationFile (the twelfth) is set above with the build
+       settings it belongs to.
+
+       GeneratePackageOnBuild is deliberately NOT set: a publishable library is packed explicitly by
+       the release step, never on every local build. Neither are IncludeSymbols,
+       SymbolPackageFormat, PublishRepositoryUrl or EmbedUntrackedSources — a release ships exactly
+       one file, the .nupkg, and there is no symbol package, not even as an option. -->
+  <PropertyGroup>
+    <PackageId>Enigma.Avalonia.Desktop</PackageId>
+    <Version>1.0.0</Version>
+    <Title>Enigma.Avalonia.Desktop — Avalonia desktop controls</Title>
+    <Description>Enigma.Avalonia.Desktop is a control library for Avalonia 12 desktop applications. It ships a navigation shell, a docking host, a ribbon, fourteen typed editors covering text, every built-in numeric type and byte arrays as raw, Base64 or hexadecimal text, a content dialog, an overlay and an info bar each driven by its own service, settings cards, file and folder picker services, the CollectionView data subsystem for sorting, filtering and grouping, and one Fluent theme dictionary with Dark and Light variants that styles the whole set.</Description>
+    <PackageTags>avalonia avaloniaui controls desktop navigation docking ribbon editors mvvm fluent ui dialog settings collectionview overlay infobar dotnet</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/enigmalibs/Enigma.Avalonia</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/enigmalibs/Enigma.Avalonia</PackageProjectUrl>
+    <!-- Mirrors the top of RELEASENOTES.md; the closing sentence is fixed by the house standard and
+         must stay exactly "See RELEASENOTES.md for the full details." -->
+    <PackageReleaseNotes>First release of Enigma.Avalonia.Desktop, a control library for Avalonia 12 desktop applications. Everything it ships is one of two things: a control — a TemplatedControl styled by the one theme dictionary you merge into Application.Resources — or a service you register as a singleton and inject. That covers a navigation shell, a docking host, a ribbon, fourteen typed editors, a content dialog, an overlay and an info bar, settings cards, file and folder pickers, and the CollectionView sorting, filtering and grouping subsystem, all under a Fluent theme with Dark and Light variants. Targets net8.0 and net10.0. See RELEASENOTES.md for the full details.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <!-- PackageReadmeFile and PackageLicenseFile only name the files; this is what actually puts them
+       in the package. Both live at the solution root, two directories up. -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- The theme dictionary, addressable as avares://Enigma.Avalonia.Desktop/Themes/Fluent.axaml
+       (plan §2.5). The Avalonia targets also route .axaml files under AvaloniaResource through the
+       XAML compiler, so this dictionary is compiled, not just embedded. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Themes\**" />
+  </ItemGroup>
+
+  <!-- No Version= — Central Package Management (plan §2.3, §2.4.8). -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Enigma.Core" />
+  </ItemGroup>
+
+</Project>

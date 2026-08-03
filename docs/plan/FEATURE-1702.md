@@ -1,6 +1,6 @@
 # FEATURE-1702 — Release preparation & NuGet publish runbook (1.0.0)
 
-**Status:** TODO · 3 phases
+**Status:** DONE · 3 phases
 **Branches:** `feature/feature-1702-phaseNN-release`
 **Depends on:** FEATURE-22A5, FEATURE-6EB0, FEATURE-57C8, FEATURE-2802
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -33,7 +33,7 @@ remote** — say so in the completion doc; the publish path cannot run until one
 No MSI profile: profiles are apps-only and this item releases a library. The showcase is a
 non-packable sample and is not released.
 
-## 3. PHASE01 — Package metadata & third-party licence audit — TODO
+## 3. PHASE01 — Package metadata & third-party licence audit — DONE
 
 ### Metadata — all 12 properties in `src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj`
 
@@ -88,7 +88,7 @@ third-party code or assets, so the expected answer is *no* — but state the rea
 **Acceptance:** all 12 properties present and correct; packing `ItemGroup` present; the five forbidden
 properties absent; build clean in Release; audit table recorded.
 
-## 4. PHASE02 — RELEASENOTES, PackageReleaseNotes, README callout — TODO
+## 4. PHASE02 — RELEASENOTES, PackageReleaseNotes, README callout — DONE
 
 ### `RELEASENOTES.md` (root) — first-release variant
 
@@ -124,7 +124,7 @@ Also confirm the README's supported-target-frameworks line reads `net8.0` + `net
 `PackageReleaseNotes` present and ending with the required sentence; README callout in place; no
 `CHANGELOG.md` exists; clean-slate rule holds (no port-source reference in either document).
 
-## 5. PHASE03 — docs/RELEASE.md, pre-flight, pack-verify, printed runbook — TODO
+## 5. PHASE03 — docs/RELEASE.md, pre-flight, pack-verify, printed runbook — DONE
 
 ### Steps
 

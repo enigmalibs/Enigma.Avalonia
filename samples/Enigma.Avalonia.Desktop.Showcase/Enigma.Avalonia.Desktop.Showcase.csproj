@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared settings (LangVersion, Nullable, ImplicitUsings, TreatWarningsAsErrors,
+       EnforceCodeStyleInBuild, Authors, Copyright) are inherited from Directory.Build.props and must
+       never be repeated here — plan FEATURE-28E8 §2.4.4. -->
+  <PropertyGroup>
+    <!-- WinExe suppresses the console window on Windows; inert on Linux. -->
+    <OutputType>WinExe</OutputType>
+    <!-- Plan §2.2: an app ships a single runtime. -->
+    <TargetFramework>net10.0</TargetFramework>
+
+    <!-- The showcase is the visual verification, never a shipped artifact. -->
+    <IsPackable>false</IsPackable>
+
+    <!-- Plan §2.4.12 — see the same property on the library for why it is not optional. -->
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+
+    <!-- Deliberately NOT set: GenerateDocumentationFile. CS1591 exists to cover packed API surface
+         and this project packs nothing; enabling it would demand XML docs on every page ViewModel. -->
+
+    <!-- Gives the built Windows .exe its icon in Explorer and the taskbar, even when the app is not
+         running. It is Windows-only and covers a different surface from the window's own
+         Icon="/Assets/app.ico" — that one is what every platform shows at run time. Same file, both
+         places. -->
+    <ApplicationIcon>Assets/app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <!-- The app's art assets, addressable as avares:// URIs and as /Assets/... window icons. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <!-- Read by the generic host at startup and bound to ShowcaseOptions. -->
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- No Version= — Central Package Management (plan §2.3, §2.4.8). -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Enigma.Icons.Avalonia" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+
+    <!-- Debug-only developer tools. There is no Avalonia.Diagnostics release for Avalonia 12, so
+         AvaloniaUI.DiagnosticsSupport is the only option and .WithDeveloperTools() replaces v11's
+         this.AttachDevTools(). Conditioning the assets rather than the PackageReference itself keeps
+         the restore graph identical across configurations while shipping nothing in Release. -->
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Enigma.Avalonia.Desktop\Enigma.Avalonia.Desktop.csproj" />
+  </ItemGroup>
+
+</Project>
