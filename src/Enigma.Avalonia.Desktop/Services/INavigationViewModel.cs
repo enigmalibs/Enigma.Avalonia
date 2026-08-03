@@ -4,8 +4,10 @@ namespace Enigma.Avalonia.Desktop.Services;
 
 /// <summary>
 /// Defines async lifecycle methods for navigation with cancellation support.
-/// Can be implemented by either page views (Controls) or their ViewModels.
-/// Takes precedence over INavigationLifecycle when both are implemented.
+/// Implement it on a page's ViewModel: <see cref="INavigationService"/> inspects the page's
+/// <c>DataContext</c> and never the page <c>Control</c> itself, so a Control implementing this
+/// interface receives no callbacks. The interface is optional — a page whose <c>DataContext</c> does
+/// not implement it navigates with no callbacks at all.
 /// </summary>
 public interface INavigationViewModel
 {

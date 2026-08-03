@@ -15,7 +15,7 @@ dotnet test --solution Enigma.Avalonia.slnx
 # Run the showcase app — needs a real desktop session; a headless shell cannot show it
 dotnet run --project samples/Enigma.Avalonia.Desktop.Showcase
 
-# Pack the library (release time only — see "Releasing" below)
+# Pack the library (release time only — the full runbook is docs/RELEASE.md)
 dotnet pack src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj -c Release
 ```
 
@@ -58,10 +58,17 @@ startup, before the window is shown — `samples/…/App.axaml.cs` is the refere
 - **`Nullable` is enable**; no `!` without a commented justification.
 - **XML doc comments on every public member** of the library — `GenerateDocumentationFile` makes
   CS1591 a build error.
-- **Central Package Management.** Versions live only in `Directory.Packages.props`; no
-  `PackageReference` carries a `Version=` attribute. The Avalonia set is version-coupled — bump the
-  whole set together, never one package. There is no `Avalonia.Diagnostics` package for Avalonia 12;
-  never reintroduce that id.
+- **Central Package Management.** *Dependency* versions live only in `Directory.Packages.props`; no
+  `PackageReference` carries a `Version=` attribute. This says nothing about the library's own
+  `<Version>` property — that is the package version and belongs in the library csproj (below). The
+  Avalonia set is version-coupled — bump the whole set together, never one package. There is no
+  `Avalonia.Diagnostics` package for Avalonia 12; never reintroduce that id.
+- **Packaging metadata lives in the library csproj**, in its own `PropertyGroup`: the twelve
+  release properties, including `<Version>`, plus the `ItemGroup` that packs the root `README.md`
+  and `LICENSE.md`. **A release ships exactly one file, the `.nupkg`** — never add
+  `GeneratePackageOnBuild`, `IncludeSymbols`, `SymbolPackageFormat`, `PublishRepositoryUrl` or
+  `EmbedUntrackedSources`, and never pass `--include-symbols` to `dotnet pack`. Packing is an
+  explicit release step, not something a local build does.
 - **`LangVersion` 14**, set once in `Directory.Build.props` — never repeated in a csproj. The same
   goes for `Nullable`, `ImplicitUsings` and `TreatWarningsAsErrors`.
 - **`.slnx`, never `.sln`.** Solution folders `/src/`, `/samples/`, `/tests/`.

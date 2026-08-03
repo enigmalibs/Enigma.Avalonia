@@ -13,7 +13,7 @@ of the services drive a host control you place in your window and hand over at s
 the window's storage provider; past that, nothing in the library asks a ViewModel to know about a
 `Window`.
 
-<!-- The what's-new callout slots in here at release time. -->
+> **What's new in 1.0** — first release. See [RELEASENOTES.md](RELEASENOTES.md).
 
 ## Features
 
