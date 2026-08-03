@@ -1,6 +1,6 @@
 # FEATURE-16A9 — `enigma-avalonia-desktop` house skill
 
-**Status:** TODO · single phase
+**Status:** DONE · single phase
 **Branch:** `feature/feature-16a9-house-skill`
 **Depends on:** FEATURE-1702 (the published API and its documented surface)
 
