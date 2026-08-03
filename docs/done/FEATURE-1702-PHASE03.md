@@ -20,9 +20,13 @@ verified the real packed artifact against every assertion the plan lists — the
   assertions against the real `.nupkg` (§4 below), then deleted the directory. Nothing was tagged,
   pushed or published.
 - **Runbook printed** to the console for the user to run.
+- **`INavigationViewModel`'s summary corrected** — added on the user's instruction after the
+  verification above surfaced it (deviation 5). The pack-verify proved the XML documentation file
+  ships in both TFM folders, so a doc comment describing a design the code does not implement was a
+  1.0.0 defect visible in every consumer's IntelliSense, not a cosmetic one.
 
-No source, theme, showcase, test or csproj file was touched. This phase is one new document plus
-verification of what the previous two phases wrote.
+No theme, showcase, test or csproj file was touched. This phase is one new document, one XML doc
+comment, and verification of what the previous two phases wrote.
 
 ## 2. Files touched
 
@@ -30,6 +34,7 @@ verification of what the previous two phases wrote.
 |---|---|
 | `docs/RELEASE.md` | **Created** — 134 lines, the filled release runbook |
 | `CLAUDE.md` | Modified — line 18's pack comment pointed at `docs/RELEASE.md` instead of the forward reference `see "Releasing" below`, now that the file it implied actually exists (documentation freshness sweep, accepted) |
+| `src/Enigma.Avalonia.Desktop/Services/INavigationViewModel.cs` | Modified — the `<summary>` block rewritten to describe the dispatch the code actually performs (deviation 5). Doc comment only; no signature, no behaviour change |
 | `docs/roadmap.md` | PHASE03 row → `IN PROGRESS`, then → `DONE`; the `FEATURE-1702` item row → `DONE` (final phase) |
 | `docs/plan/FEATURE-1702.md` | §5 heading → `IN PROGRESS`, then → `DONE` |
 | `docs/done/FEATURE-1702-PHASE03.md` | Created (this file) |
@@ -95,7 +100,30 @@ not an up-to-date skip.
 
 **Definition of Done criterion 2.** `dotnet test --solution Enigma.Avalonia.slnx -c Release` →
 **281 passed, 0 failed, 0 skipped** (`Test run summary: Passed!`). Same count as PHASE02 — expected,
-since this phase adds no code.
+since this phase adds no executable code.
+
+**Both criteria were re-established after the `INavigationViewModel` edit.** A doc comment recompiles
+the library on both TFM passes and regenerates the shipped XML documentation file, so the first run's
+evidence no longer covered the tree. `clean` → `build` → `test` was repeated in full: again
+**`0 Warning(s)`, `0 Error(s)`** with no `AVLN*`/`CS####` line anywhere in the log, and again
+**281 passed, 0 failed, 0 skipped**. The new `<see cref="INavigationService"/>` resolved — it appears
+in the generated XML as `T:Enigma.Avalonia.Desktop.Services.INavigationService`, so CS1574 (a build
+*error* here, under `TreatWarningsAsErrors`) did not fire.
+
+**The pack-verify was re-run for the one assertion the edit could move.** Rather than trust the
+source, the corrected summary was read back out of a freshly packed `.nupkg`: both
+`lib/net8.0/Enigma.Avalonia.Desktop.xml` and `lib/net10.0/Enigma.Avalonia.Desktop.xml` carry the new
+text, and a search for `INavigationLifecycle` across both returns nothing. The verify directory was
+deleted again.
+
+**A sweep confirmed this was the only instance of the defect class.** The phantom survived because it
+was a bare type name in prose rather than a `<see cref="…"/>`, which the compiler never validates. So
+every bare interface- or PascalCase-looking identifier in the library's doc comments (22 distinct,
+`cref` attributes stripped first) was checked against the declarations in `src/`: the remainder are
+all real BCL types (`ArgumentNullException`, `InvalidOperationException`, `NotSupportedException`),
+real Avalonia types (`ContentControl`, `GridSplitter`, `ItemsControl`, `ItemsSourceView`, `ListBox`,
+`TextBlock`), members rather than types (`OnAppearingAsync`, `PageFactory`, `CurrentPage`,
+`DataContext`, …) or plain words (`ViewModel`, `ViewModels`). No second phantom type exists.
 
 **No test was added, and none is warranted.** Plan §5's acceptance criteria are assertions about a
 *packed artifact* and about a document's content, neither of which a unit test in this solution can
@@ -143,6 +171,35 @@ check (UTF-8, LF, 0 CR bytes) and a final-newline check.
    post-publish checks; the template's shape is six numbered sections. The document follows the
    template's six sections, which cover exactly the plan's steps in the plan's order — nothing added
    to the release procedure itself, and nothing dropped.
+5. **One source edit, outside the plan's scope, made on the user's explicit instruction.** Plan §5
+   scopes this phase to `docs/RELEASE.md` plus verification, and the phase first recorded
+   `INavigationViewModel`'s doc comment as a recommendation only. The user then asked for it to be
+   fixed, so it was — after the phase's own commit `21f165d` had already landed, which makes the fix
+   a second commit on `feature/feature-1702-phase03-release` (this file's update rides with it).
+   Squashing it into `21f165d` keeps the workflow's one-commit-per-dev shape; landing it as its own
+   commit keeps a source change visibly separate from a documentation phase. Either is defensible and
+   the choice is the user's. If it should be tracked as its own work item instead, revert the two
+   files and re-land them as a `BUG-HHHH` — nothing else in the phase depends on the fix.
+
+   **Two sentences were wrong, not the one originally flagged.** The whole `<summary>` described a
+   dual-dispatch design the code never had:
+
+   - *"Takes precedence over INavigationLifecycle when both are implemented"* — no
+     `INavigationLifecycle` exists anywhere in the solution.
+   - *"Can be implemented by either page views (Controls) or their ViewModels"* — false, and the more
+     harmful of the two. `NavigationService.cs:201` and `:221` both test
+     `page.DataContext is INavigationViewModel`; the `Control` itself is never inspected. A consumer
+     following the comment and implementing the interface on their page Control gets **no callbacks
+     and no error** — `OnDisappearingAsync` never runs, so a navigation guard written that way
+     silently fails to guard.
+
+   The replacement states the dispatch the code performs and matches `docs/guides/navigation.md`,
+   which FEATURE-2802 PHASE01 had already written against the source rather than against the comment
+   (`navigation.md:28`, `:226`–`:230`). `DataContext` and `Control` are marked up as `<c>…</c>` rather
+   than `cref`-ed on purpose: a `cref` to an Avalonia type from inside namespace
+   `Enigma.Avalonia.Desktop.*` runs straight into `CLAUDE.md` gotcha 1, where `Avalonia.…` resolves
+   against `Enigma.Avalonia`. The one `cref` added, `<see cref="INavigationService"/>`, is in the same
+   namespace and resolved cleanly.
 
 ### Follow-ups
 
@@ -155,13 +212,9 @@ check (UTF-8, LF, 0 CR bytes) and a final-newline check.
 2. **`<licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>` in the nuspec is expected — no
    action.** NuGet emits that shim automatically whenever `<license type="file">` is used, so older
    clients still find a licence URL. It is not a stray property and must not be "fixed".
-3. **`INavigationViewModel`'s XML doc still names a type that does not exist, and this phase confirmed
-   it ships.** `src/Enigma.Avalonia.Desktop/Services/INavigationViewModel.cs:8` refers to
-   `INavigationLifecycle`, which is not in the solution (found by FEATURE-2802 PHASE01, carried by
-   PHASE02 follow-up 3). The pack-verify shows a 195 008-byte
-   `Enigma.Avalonia.Desktop.xml` in **both** TFM folders, so that sentence is in the package and
-   will appear in consumers' IntelliSense at 1.0.0. Recommended: fix the one line before the
-   publishing pack. It is a source edit outside this phase's scope, so it was not made here.
+3. **`INavigationViewModel`'s XML doc is fixed — this closes the follow-up FEATURE-2802 PHASE01
+   opened.** See deviation 5. Nothing is left outstanding on it: the phantom type is gone from the
+   source and from the packed XML on both TFMs, and the sweep in §5 shows no second instance.
 4. **`FEATURE-1702` is complete — the 1.0.0 line is prepared but not published.** Every in-repo
    release artifact now exists; what remains is the human-run runbook. `FEATURE-66EB`
    (accessibility baseline) stays deferred until 1.0.0 is actually on nuget.org, per the roadmap's
