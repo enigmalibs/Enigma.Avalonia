@@ -34,7 +34,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | - PHASE01    | Package metadata & third-party license audit                             | DONE        | (in FEATURE-1702.md)      |
 | - PHASE02    | RELEASENOTES, PackageReleaseNotes, README what's-new callout             | DONE        | (in FEATURE-1702.md)      |
 | - PHASE03    | docs/RELEASE.md, pre-flight, pack-verify, printed runbook                | DONE        | (in FEATURE-1702.md)      |
-| FEATURE-16A9 | `enigma-avalonia-desktop` house skill (target is outside this repo)      | TODO        | docs/plan/FEATURE-16A9.md |
+| FEATURE-16A9 | `enigma-avalonia-desktop` house skill (target is outside this repo)      | DONE        | docs/plan/FEATURE-16A9.md |
 | FEATURE-66EB | Accessibility baseline — **DEFERRED, do not build yet**                  | TODO        | docs/plan/FEATURE-66EB.md |
 
 `FEATURE-16A9` and `FEATURE-66EB` are single-phase items — no phase rows. Everything above them is
