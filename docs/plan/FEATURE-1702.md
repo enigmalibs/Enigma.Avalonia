@@ -1,6 +1,6 @@
 # FEATURE-1702 — Release preparation & NuGet publish runbook (1.0.0)
 
-**Status:** IN PROGRESS · 3 phases
+**Status:** DONE · 3 phases
 **Branches:** `feature/feature-1702-phaseNN-release`
 **Depends on:** FEATURE-22A5, FEATURE-6EB0, FEATURE-57C8, FEATURE-2802
 **Solution invariants:** `docs/plan/FEATURE-28E8.md` §2.
@@ -124,7 +124,7 @@ Also confirm the README's supported-target-frameworks line reads `net8.0` + `net
 `PackageReleaseNotes` present and ending with the required sentence; README callout in place; no
 `CHANGELOG.md` exists; clean-slate rule holds (no port-source reference in either document).
 
-## 5. PHASE03 — docs/RELEASE.md, pre-flight, pack-verify, printed runbook — TODO
+## 5. PHASE03 — docs/RELEASE.md, pre-flight, pack-verify, printed runbook — DONE
 
 ### Steps
 

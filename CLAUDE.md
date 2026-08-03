@@ -15,7 +15,7 @@ dotnet test --solution Enigma.Avalonia.slnx
 # Run the showcase app — needs a real desktop session; a headless shell cannot show it
 dotnet run --project samples/Enigma.Avalonia.Desktop.Showcase
 
-# Pack the library (release time only — see "Releasing" below)
+# Pack the library (release time only — the full runbook is docs/RELEASE.md)
 dotnet pack src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj -c Release
 ```
 
