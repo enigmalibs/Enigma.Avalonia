@@ -40,7 +40,7 @@
   <ItemGroup>
     <PackageVersion Include="Enigma.Icons.Avalonia" Version="1.0.0" />
     <PackageVersion Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.1.0-dev-365" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
   </ItemGroup>
 
   <!-- Tests — MTP-native. The runner comes from global.json; there is deliberately no
