@@ -5,7 +5,7 @@
        Brushes.axaml resolves one of these keys, and every control template resolves a brush — so a
        consumer retheming the library overrides colours here and nothing else.
 
-       Both variants define the same 29 keys. That is what makes runtime theme switching total: a key
+       Both variants define the same 30 keys. That is what makes runtime theme switching total: a key
        present in one variant but not the other would resolve to nothing after a switch, and the
        DynamicResource in Brushes.axaml would silently fall back to an unset brush. -->
 
@@ -43,6 +43,8 @@
       <Color x:Key="EnigmaWarningBorderColor">#504020</Color>
       <Color x:Key="EnigmaErrorBackgroundColor">#301C20</Color>
       <Color x:Key="EnigmaErrorBorderColor">#502830</Color>
+      <!-- The window-background tone, as a dialog card fill: ContentDialog's secondary class. -->
+      <Color x:Key="EnigmaDialogSecondaryBackgroundColor">#1E1F22</Color>
     </ResourceDictionary>
 
     <!-- Light variant -->
@@ -77,6 +79,8 @@
       <Color x:Key="EnigmaWarningBorderColor">#DCC098</Color>
       <Color x:Key="EnigmaErrorBackgroundColor">#F4DADA</Color>
       <Color x:Key="EnigmaErrorBorderColor">#DCA0A0</Color>
+      <!-- The window-background tone, as a dialog card fill: ContentDialog's secondary class. -->
+      <Color x:Key="EnigmaDialogSecondaryBackgroundColor">#F7F8FA</Color>
     </ResourceDictionary>
 
   </ResourceDictionary.ThemeDictionaries>

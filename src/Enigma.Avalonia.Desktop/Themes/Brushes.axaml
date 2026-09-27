@@ -32,6 +32,7 @@
   <SolidColorBrush x:Key="EnigmaWarningBorderBrush" Color="{DynamicResource EnigmaWarningBorderColor}" />
   <SolidColorBrush x:Key="EnigmaErrorBackgroundBrush" Color="{DynamicResource EnigmaErrorBackgroundColor}" />
   <SolidColorBrush x:Key="EnigmaErrorBorderBrush" Color="{DynamicResource EnigmaErrorBorderColor}" />
+  <SolidColorBrush x:Key="EnigmaDialogSecondaryBackgroundBrush" Color="{DynamicResource EnigmaDialogSecondaryBackgroundColor}" />
 
   <!-- Below: FluentTheme's own resource keys, overridden so the framework's TextBox and ComboBox sit
        in the same palette as this library's controls. The names are Fluent's contract, not ours —

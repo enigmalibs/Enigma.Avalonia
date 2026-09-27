@@ -80,6 +80,7 @@ replaces the host rather than stacking one on another.
 | `DialogResult` | `DialogResult.None` | Set to the closing button just before `Closed` fires. |
 | `IsOpen` | `false` | Drives visibility; `ShowAsync` sets it. |
 | `OverlayBrush` | `#4D000000` | The scrim behind the card. Clicking it closes with `DialogResult.None`. |
+| `Background` | `EnigmaSurfaceHighBrush` | The card's fill. `Classes="secondary"` switches it to the darker `EnigmaDialogSecondaryBackgroundBrush` — the window-background tone — for content laid out for the window's own background. |
 | `DialogWidth`, `DialogHeight` | `double.NaN` | Explicit card size; `NaN` auto-sizes within the bounds below. |
 | `DialogMinWidth`, `DialogMaxWidth` | `320`, `600` | Width bounds. Raise the max for wide content. |
 | `DialogMinHeight`, `DialogMaxHeight` | `0`, `double.PositiveInfinity` | Height bounds. Set the max to make tall content scroll inside the card. |
@@ -375,8 +376,11 @@ public class ImportViewModel : ObservableObject
   `DialogResult.None` as a cancel.
 - `ContentDialogService.ShowAsync` resets the title, content, all three button texts, all three
   button commands, all three enabled flags, `DefaultButton` and `IconData`, and calls `ClearValue` on
-  `IconBrush`. It does **not** reset the six `Dialog*` size properties, `OverlayBrush` or
-  `DialogResult` — put those on the host once, in XAML.
+  `IconBrush`. It does **not** reset the six `Dialog*` size properties, `OverlayBrush`, `Background`,
+  the host's `Classes` or `DialogResult` — put those on the host once, in XAML. A host declared with
+  `Classes="secondary"` therefore shows every dialog on the secondary background; to use both looks,
+  give the secondary one a host of its own, or add the class in `configure` and remove it once the
+  dialog has closed.
 - `InfoBarService.ShowAsync` resets `Title`, `Message`, `Severity` and `DisplayDuration` (with
   `ClearValue`), so a timed message never makes the next one timed. `InfoBar` is a
   `ContentControl`, but its template renders no `ContentPresenter`: setting `Content` has no visual

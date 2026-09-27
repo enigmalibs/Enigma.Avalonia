@@ -1,6 +1,6 @@
 # FEATURE-5ED6 — ContentDialog secondary background
 
-**Status:** TODO · single phase
+**Status:** DONE · single phase
 **Type:** FEATURE
 **Branch:** `feature/feature-5ed6-dialog-secondary-bg`
 **Run:** feature/2026-09-27-infobar-dialog-release
@@ -56,18 +56,18 @@ laid out for the window's own background rather than for the raised dialog surfa
 
 ## 5. Acceptance criteria
 
-- [ ] By default the dialog card paints `EnigmaSurfaceHighBrush` (unchanged look).
-- [ ] `Classes="secondary"` paints the card with `EnigmaDialogSecondaryBackgroundBrush`, whose Dark
+- [x] By default the dialog card paints `EnigmaSurfaceHighBrush` (unchanged look).
+- [x] `Classes="secondary"` paints the card with `EnigmaDialogSecondaryBackgroundBrush`, whose Dark
       colour is darker than `EnigmaSurfaceHighColor`.
-- [ ] An explicit `Background` on the dialog paints the card.
-- [ ] Redefining `EnigmaSurfaceHighBrush` in the dialog's own `Resources` (the GitClient workaround)
+- [x] An explicit `Background` on the dialog paints the card.
+- [x] Redefining `EnigmaSurfaceHighBrush` in the dialog's own `Resources` (the GitClient workaround)
       still re-paints the card.
-- [ ] Both variants define the new colour; the new brush tracks a theme switch (existing theme tests
+- [x] Both variants define the new colour; the new brush tracks a theme switch (existing theme tests
       stay green with the new keys).
-- [ ] `PART_Card` is in the ContentDialog catalogue entry.
-- [ ] The showcase demonstrates the secondary background.
-- [ ] Full build 0 warnings (including `AVLN*`), whole suite green.
-- [ ] The theming and dialogs guides document the class, the key pair and the `Background` hook.
+- [x] `PART_Card` is in the ContentDialog catalogue entry.
+- [x] The showcase demonstrates the secondary background.
+- [x] Full build 0 warnings (including `AVLN*`), whole suite green.
+- [x] The theming and dialogs guides document the class, the key pair and the `Background` hook.
 
 ## 6. Out of scope
 

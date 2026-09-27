@@ -63,6 +63,7 @@ public class ServicesTestingPageViewModel : ObservableObject
         ShowPasswordDialogCommand = new AsyncRelayCommand(OnShowPasswordDialogAsync);
         ShowWideDialogCommand = new AsyncRelayCommand(OnShowWideDialogAsync);
         ShowTallDialogCommand = new AsyncRelayCommand(OnShowTallDialogAsync);
+        ShowSecondaryDialogCommand = new AsyncRelayCommand(OnShowSecondaryDialogAsync);
 
         RunSimpleTaskCommand = new AsyncRelayCommand(OnRunSimpleTaskAsync, CanRunTask);
         RunComplexTaskCommand = new AsyncRelayCommand(OnRunComplexTaskAsync, CanRunTask);
@@ -114,6 +115,9 @@ public class ServicesTestingPageViewModel : ObservableObject
 
     /// <summary>Gets the command showing a dialog whose content scrolls inside the card.</summary>
     public AsyncRelayCommand ShowTallDialogCommand { get; }
+
+    /// <summary>Gets the command showing a dialog on the darker secondary background.</summary>
+    public AsyncRelayCommand ShowSecondaryDialogCommand { get; }
 
     /// <summary>Gets the command running a task behind a progress overlay.</summary>
     public AsyncRelayCommand RunSimpleTaskCommand { get; }
@@ -298,6 +302,61 @@ public class ServicesTestingPageViewModel : ObservableObject
         });
 
         LastDialogResult = $"Tall dialog result: {result}";
+    }
+
+    /// <summary>
+    /// Shows a dialog on the secondary background: the window-background tone, for content laid out the
+    /// way a page is, with lighter strips standing out from it.
+    /// </summary>
+    private async Task OnShowSecondaryDialogAsync()
+    {
+        var list = new StackPanel { Spacing = 8 };
+
+        foreach (var (group, items) in new[]
+                 {
+                     ("Local", new[] { "main", "develop", "feature/infobar-auto-close" }),
+                     ("Remote", new[] { "origin/main", "origin/develop" }),
+                 })
+        {
+            // A lighter strip for each group heading, as a page would draw one.
+            var heading = new Border
+            {
+                Padding = new Thickness(10, 6),
+                CornerRadius = new CornerRadius(4),
+                Child = ThemedText(group, "EnigmaForegroundBrush"),
+            };
+            heading[!Border.BackgroundProperty] = new DynamicResourceExtension("EnigmaSurfaceBrush");
+            list.Children.Add(heading);
+
+            foreach (var item in items)
+            {
+                var row = ThemedText(item, "EnigmaForegroundSecondaryBrush");
+                row.Margin = new Thickness(10, 0);
+                list.Children.Add(row);
+            }
+        }
+
+        // The look is a host setting, so a page sharing the window's one host adds the class for this
+        // dialog and takes it off again afterwards. An app with a dedicated host sets Classes="secondary"
+        // on it in XAML instead.
+        ContentDialog? shown = null;
+        try
+        {
+            var result = await _dialogService.ShowAsync(dialog =>
+            {
+                shown = dialog;
+                dialog.Classes.Add("secondary");
+                dialog.Title = "Branches";
+                dialog.Content = list;
+                dialog.CloseButtonText = "Close";
+            });
+
+            LastDialogResult = $"Secondary dialog result: {result}";
+        }
+        finally
+        {
+            shown?.Classes.Remove("secondary");
+        }
     }
 
     /// <summary>Runs a task behind the overlay, switching the card between indeterminate and measured progress.</summary>
