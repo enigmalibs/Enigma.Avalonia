@@ -36,7 +36,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | - PHASE03    | docs/RELEASE.md, pre-flight, pack-verify, printed runbook                 | DONE   | (in FEATURE-1702.md)      |
 | FEATURE-16A9 | `enigma-avalonia-desktop` house skill (target is outside this repo)       | DONE   | docs/plan/FEATURE-16A9.md |
 | FEATURE-66EB | Accessibility baseline — **DEFERRED, do not build yet**                   | TODO   | docs/plan/FEATURE-66EB.md |
-| FEATURE-726D | InfoBar auto-close after a duration                                       | TODO   | docs/plan/FEATURE-726D.md |
+| FEATURE-726D | InfoBar auto-close after a duration                                       | DONE   | docs/plan/FEATURE-726D.md |
 | FEATURE-5ED6 | ContentDialog secondary background                                        | TODO   | docs/plan/FEATURE-5ED6.md |
 | FEATURE-0DB5 | Release 1.1.0 (routine)                                                   | TODO   | docs/plan/FEATURE-0DB5.md |
 
