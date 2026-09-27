@@ -45,6 +45,7 @@
             <Button Content="Password Dialog" Command="{Binding ShowPasswordDialogCommand}" />
             <Button Content="Wide Dialog" Command="{Binding ShowWideDialogCommand}" />
             <Button Content="Tall Dialog" Command="{Binding ShowTallDialogCommand}" />
+            <Button Content="Secondary Background" Command="{Binding ShowSecondaryDialogCommand}" />
           </WrapPanel>
 
           <TextBlock Classes="result"

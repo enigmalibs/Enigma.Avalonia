@@ -61,7 +61,7 @@ internal static class ControlCatalog
                 SecondaryButtonText = "Maybe",
                 CloseButtonText = "Cancel",
             },
-            ["PART_Overlay", "PART_PrimaryButton", "PART_SecondaryButton", "PART_CloseButton"]),
+            ["PART_Overlay", "PART_Card", "PART_PrimaryButton", "PART_SecondaryButton", "PART_CloseButton"]),
         new("Overlay", () => new Overlay { IsOpen = true, Content = new TextBlock { Text = "Working…" } }, []),
         new("InfoBar", () => new InfoBar { IsOpen = true, Title = "Saved", Message = "All good" },
             ["PART_Card", "PART_Icon", "PART_CloseButton"]),
