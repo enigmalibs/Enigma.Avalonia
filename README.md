@@ -13,7 +13,8 @@ of the services drive a host control you place in your window and hand over at s
 the window's storage provider; past that, nothing in the library asks a ViewModel to know about a
 `Window`.
 
-> **What's new in 1.0** — first release. See [RELEASENOTES.md](RELEASENOTES.md).
+> **What's new in 1.1** — info bars that close themselves after a `DisplayDuration`, and a darker
+> `secondary` background for `ContentDialog`. See [RELEASENOTES.md](RELEASENOTES.md).
 
 ## Features
 
@@ -31,8 +32,9 @@ the window's storage provider; past that, nothing in the library asks a ViewMode
   watermark and unit label, leading and action content slots, and a validation state surfaced as the
   `:error` pseudo-class.
 - **Dialogs, overlay and info bar** — `ContentDialog` (three configurable buttons, an icon, six size
-  properties and a `DialogResult`), `Overlay` for hosting arbitrary blocking content, and `InfoBar`
-  with four severities — each driven by its own service.
+  properties, a `secondary` background style and a `DialogResult`), `Overlay` for hosting arbitrary
+  blocking content, and `InfoBar` with four severities and an optional auto-close `DisplayDuration`
+  — each driven by its own service.
 - **Settings cards** — `SettingsCard` and `SettingsCardExpander` for building a settings page out of
   labelled rows with inline controls.
 - **Collection views** — `CollectionViewSource` and `CollectionView` with `SortDescription` sorting,

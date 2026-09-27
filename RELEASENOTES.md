@@ -1,3 +1,59 @@
+# Enigma.Avalonia.Desktop v1.1.0 Release Notes
+
+A feature release for two of the modal and notification surfaces, fully backward compatible with
+1.0.0. An `InfoBar` can now close itself after a period you choose — and still never does unless
+you ask — and a `ContentDialog` can sit on a darker, secondary background for content laid out for
+the window's own background rather than for the raised dialog surface.
+
+## New Features
+
+- **Timed info bars.**
+  - `InfoBar.DisplayDuration` — a new `TimeSpan?` styled property. The default, `null`, keeps the 1.0
+    behaviour: the bar stays open until it is dismissed. Set it and the bar closes itself once the
+    period has elapsed, exactly as `Close()` would — `IsOpen` goes `false`, `Closed` is raised, and
+    the pending `ShowAsync()` completes. The countdown starts when the bar opens, restarts when the
+    duration changes or `ShowAsync()` is called on the open bar, and is cancelled when the bar closes
+    any other way. A value must be `null`, or greater than zero and at most `int.MaxValue`
+    milliseconds; anything else throws `ArgumentException` where it is set.
+  - `InfoBarServiceExtensions` — `IInfoBarService.ShowAsync(TimeSpan displayDuration,
+    Action<InfoBar>? configure = null)`, an extension overload that shows a timed bar. The duration
+    is applied after `configure`, so the argument wins, and an invalid one throws
+    `ArgumentOutOfRangeException` before the host is touched. `IInfoBarService` itself is unchanged,
+    so your own implementations keep compiling.
+  - `InfoBarService.ShowAsync` now also resets `DisplayDuration` between messages, so a timed message
+    never makes the next one timed.
+- **Secondary dialog background.**
+  - `Classes="secondary"` on a `ContentDialog` paints its card with the new
+    `EnigmaDialogSecondaryBackgroundBrush` — the window-background tone, darker than the default
+    `EnigmaSurfaceHighBrush` in the Dark variant.
+  - New theme keys `EnigmaDialogSecondaryBackgroundColor` (Dark `#1E1F22`, Light `#F7F8FA`) and
+    `EnigmaDialogSecondaryBackgroundBrush`; the palette is now 30 colours and 27 brushes.
+  - The dialog card now paints `ContentDialog.Background`, which the theme sets to
+    `EnigmaSurfaceHighBrush` — the look is unchanged by default, a `Background` of your own now
+    applies, and redefining `EnigmaSurfaceHighBrush` in a dialog's own `Resources` still works. The
+    card is exposed as the template part `PART_Card`.
+  - `ContentDialogService` does not reset `Background` or the host's classes: like the `Dialog*`
+    sizes, the look is a host setting.
+
+## Dependencies
+
+No runtime dependency of the package changes; it still brings `Avalonia` and
+`Avalonia.Themes.Fluent` **12.1.1**, `CommunityToolkit.Mvvm` **8.4.2** and `Enigma.Core` **1.0.0**.
+
+- The coupled Avalonia set (`Avalonia`, `Avalonia.Themes.Fluent`, `Avalonia.Desktop`,
+  `Avalonia.Fonts.Inter`, `Avalonia.Headless.XUnit`) is held back at **12.1.1** — 12.1.3 is out, and
+  the set is bumped as a whole, as its own decision.
+- `Enigma.Core` is held back at **1.0.0** — 2.0.0 is a major version of a dependency that flows to
+  every consumer, which a minor release of this package should not pull in.
+- Repository-only, not in the package: `Microsoft.Extensions.Hosting` (showcase) **10.0.10 →
+  10.0.12**; `xunit.v3` (tests) held back at **3.2.2** — moving to 4.x is a test-suite migration of
+  its own.
+
+## Version
+
+- Released: **1.1.0** — a minor release under Semantic Versioning: new, backward-compatible
+  functionality, nothing removed or changed.
+
 # Enigma.Avalonia.Desktop v1.0.0 Release Notes
 
 The first public release of **Enigma.Avalonia.Desktop** — a control library for Avalonia 12 desktop
