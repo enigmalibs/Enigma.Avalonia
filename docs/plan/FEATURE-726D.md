@@ -1,6 +1,6 @@
 # FEATURE-726D — InfoBar auto-close after a duration
 
-**Status:** TODO · single phase
+**Status:** DONE · single phase
 **Type:** FEATURE
 **Branch:** `feature/feature-726d-infobar-auto-close`
 **Run:** feature/2026-09-27-infobar-dialog-release
@@ -75,21 +75,21 @@ own unless a duration is asked for**.
 
 ## 5. Acceptance criteria
 
-- [ ] `InfoBar.DisplayDuration` defaults to `null`, and a bar shown without a duration is still open
+- [x] `InfoBar.DisplayDuration` defaults to `null`, and a bar shown without a duration is still open
       after its would-be deadline has passed.
-- [ ] A bar shown with a short duration closes on its own: `IsOpen` becomes `false`, `Closed` is
+- [x] A bar shown with a short duration closes on its own: `IsOpen` becomes `false`, `Closed` is
       raised once, and the `ShowAsync()` task completes.
-- [ ] Closing a timed bar early cancels its countdown: re-showing it without a duration keeps it open
+- [x] Closing a timed bar early cancels its countdown: re-showing it without a duration keeps it open
       past the original deadline.
-- [ ] Setting `DisplayDuration` to zero, a negative value, or more than `int.MaxValue` ms throws
+- [x] Setting `DisplayDuration` to zero, a negative value, or more than `int.MaxValue` ms throws
       `ArgumentException`; `null` and positive values are accepted.
-- [ ] `IInfoBarService.ShowAsync(TimeSpan, Action<InfoBar>?)` opens a timed bar, the explicit
+- [x] `IInfoBarService.ShowAsync(TimeSpan, Action<InfoBar>?)` opens a timed bar, the explicit
       duration wins over one set in `configure`, and an invalid duration throws
       `ArgumentOutOfRangeException` with `ParamName` `"displayDuration"` without opening the host.
-- [ ] `InfoBarService.ShowAsync` resets `DisplayDuration`: a message after a timed one is untimed.
-- [ ] The showcase has an auto-closing info bar demo.
-- [ ] Full build 0 warnings (including `AVLN*`), whole suite green.
-- [ ] The guide documents the property, the extension, the reset and replaces the `Task.WhenAny`
+- [x] `InfoBarService.ShowAsync` resets `DisplayDuration`: a message after a timed one is untimed.
+- [x] The showcase has an auto-closing info bar demo.
+- [x] Full build 0 warnings (including `AVLN*`), whole suite green.
+- [x] The guide documents the property, the extension, the reset and replaces the `Task.WhenAny`
       workaround.
 
 ## 6. Out of scope

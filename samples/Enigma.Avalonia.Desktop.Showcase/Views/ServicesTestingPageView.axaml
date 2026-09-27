@@ -78,13 +78,14 @@
                                      IsExpanded="True">
         <StackPanel Spacing="12">
           <TextBlock Classes="hint"
-                     Text="An info bar notifies without blocking; its severity selects the icon and the colours. Awaiting ShowAsync completes when the bar closes." />
+                     Text="An info bar notifies without blocking; its severity selects the icon and the colours. Awaiting ShowAsync completes when the bar closes — dismissed, or by itself once a display duration elapses." />
 
           <WrapPanel Orientation="Horizontal" ItemSpacing="8" LineSpacing="8">
             <Button Content="Info" Command="{Binding ShowInfoCommand}" />
             <Button Content="Success" Command="{Binding ShowSuccessCommand}" />
             <Button Content="Warning" Command="{Binding ShowWarningCommand}" />
             <Button Content="Error" Command="{Binding ShowErrorCommand}" />
+            <Button Content="Auto-close (5 s)" Command="{Binding ShowTimedCommand}" />
             <Button Content="Close" Command="{Binding CloseInfoBarCommand}" />
           </WrapPanel>
 

@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia;
@@ -70,6 +71,7 @@ public class ServicesTestingPageViewModel : ObservableObject
         ShowSuccessCommand = new AsyncRelayCommand(OnShowSuccessAsync);
         ShowWarningCommand = new AsyncRelayCommand(OnShowWarningAsync);
         ShowErrorCommand = new AsyncRelayCommand(OnShowErrorAsync);
+        ShowTimedCommand = new AsyncRelayCommand(OnShowTimedAsync);
         CloseInfoBarCommand = new AsyncRelayCommand(OnCloseInfoBarAsync);
     }
 
@@ -130,6 +132,9 @@ public class ServicesTestingPageViewModel : ObservableObject
 
     /// <summary>Gets the command showing an error info bar.</summary>
     public AsyncRelayCommand ShowErrorCommand { get; }
+
+    /// <summary>Gets the command showing an info bar that closes itself after five seconds.</summary>
+    public AsyncRelayCommand ShowTimedCommand { get; }
 
     /// <summary>Gets the command dismissing the current info bar from code.</summary>
     public AsyncRelayCommand CloseInfoBarCommand { get; }
@@ -437,6 +442,21 @@ public class ServicesTestingPageViewModel : ObservableObject
             "Error",
             "An error has occurred during the operation.",
             InfoBarSeverity.Error);
+    }
+
+    /// <summary>Shows an info bar that closes itself after five seconds, unless it is dismissed first.</summary>
+    private async Task OnShowTimedAsync()
+    {
+        // The TimeSpan overload is an extension on IInfoBarService. Every other bar on this page stays up
+        // until it is dismissed: the service resets the duration before each message.
+        await _infoBarService.ShowAsync(TimeSpan.FromSeconds(5), bar =>
+        {
+            bar.Title = "Auto-close";
+            bar.Message = "This info bar closes itself after five seconds.";
+            bar.Severity = InfoBarSeverity.Info;
+        });
+
+        LastInfoBarResult = "Timed info bar closed";
     }
 
     /// <summary>Dismisses the current info bar from code rather than from its close button.</summary>
