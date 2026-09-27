@@ -71,8 +71,8 @@ and info-bar host controls are separate steps — see the [quick start](../../RE
 
 ## Colour and brush reference
 
-`Colors.axaml` defines **29** colour keys, once under `x:Key="Dark"` and once under `x:Key="Light"`
-inside `ResourceDictionary.ThemeDictionaries`. `Brushes.axaml` turns **26** of them into brushes, one
+`Colors.axaml` defines **30** colour keys, once under `x:Key="Dark"` and once under `x:Key="Light"`
+inside `ResourceDictionary.ThemeDictionaries`. `Brushes.axaml` turns **27** of them into brushes, one
 per key, outside any theme dictionary; the three input-background colours have no `Enigma*` brush of
 their own and feed the FluentTheme override keys in the next section.
 
@@ -111,6 +111,7 @@ updating. The table is in declaration order, so it diffs directly against the so
 | `EnigmaWarningBorderColor` | `#504020` | `#DCC098` | `EnigmaWarningBorderBrush` | Warning-severity notification border. |
 | `EnigmaErrorBackgroundColor` | `#301C20` | `#F4DADA` | `EnigmaErrorBackgroundBrush` | Error-severity notification fill. |
 | `EnigmaErrorBorderColor` | `#502830` | `#DCA0A0` | `EnigmaErrorBorderBrush` | Error-severity notification border. |
+| `EnigmaDialogSecondaryBackgroundColor` | `#1E1F22` | `#F7F8FA` | `EnigmaDialogSecondaryBackgroundBrush` | The `secondary` dialog card: the window-background tone, for dialog content laid out for the window's own background. Its own key, so it can be re-themed apart from `EnigmaBackgroundColor`. |
 
 ## Standard Avalonia controls
 
@@ -353,4 +354,4 @@ the whole tree follow.
 - The theme sets no application-level `Foreground` or `FontFamily`. Text outside the library's controls
   keeps Avalonia's defaults until you give it an `Enigma*` brush.
 - A colour key added to one variant and not the other compiles and ships, then fails at runtime after a
-  switch by rendering nothing — which is why both variants carry the identical 29-key set.
+  switch by rendering nothing — which is why both variants carry the identical 30-key set.
