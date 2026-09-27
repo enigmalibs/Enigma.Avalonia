@@ -7,6 +7,10 @@
     <Setter Property="VerticalAlignment" Value="Stretch" />
     <Setter Property="IsVisible" Value="False" />
     <Setter Property="IconBrush" Value="{DynamicResource EnigmaForegroundBrush}" />
+    <!-- The card's fill. A setter rather than a literal in the template, so Background on the dialog
+         paints the card, and a redefined EnigmaSurfaceHighBrush in the dialog's own Resources still
+         applies. -->
+    <Setter Property="Background" Value="{DynamicResource EnigmaSurfaceHighBrush}" />
     <Setter Property="Template">
       <ControlTemplate>
         <Panel>
@@ -17,7 +21,8 @@
                   VerticalAlignment="Stretch" />
 
           <!-- Dialog Content -->
-          <Border Background="{DynamicResource EnigmaSurfaceHighBrush}"
+          <Border Name="PART_Card"
+                  Background="{TemplateBinding Background}"
                   BorderBrush="{DynamicResource EnigmaBorderBrush}"
                   BorderThickness="1"
                   CornerRadius="8"
@@ -98,6 +103,12 @@
     <!-- Show dialog when IsOpen is true -->
     <Style Selector="^[IsOpen=True]">
       <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <!-- Secondary: the card on the window-background tone rather than the raised dialog surface, for
+         content laid out for the window's own background. Classes="secondary" on the host. -->
+    <Style Selector="^.secondary">
+      <Setter Property="Background" Value="{DynamicResource EnigmaDialogSecondaryBackgroundBrush}" />
     </Style>
   </ControlTheme>
 

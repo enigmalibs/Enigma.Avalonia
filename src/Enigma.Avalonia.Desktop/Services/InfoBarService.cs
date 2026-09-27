@@ -62,5 +62,6 @@ public class InfoBarService : IInfoBarService
         infoBar.Title = null;
         infoBar.Message = null;
         infoBar.Severity = InfoBarSeverity.Info;
+        infoBar.ClearValue(InfoBar.DisplayDurationProperty); // A timed message must not make the next one timed
     }
 }

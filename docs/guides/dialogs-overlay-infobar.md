@@ -22,7 +22,7 @@ long-running operation can keep mutating live content while the surface stays up
 |---------|--------------|---------|------------|-------------|
 | Modal dialog | `ContentDialog` | `IContentDialogService` | `ShowMessageAsync`, `ShowAsync` | one of its three buttons, `Escape`, a click on the scrim, or `HideAsync` |
 | Blocking overlay | `Overlay` | `IOverlayService` | `ShowAsync(Control)` | `HideAsync` only — the user cannot dismiss it |
-| Inline notification | `InfoBar` | `IInfoBarService` | `ShowAsync(Action<InfoBar>?)` | its close button, or `HideAsync` |
+| Inline notification | `InfoBar` | `IInfoBarService` | `ShowAsync(Action<InfoBar>?)`, `ShowAsync(TimeSpan, Action<InfoBar>?)` | its close button, `HideAsync`, or its `DisplayDuration` elapsing |
 
 Every service member, in full:
 
@@ -37,13 +37,16 @@ Every service member, in full:
 | | `HideAsync()` | `Task` — already completed; also clears `Overlay.Content` |
 | `IInfoBarService` | `RegisterHost(InfoBar infoBar)` | `void` |
 | | `ShowAsync(Action<InfoBar>? configure = null)` | `Task` — completes when the bar is dismissed |
+| | `ShowAsync(TimeSpan displayDuration, Action<InfoBar>? configure = null)` — extension, `InfoBarServiceExtensions` | `Task` — completes when the bar closes itself after `displayDuration`, or is dismissed first |
 | | `HideAsync()` | `Task` |
 
 `Show*` is strict about the host, `HideAsync` is forgiving. With no host registered every `Show*`
 throws `InvalidOperationException` — "ContentDialog host has not been registered. Call RegisterHost
 first.", "No Overlay registered. Call RegisterHost first.", "InfoBar host has not been registered.
 Call RegisterHost first." — while all three `HideAsync` methods are silent no-ops, because there is
-nothing to close. `IOverlayService.ShowAsync(null!)` throws `ArgumentNullException` with `ParamName`
+nothing to close. The timed `IInfoBarService.ShowAsync(TimeSpan, …)` throws
+`ArgumentOutOfRangeException` with `ParamName` `"displayDuration"` for a zero, negative or longer than
+`int.MaxValue` ms duration — before it touches the host. `IOverlayService.ShowAsync(null!)` throws `ArgumentNullException` with `ParamName`
 `"control"`, but only once a host exists: the host check runs first. Calling `RegisterHost` twice
 replaces the host rather than stacking one on another.
 
@@ -60,6 +63,7 @@ replaces the host rather than stacking one on another.
 | `IContentDialogService` / `ContentDialogService` | `Enigma.Avalonia.Desktop.Services` | Dialog service and its implementation. Singleton. |
 | `IOverlayService` / `OverlayService` | `Enigma.Avalonia.Desktop.Services` | Overlay service and its implementation. Singleton. |
 | `IInfoBarService` / `InfoBarService` | `Enigma.Avalonia.Desktop.Services` | Info bar service and its implementation. Singleton. |
+| `InfoBarServiceExtensions` | `Enigma.Avalonia.Desktop.Services` | The timed `ShowAsync(TimeSpan, Action<InfoBar>?)` overload on `IInfoBarService`. |
 
 `ContentDialog` carries the whole dialog surface as styled properties:
 
@@ -76,11 +80,16 @@ replaces the host rather than stacking one on another.
 | `DialogResult` | `DialogResult.None` | Set to the closing button just before `Closed` fires. |
 | `IsOpen` | `false` | Drives visibility; `ShowAsync` sets it. |
 | `OverlayBrush` | `#4D000000` | The scrim behind the card. Clicking it closes with `DialogResult.None`. |
+| `Background` | `EnigmaSurfaceHighBrush` | The card's fill. `Classes="secondary"` switches it to the darker `EnigmaDialogSecondaryBackgroundBrush` — the window-background tone — for content laid out for the window's own background. |
 | `DialogWidth`, `DialogHeight` | `double.NaN` | Explicit card size; `NaN` auto-sizes within the bounds below. |
 | `DialogMinWidth`, `DialogMaxWidth` | `320`, `600` | Width bounds. Raise the max for wide content. |
 | `DialogMinHeight`, `DialogMaxHeight` | `0`, `double.PositiveInfinity` | Height bounds. Set the max to make tall content scroll inside the card. |
 
-`InfoBar` exposes `Title`, `Message`, `Severity` (default `InfoBarSeverity.Info`) and `IsOpen`.
+`InfoBar` exposes `Title`, `Message`, `Severity` (default `InfoBarSeverity.Info`), `IsOpen` and
+`DisplayDuration` — a `TimeSpan?`, default `null`, meaning the bar stays open until it is dismissed.
+Set it and the bar closes itself once that period has elapsed; it must be `null`, or greater than
+zero and at most `int.MaxValue` milliseconds, and any other value throws `ArgumentException` where it
+is set.
 `Overlay` exposes only `IsOpen` and `OverlayBrush` (same `#4D000000` default) plus the inherited
 `Content`. Every brush key these controls resolve is documented in [theming](theming.md).
 
@@ -92,10 +101,10 @@ page-local host that nothing registers:
 | `ContentDialog` | `Task<DialogResult> ShowAsync()` | Sets `IsOpen`; completes when the dialog closes. |
 | | `Task HideAsync()` | Closes with `DialogResult.None`; already completed if the dialog was not open. |
 | | `event EventHandler<DialogResult>? Closed` | Raised after `DialogResult` and `IsOpen` are updated. |
-| `InfoBar` | `Task ShowAsync()` | Sets `IsOpen`; completes when the bar is dismissed. |
+| `InfoBar` | `Task ShowAsync()` | Sets `IsOpen`; completes when the bar is dismissed or closes itself. On a bar that is already open it restarts the `DisplayDuration` countdown. |
 | | `void Close()` | Clears `IsOpen` and raises `Closed`. |
 | | `Task CloseAsync()` | Calls `Close()` and returns an already-completed task. |
-| | `event EventHandler? Closed` | Raised by the close button and by `Close()`. |
+| | `event EventHandler? Closed` | Raised by the close button, by `Close()`, and when `DisplayDuration` elapses. |
 | `Overlay` | — | No methods at all: assign `Content`, then set `IsOpen`. That is exactly what `OverlayService` does. |
 
 ## Usage
@@ -280,10 +289,12 @@ public class ProjectViewModel : ObservableObject
 control — and returns immediately, because the user has no way to dismiss an overlay. The control
 stays live while the overlay holds it, so the operation reports progress by mutating it in place and
 calls `HideAsync` from a `finally` so a fault cannot leave the UI blocked. `IInfoBarService.ShowAsync`
-is the opposite: it completes only once the bar is dismissed, so keep the `Task` and await it where
-it suits you.
+is the opposite: it completes only once the bar closes, so keep the `Task` and await it where it
+suits you. The `TimeSpan` overload gives the bar a `DisplayDuration`, so it closes itself if nobody
+dismisses it first.
 
 ```csharp
+using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -336,17 +347,14 @@ public class ImportViewModel : ObservableObject
             await _overlayService.HideAsync();
         }
 
-        // Deliberately not awaited: the command returns while the bar waits to be dismissed.
-        Task dismissed = _infoBarService.ShowAsync(bar =>
+        // Give the user five seconds to read it: the bar closes itself unless it is dismissed first.
+        // Awaiting it keeps the command running until then; discard the Task to return at once.
+        await _infoBarService.ShowAsync(TimeSpan.FromSeconds(5), bar =>
         {
             bar.Title = "Import complete";
             bar.Message = "4 record sets were imported.";
             bar.Severity = InfoBarSeverity.Success;
         });
-
-        // Give the user five seconds to read it, then take it down if it is still up.
-        await Task.WhenAny(dismissed, Task.Delay(5000));
-        await _infoBarService.HideAsync();
     }
 }
 ```
@@ -368,14 +376,21 @@ public class ImportViewModel : ObservableObject
   `DialogResult.None` as a cancel.
 - `ContentDialogService.ShowAsync` resets the title, content, all three button texts, all three
   button commands, all three enabled flags, `DefaultButton` and `IconData`, and calls `ClearValue` on
-  `IconBrush`. It does **not** reset the six `Dialog*` size properties, `OverlayBrush` or
-  `DialogResult` — put those on the host once, in XAML.
-- `InfoBarService.ShowAsync` resets `Title`, `Message` and `Severity` only. `InfoBar` is a
+  `IconBrush`. It does **not** reset the six `Dialog*` size properties, `OverlayBrush`, `Background`,
+  the host's `Classes` or `DialogResult` — put those on the host once, in XAML. A host declared with
+  `Classes="secondary"` therefore shows every dialog on the secondary background; to use both looks,
+  give the secondary one a host of its own, or add the class in `configure` and remove it once the
+  dialog has closed.
+- `InfoBarService.ShowAsync` resets `Title`, `Message`, `Severity` and `DisplayDuration` (with
+  `ClearValue`), so a timed message never makes the next one timed. `InfoBar` is a
   `ContentControl`, but its template renders no `ContentPresenter`: setting `Content` has no visual
   effect, so use `Title` and `Message`.
-- There is no auto-dismiss timer on `InfoBar`; it stays up until its close button, `Close()`,
-  `CloseAsync()` or the service's `HideAsync()` closes it. The bar is `Top`-aligned and stretches the
-  width of its container regardless of where it sits in the panel.
+- By default `InfoBar` never closes on its own; it stays up until its close button, `Close()`,
+  `CloseAsync()` or the service's `HideAsync()` closes it. With a `DisplayDuration` it also closes
+  itself: the countdown starts when the bar opens, restarts when the duration changes or `ShowAsync`
+  is called on the open bar, and is cancelled when the bar closes by any other means. The timed
+  service overload applies its `displayDuration` after `configure`, so the argument wins. The bar is
+  `Top`-aligned and stretches the width of its container regardless of where it sits in the panel.
 - `Overlay` cannot be dismissed by the user — no `Escape` handling, no scrim click. Always pair
   `ShowAsync` with a `HideAsync` in a `finally`. Its content is centred, not stretched.
 - `IOverlayService.HideAsync` clears `Overlay.Content`, so the overlay holds no reference to the
