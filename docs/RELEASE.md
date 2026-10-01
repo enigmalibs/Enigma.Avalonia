@@ -67,9 +67,8 @@ points at a commit which is not the released one.
 ## 3. Tag the release
 
 Match the repository's existing tag convention — run `git tag` to see how prior releases were
-tagged (bare `X.Y.Z` vs. `vX.Y.Z`). The repository has **no tags yet**, so the house default
-applies: a **bare** `X.Y.Z` tag, and that becomes the convention every later release matches. Tag
-the merge commit and push the tag:
+tagged (bare `X.Y.Z` vs. `vX.Y.Z`). The convention is a **bare** `X.Y.Z` tag — `1.0.0` and `1.1.0`
+were tagged that way — and every later release matches it. Tag the merge commit and push the tag:
 
 ```bash
 git tag X.Y.Z

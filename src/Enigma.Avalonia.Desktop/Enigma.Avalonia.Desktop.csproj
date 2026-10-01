@@ -29,7 +29,7 @@
        one file, the .nupkg, and there is no symbol package, not even as an option. -->
   <PropertyGroup>
     <PackageId>Enigma.Avalonia.Desktop</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Title>Enigma.Avalonia.Desktop — Avalonia desktop controls</Title>
     <Description>Enigma.Avalonia.Desktop is a control library for Avalonia 12 desktop applications. It ships a navigation shell, a docking host, a ribbon, fourteen typed editors covering text, every built-in numeric type and byte arrays as raw, Base64 or hexadecimal text, a content dialog, an overlay and an info bar each driven by its own service, settings cards, file and folder picker services, the CollectionView data subsystem for sorting, filtering and grouping, and one Fluent theme dictionary with Dark and Light variants that styles the whole set.</Description>
     <PackageTags>avalonia avaloniaui controls desktop navigation docking ribbon editors mvvm fluent ui dialog settings collectionview overlay infobar dotnet</PackageTags>
@@ -40,7 +40,7 @@
     <PackageProjectUrl>https://github.com/enigmalibs/Enigma.Avalonia</PackageProjectUrl>
     <!-- Mirrors the top of RELEASENOTES.md; the closing sentence is fixed by the house standard and
          must stay exactly "See RELEASENOTES.md for the full details." -->
-    <PackageReleaseNotes>A feature release, fully backward compatible with 1.0.0. An InfoBar can now close itself after a period you choose, through the new DisplayDuration property or the IInfoBarService.ShowAsync(TimeSpan, …) extension overload, and still never does unless you ask. A ContentDialog can now sit on a darker secondary background with Classes="secondary", backed by the new EnigmaDialogSecondaryBackground colour and brush keys, and its card now paints the control's Background. No runtime dependency changes. See RELEASENOTES.md for the full details.</PackageReleaseNotes>
+    <PackageReleaseNotes>A feature release for the Dark theme, backward compatible with 1.1.0. The four InfoBar severity fills and their borders are lifted to softer, pastel tints in the Dark variant, on the same hues as the Light variant, so an info bar no longer sinks into the panels around it; primary text on every fill keeps WCAG AA contrast. The info bar message line now paints the new EnigmaInfoBarMessageForeground colour and brush keys, which keep it readable on the new fills in Dark and leave the Light variant exactly as it was. No key is renamed or removed, every existing override still applies, and no runtime dependency changes. See RELEASENOTES.md for the full details.</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- PackageReadmeFile and PackageLicenseFile only name the files; this is what actually puts them
