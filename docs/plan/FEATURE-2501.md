@@ -1,6 +1,6 @@
 # FEATURE-2501 — InfoBar pastel fills in the Dark variant
 
-**Status:** TODO · single phase
+**Status:** DONE · single phase
 **Type:** FEATURE
 **Branch:** `feature/feature-2501-infobar-dark-pastel`
 **Run:** feature/2026-10-01-infobar-pastel-release
@@ -72,15 +72,15 @@ stays untouched.
 
 ## 5. Acceptance criteria
 
-- [ ] The eight Dark values are the table's; every Light value is byte-for-byte unchanged.
-- [ ] Every Dark severity fill keeps ≥ 4.5:1 against `EnigmaForegroundColor` and against
+- [x] The eight Dark values are the table's; every Light value is byte-for-byte unchanged.
+- [x] Every Dark severity fill keeps ≥ 4.5:1 against `EnigmaForegroundColor` and against
       `EnigmaInfoBarMessageForegroundColor`, and is lighter than `EnigmaSurfaceHighColor`.
-- [ ] The InfoBar card paints each severity's background/border brush pair; the message line paints
+- [x] The InfoBar card paints each severity's background/border brush pair; the message line paints
       `EnigmaInfoBarMessageForegroundBrush`.
-- [ ] In Light the message colour equals `EnigmaForegroundSecondaryColor` (look unchanged).
-- [ ] Both variants define the new colour; the new brush tracks a theme switch.
-- [ ] Full build 0 warnings (including `AVLN*`), whole suite green.
-- [ ] The theming guide documents the new values, the new key pair and the counts.
+- [x] In Light the message colour equals `EnigmaForegroundSecondaryColor` (look unchanged).
+- [x] Both variants define the new colour; the new brush tracks a theme switch.
+- [x] Full build 0 warnings (including `AVLN*`), whole suite green.
+- [x] The theming guide documents the new values, the new key pair and the counts.
 
 ## 6. Out of scope
 

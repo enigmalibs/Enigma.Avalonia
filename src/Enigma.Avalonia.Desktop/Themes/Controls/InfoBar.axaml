@@ -40,7 +40,7 @@
                            FontWeight="SemiBold"
                            IsVisible="{TemplateBinding Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                 <TextBlock Text="{TemplateBinding Message}"
-                           Foreground="{DynamicResource EnigmaForegroundSecondaryBrush}"
+                           Foreground="{DynamicResource EnigmaInfoBarMessageForegroundBrush}"
                            TextWrapping="Wrap"
                            IsVisible="{TemplateBinding Message, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
               </StackPanel>
