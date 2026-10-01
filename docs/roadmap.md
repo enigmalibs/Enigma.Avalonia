@@ -40,11 +40,11 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-5ED6 | ContentDialog secondary background                                        | DONE   | docs/plan/FEATURE-5ED6.md |
 | FEATURE-0DB5 | Release 1.1.0 (routine)                                                   | DONE   | docs/plan/FEATURE-0DB5.md |
 | FEATURE-2501 | InfoBar pastel fills in the Dark variant                                  | DONE   | docs/plan/FEATURE-2501.md |
-| FEATURE-39BB | Release 1.2.0 (routine)                                                   | TODO   | docs/plan/FEATURE-39BB.md |
+| FEATURE-39BB | Release 1.2.0 (routine)                                                   | DONE   | docs/plan/FEATURE-39BB.md |
 
 `FEATURE-16A9`, `FEATURE-66EB`, `FEATURE-726D`, `FEATURE-5ED6`, `FEATURE-0DB5`, `FEATURE-2501` and
-`FEATURE-39BB` are single-phase items — no phase rows. Everything above `FEATURE-16A9` is multi-phase: one branch, one commit and one
-`docs/done/<ID>-PHASENN.md` per phase.
+`FEATURE-39BB` are single-phase items — no phase rows. Everything above `FEATURE-16A9` is
+multi-phase: one branch, one commit and one `docs/done/<ID>-PHASENN.md` per phase.
 
 `FEATURE-66EB` is the one row `/build` must **skip** until the 1.0.0 line is published: it is
 deliberately deferred, and picking it up early would break the 1:1 port contract that
