@@ -5,7 +5,7 @@
        Brushes.axaml resolves one of these keys, and every control template resolves a brush — so a
        consumer retheming the library overrides colours here and nothing else.
 
-       Both variants define the same 30 keys. That is what makes runtime theme switching total: a key
+       Both variants define the same 31 keys. That is what makes runtime theme switching total: a key
        present in one variant but not the other would resolve to nothing after a switch, and the
        DynamicResource in Brushes.axaml would silently fall back to an unset brush. -->
 
@@ -35,16 +35,23 @@
       <Color x:Key="EnigmaSuccessColor">#59A869</Color>
       <Color x:Key="EnigmaWarningColor">#E8A33D</Color>
       <Color x:Key="EnigmaErrorColor">#F75464</Color>
-      <Color x:Key="EnigmaInfoBackgroundColor">#1C2940</Color>
-      <Color x:Key="EnigmaInfoBorderColor">#28406A</Color>
-      <Color x:Key="EnigmaSuccessBackgroundColor">#1C3028</Color>
-      <Color x:Key="EnigmaSuccessBorderColor">#28503A</Color>
-      <Color x:Key="EnigmaWarningBackgroundColor">#302718</Color>
-      <Color x:Key="EnigmaWarningBorderColor">#504020</Color>
-      <Color x:Key="EnigmaErrorBackgroundColor">#301C20</Color>
-      <Color x:Key="EnigmaErrorBorderColor">#502830</Color>
+      <!-- Severity fills and borders: pastel tints on the Light variant's own hues (Info 261°,
+           Success 145°, Warning 79°, Error 18°). Every fill is OKLCH L 0.40 / C 0.05 and every border
+           L 0.52 / C 0.075 — light enough to stand off the surface scale, dark enough that
+           EnigmaForegroundColor text on a fill keeps WCAG AA (about 5:1). -->
+      <Color x:Key="EnigmaInfoBackgroundColor">#384863</Color>
+      <Color x:Key="EnigmaInfoBorderColor">#506994</Color>
+      <Color x:Key="EnigmaSuccessBackgroundColor">#364F37</Color>
+      <Color x:Key="EnigmaSuccessBorderColor">#4D744E</Color>
+      <Color x:Key="EnigmaWarningBackgroundColor">#564527</Color>
+      <Color x:Key="EnigmaWarningBorderColor">#806434</Color>
+      <Color x:Key="EnigmaErrorBackgroundColor">#603D3D</Color>
+      <Color x:Key="EnigmaErrorBorderColor">#8F5758</Color>
       <!-- The window-background tone, as a dialog card fill: ContentDialog's secondary class. -->
       <Color x:Key="EnigmaDialogSecondaryBackgroundColor">#1E1F22</Color>
+      <!-- The InfoBar message line: the primary text tone, because the secondary tone is not
+           readable on the severity fills above. -->
+      <Color x:Key="EnigmaInfoBarMessageForegroundColor">#BCBEC4</Color>
     </ResourceDictionary>
 
     <!-- Light variant -->
@@ -81,6 +88,8 @@
       <Color x:Key="EnigmaErrorBorderColor">#DCA0A0</Color>
       <!-- The window-background tone, as a dialog card fill: ContentDialog's secondary class. -->
       <Color x:Key="EnigmaDialogSecondaryBackgroundColor">#F7F8FA</Color>
+      <!-- The InfoBar message line: the secondary text tone, which reads well on the light fills. -->
+      <Color x:Key="EnigmaInfoBarMessageForegroundColor">#6F737A</Color>
     </ResourceDictionary>
 
   </ResourceDictionary.ThemeDictionaries>

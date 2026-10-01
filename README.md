@@ -13,8 +13,8 @@ of the services drive a host control you place in your window and hand over at s
 the window's storage provider; past that, nothing in the library asks a ViewModel to know about a
 `Window`.
 
-> **What's new in 1.1** — info bars that close themselves after a `DisplayDuration`, and a darker
-> `secondary` background for `ContentDialog`. See [RELEASENOTES.md](RELEASENOTES.md).
+> **What's new in 1.2** — softer, pastel info-bar severity colours in the Dark theme, with a
+> message line that stays readable on them. See [RELEASENOTES.md](RELEASENOTES.md).
 
 ## Features
 

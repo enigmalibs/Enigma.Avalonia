@@ -71,8 +71,8 @@ and info-bar host controls are separate steps — see the [quick start](../../RE
 
 ## Colour and brush reference
 
-`Colors.axaml` defines **30** colour keys, once under `x:Key="Dark"` and once under `x:Key="Light"`
-inside `ResourceDictionary.ThemeDictionaries`. `Brushes.axaml` turns **27** of them into brushes, one
+`Colors.axaml` defines **31** colour keys, once under `x:Key="Dark"` and once under `x:Key="Light"`
+inside `ResourceDictionary.ThemeDictionaries`. `Brushes.axaml` turns **28** of them into brushes, one
 per key, outside any theme dictionary; the three input-background colours have no `Enigma*` brush of
 their own and feed the FluentTheme override keys in the next section.
 
@@ -103,15 +103,16 @@ updating. The table is in declaration order, so it diffs directly against the so
 | `EnigmaSuccessColor` | `#59A869` | `#3B8C4B` | `EnigmaSuccessBrush` | Success accent for your own content; no shipped template consumes it. |
 | `EnigmaWarningColor` | `#E8A33D` | `#C48832` | `EnigmaWarningBrush` | Warning accent for your own content; no shipped template consumes it. |
 | `EnigmaErrorColor` | `#F75464` | `#DB3B3B` | `EnigmaErrorBrush` | Validation error border and message text on the editors. |
-| `EnigmaInfoBackgroundColor` | `#1C2940` | `#DAE6FA` | `EnigmaInfoBackgroundBrush` | Info-severity notification fill. |
-| `EnigmaInfoBorderColor` | `#28406A` | `#A0BEF0` | `EnigmaInfoBorderBrush` | Info-severity notification border. |
-| `EnigmaSuccessBackgroundColor` | `#1C3028` | `#DAEEDA` | `EnigmaSuccessBackgroundBrush` | Success-severity notification fill. |
-| `EnigmaSuccessBorderColor` | `#28503A` | `#A0D4A0` | `EnigmaSuccessBorderBrush` | Success-severity notification border. |
-| `EnigmaWarningBackgroundColor` | `#302718` | `#F4E6D0` | `EnigmaWarningBackgroundBrush` | Warning-severity notification fill. |
-| `EnigmaWarningBorderColor` | `#504020` | `#DCC098` | `EnigmaWarningBorderBrush` | Warning-severity notification border. |
-| `EnigmaErrorBackgroundColor` | `#301C20` | `#F4DADA` | `EnigmaErrorBackgroundBrush` | Error-severity notification fill. |
-| `EnigmaErrorBorderColor` | `#502830` | `#DCA0A0` | `EnigmaErrorBorderBrush` | Error-severity notification border. |
+| `EnigmaInfoBackgroundColor` | `#384863` | `#DAE6FA` | `EnigmaInfoBackgroundBrush` | Info-severity notification fill. |
+| `EnigmaInfoBorderColor` | `#506994` | `#A0BEF0` | `EnigmaInfoBorderBrush` | Info-severity notification border. |
+| `EnigmaSuccessBackgroundColor` | `#364F37` | `#DAEEDA` | `EnigmaSuccessBackgroundBrush` | Success-severity notification fill. |
+| `EnigmaSuccessBorderColor` | `#4D744E` | `#A0D4A0` | `EnigmaSuccessBorderBrush` | Success-severity notification border. |
+| `EnigmaWarningBackgroundColor` | `#564527` | `#F4E6D0` | `EnigmaWarningBackgroundBrush` | Warning-severity notification fill. |
+| `EnigmaWarningBorderColor` | `#806434` | `#DCC098` | `EnigmaWarningBorderBrush` | Warning-severity notification border. |
+| `EnigmaErrorBackgroundColor` | `#603D3D` | `#F4DADA` | `EnigmaErrorBackgroundBrush` | Error-severity notification fill. |
+| `EnigmaErrorBorderColor` | `#8F5758` | `#DCA0A0` | `EnigmaErrorBorderBrush` | Error-severity notification border. |
 | `EnigmaDialogSecondaryBackgroundColor` | `#1E1F22` | `#F7F8FA` | `EnigmaDialogSecondaryBackgroundBrush` | The `secondary` dialog card: the window-background tone, for dialog content laid out for the window's own background. Its own key, so it can be re-themed apart from `EnigmaBackgroundColor`. |
+| `EnigmaInfoBarMessageForegroundColor` | `#BCBEC4` | `#6F737A` | `EnigmaInfoBarMessageForegroundBrush` | The `InfoBar` message line. The primary text tone in Dark, because the secondary tone is not readable on the severity fills; the secondary tone in Light. |
 
 ## Standard Avalonia controls
 
@@ -347,6 +348,10 @@ the whole tree follow.
 - `EnigmaOverlayColor` is the one colour whose alpha carries meaning — `#80000000` dark, `#40000000`
   light — because the scrim dims what is behind it. Preserve the alpha when overriding it or the modal
   background turns opaque.
+- The Dark severity fills are pastel tints that still carry light text: each sits at OKLCH L 0.40 /
+  C 0.05 (its border at L 0.52 / C 0.075) on the Light variant's hue, which keeps
+  `EnigmaForegroundColor` text on it at about 5:1. Keep an override of your own above WCAG AA's
+  4.5:1 for that text — your content on these brushes uses it too, not just the info bar.
 - `EnigmaOverlayBrush`, `EnigmaSuccessBrush` and `EnigmaWarningBrush` are consumed by no shipped
   template; they exist for your content. `Overlay.OverlayBrush` and `ContentDialog.OverlayBrush` default
   to a literal semi-transparent black, so assign `{DynamicResource EnigmaOverlayBrush}` explicitly if
@@ -354,4 +359,4 @@ the whole tree follow.
 - The theme sets no application-level `Foreground` or `FontFamily`. Text outside the library's controls
   keeps Avalonia's defaults until you give it an `Enigma*` brush.
 - A colour key added to one variant and not the other compiles and ships, then fails at runtime after a
-  switch by rendering nothing — which is why both variants carry the identical 30-key set.
+  switch by rendering nothing — which is why both variants carry the identical 31-key set.

@@ -1,3 +1,57 @@
+# Enigma.Avalonia.Desktop v1.2.0 Release Notes
+
+A feature release for the Dark theme, backward compatible with 1.1.0. The `InfoBar` severity colours
+— Info, Success, Warning and Error — are lifted to softer, pastel tints in the Dark variant, so an
+info bar stands out from the panels around it instead of sinking into them, and its message line
+stays readable on the new fills. The Light variant is unchanged.
+
+## New Features
+
+- **Pastel severity fills in the Dark variant.**
+  - The eight severity keys take new Dark defaults. Every fill sits at OKLCH L 0.40 / C 0.05 and
+    every border at L 0.52 / C 0.075, on the Light variant's own hue per severity, so both variants
+    read as the same four colours. The 1.1 fills sat level with `EnigmaSurfaceColor`.
+
+    | Key | Dark 1.1.0 | Dark 1.2.0 |
+    |---|---|---|
+    | `EnigmaInfoBackgroundColor` | `#1C2940` | `#384863` |
+    | `EnigmaInfoBorderColor` | `#28406A` | `#506994` |
+    | `EnigmaSuccessBackgroundColor` | `#1C3028` | `#364F37` |
+    | `EnigmaSuccessBorderColor` | `#28503A` | `#4D744E` |
+    | `EnigmaWarningBackgroundColor` | `#302718` | `#564527` |
+    | `EnigmaWarningBorderColor` | `#504020` | `#806434` |
+    | `EnigmaErrorBackgroundColor` | `#301C20` | `#603D3D` |
+    | `EnigmaErrorBorderColor` | `#502830` | `#8F5758` |
+
+  - `EnigmaForegroundColor` text on every new fill keeps WCAG AA contrast (4.85–5.06:1), so your own
+    content on the `Enigma*BackgroundBrush` severity brushes stays readable too.
+  - No key is renamed or removed, and an override of any of the eight keys still applies. To keep the
+    1.1 look, override them with the 1.1.0 Dark values above, in a dictionary merged after
+    `Fluent.axaml` — the *Retheming with your own palette* recipe in `docs/guides/theming.md`.
+- **A readable info bar message line.**
+  - New theme keys `EnigmaInfoBarMessageForegroundColor` (Dark `#BCBEC4`, Light `#6F737A`) and
+    `EnigmaInfoBarMessageForegroundBrush`; the `InfoBar` message line paints the brush. In Dark it
+    is the primary text tone, which the secondary tone it replaces could not match on the new fills;
+    in Light it is exactly the secondary tone it was. The palette is now 31 colours and 28 brushes.
+
+## Dependencies
+
+No runtime dependency of the package changes; it still brings `Avalonia` and
+`Avalonia.Themes.Fluent` **12.1.1**, `CommunityToolkit.Mvvm` **8.4.2** and `Enigma.Core` **1.0.0**.
+
+- The coupled Avalonia set (`Avalonia`, `Avalonia.Themes.Fluent`, `Avalonia.Desktop`,
+  `Avalonia.Fonts.Inter`, `Avalonia.Headless.XUnit`) is held back at **12.1.1** — 12.1.3 is out, and
+  the set is bumped as a whole, as its own decision.
+- `Enigma.Core` is held back at **1.0.0** — 2.0.0 is a major version of a dependency that flows to
+  every consumer, which a minor release of this package should not pull in.
+- Repository-only, not in the package: `xunit.v3` (tests) held back at **3.2.2** — 4.0.1 is out, and
+  moving to 4.x is a test-suite migration of its own. Nothing else is outdated.
+
+## Version
+
+- Released: **1.2.0** — a minor release under Semantic Versioning: new, backward-compatible theme
+  keys, and new Dark defaults for existing keys; nothing removed or renamed.
+
 # Enigma.Avalonia.Desktop v1.1.0 Release Notes
 
 A feature release for two of the modal and notification surfaces, fully backward compatible with
