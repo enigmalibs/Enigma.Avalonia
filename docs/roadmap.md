@@ -39,7 +39,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-726D | InfoBar auto-close after a duration                                       | DONE   | docs/plan/FEATURE-726D.md |
 | FEATURE-5ED6 | ContentDialog secondary background                                        | DONE   | docs/plan/FEATURE-5ED6.md |
 | FEATURE-0DB5 | Release 1.1.0 (routine)                                                   | DONE   | docs/plan/FEATURE-0DB5.md |
-| FEATURE-2501 | InfoBar pastel fills in the Dark variant                                  | TODO   | docs/plan/FEATURE-2501.md |
+| FEATURE-2501 | InfoBar pastel fills in the Dark variant                                  | DONE   | docs/plan/FEATURE-2501.md |
 | FEATURE-39BB | Release 1.2.0 (routine)                                                   | TODO   | docs/plan/FEATURE-39BB.md |
 
 `FEATURE-16A9`, `FEATURE-66EB`, `FEATURE-726D`, `FEATURE-5ED6`, `FEATURE-0DB5`, `FEATURE-2501` and
