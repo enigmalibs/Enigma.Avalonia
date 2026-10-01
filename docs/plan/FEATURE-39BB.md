@@ -1,6 +1,6 @@
 # FEATURE-39BB — Release 1.2.0 (routine)
 
-**Status:** TODO · single phase
+**Status:** DONE · single phase
 **Type:** FEATURE
 **Branch:** `feature/feature-39bb-release-1-2-0`
 **Run:** feature/2026-10-01-infobar-pastel-release
@@ -57,15 +57,15 @@ NuGet API key is never stored, committed or echoed.
 
 ## 5. Acceptance criteria
 
-- [ ] `<Version>1.2.0</Version>`; `PackageReleaseNotes` mirrors the new section and ends with the
+- [x] `<Version>1.2.0</Version>`; `PackageReleaseNotes` mirrors the new section and ends with the
       fixed sentence.
-- [ ] `RELEASENOTES.md` top section is `v1.2.0`, newest-first, with the 1.1.0 section intact below.
-- [ ] README callout reads 1.2; `SECURITY.md` supports `1.2.x`; `docs/RELEASE.md` §3 states the
+- [x] `RELEASENOTES.md` top section is `v1.2.0`, newest-first, with the 1.1.0 section intact below.
+- [x] README callout reads 1.2; `SECURITY.md` supports `1.2.x`; `docs/RELEASE.md` §3 states the
       bare-tag convention.
-- [ ] Dependency transitions (or their absence) and the held-back sets are logged.
-- [ ] Release build 0 warnings, Release test suite green.
-- [ ] Pack-verify passed and its directory deleted.
-- [ ] Runbook printed, never run.
+- [x] Dependency transitions (or their absence) and the held-back sets are logged.
+- [x] Release build 0 warnings, Release test suite green.
+- [x] Pack-verify passed and its directory deleted.
+- [x] Runbook printed, never run.
 
 ## 6. Out of scope
 
