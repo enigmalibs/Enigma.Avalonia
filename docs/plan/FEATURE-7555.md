@@ -85,7 +85,7 @@ first), that ships the **same palette and the same restyling of the standard con
 
 ## 5. PHASE02 — Mobile guide & guides index
 
-**Status:** TODO
+**Status:** DONE
 
 ### Steps
 
@@ -102,9 +102,9 @@ first), that ships the **same palette and the same restyling of the standard con
 
 ### Acceptance criteria
 
-- [ ] Guide written in the house shape; snippets verified against the real URIs, types and APIs.
-- [ ] Index links it; `theming.md` names the mobile package.
-- [ ] Build and the whole suite still green (nothing compiled changes).
+- [x] Guide written in the house shape; snippets verified against the real URIs, types and APIs.
+- [x] Index links it; `theming.md` names the mobile package.
+- [x] Build and the whole suite still green (nothing compiled changes).
 
 ## 6. PHASE03 — Packaging, packed README & runbook
 
