@@ -17,6 +17,10 @@ copy-pasteable usage samples → notes** — and every snippet targets the real 
 **Start with [theming](theming.md).** Nothing in this library renders correctly until its theme
 dictionary is merged, so every other guide assumes you have done that and does not repeat it.
 
+The companion package **Enigma.Avalonia.Mobile** carries the same palette — colours, brushes and the
+`TextBox` / `ComboBox` re-colouring, without the controls — for Avalonia mobile applications; its
+guide is under [Mobile](#mobile) below.
+
 ## Foundation
 
 - [Theming](theming.md) — merging `Fluent.axaml` as a `ResourceInclude`, the full `Enigma*` colour
@@ -53,3 +57,9 @@ dictionary is merged, so every other guide assumes you have done that and does n
 - [File and folder dialogs](file-folder-dialogs.md) — `IFileDialogService` and
   `IFolderDialogService`, the `SetStorageProvider` requirement, and the convenience overloads that
   return plain paths.
+
+## Mobile
+
+- [Mobile theme](mobile.md) — `Enigma.Avalonia.Mobile`: merging its entry point in a mobile app's
+  `App.axaml`, painting the main view from the palette, following the device's dark mode, sharing
+  views with a desktop app, and why the dictionary is merged from XAML.
