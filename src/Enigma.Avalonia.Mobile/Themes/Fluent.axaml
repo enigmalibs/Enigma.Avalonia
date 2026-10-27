@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- The mobile library's single public theme entry point:
+       avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml.
+
+       It is a ResourceDictionary, not a Styles collection: consumers merge it into
+       Application.Resources with a ResourceInclude — a StyleInclude would be wrong.
+
+       It merges the Desktop library's palette and nothing else. Colors.axaml and Brushes.axaml are
+       Enigma.Avalonia.Desktop's own files, compiled into this assembly as linked resources, so a
+       mobile app resolves exactly the keys and values a desktop app does. The Desktop control
+       templates are deliberately absent: they style Desktop-only controls.
+
+       Order matters: Colors.axaml must precede Brushes.axaml, whose brushes resolve its keys. -->
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://Enigma.Avalonia.Mobile/Themes/Colors.axaml" />
+    <ResourceInclude Source="avares://Enigma.Avalonia.Mobile/Themes/Brushes.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

@@ -1,0 +1,30 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Enigma.Avalonia.Mobile.UnitTests.TestApp"
+             RequestedThemeVariant="Dark">
+
+  <!-- The application the headless session runs, written exactly as a mobile app's App.axaml is
+       documented to be. That is deliberate, not cosmetic: the XAML compiler resolves this
+       ResourceInclude at build time into a direct reference to the mobile assembly, which is what
+       loads it. The library holds no C# type, so a ResourceInclude built in code would find no
+       loaded assembly to read the compiled dictionary from.
+
+       FluentTheme is here because Brushes.axaml overrides FluentTheme's own TextBox and ComboBox
+       keys: with FluentTheme present, resolving one of those keys proves the override wins.
+
+       RequestedThemeVariant is pinned, not left at Default: a headless session has no OS
+       preference to follow, and the variant tests assert against a known starting point. -->
+
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

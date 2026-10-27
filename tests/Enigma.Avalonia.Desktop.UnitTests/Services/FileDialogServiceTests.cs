@@ -159,7 +159,9 @@ public sealed class FileDialogServiceTests
         Assert.NotNull(options.SuggestedStartLocation);
         Assert.Equal(
             Path.TrimEndingDirectorySeparator(directory),
-            Path.TrimEndingDirectorySeparator(options.SuggestedStartLocation.Path.LocalPath));
+            // GetFullPath first: on Windows the headless provider hands the folder back with a doubled
+            // trailing separator, which a single trim leaves one of.
+            Path.TrimEndingDirectorySeparator(Path.GetFullPath(options.SuggestedStartLocation.Path.LocalPath)));
     }
 
     [AvaloniaFact]

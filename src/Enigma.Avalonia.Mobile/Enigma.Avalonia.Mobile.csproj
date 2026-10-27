@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared settings (LangVersion, Nullable, ImplicitUsings, TreatWarningsAsErrors,
+       EnforceCodeStyleInBuild, Authors, Copyright) are inherited from Directory.Build.props and must
+       never be repeated here — plan FEATURE-28E8 §2.4.4. -->
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <!-- Plan FEATURE-7555 §3: the house set for a new library, and platform-neutral on purpose. The
+         package is resource-only, so a net10.0-android or net10.0-ios app consumes the net10.0 asset
+         as-is, and building the solution needs no mobile workload. No net8.0: nothing new targets a
+         runtime whose support ends 2026-11-10. -->
+    <TargetFramework>net10.0</TargetFramework>
+
+    <!-- Kept in step with the Desktop library, although nothing here binds today: a {Binding} added
+         to a dictionary later is verified at build time instead of falling back to reflection. -->
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+
+    <!-- The house packaging set includes it; the library has no C# surface yet, so the file is
+         empty — and CS1591 still guards anything public added later. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- NuGet packaging metadata — plan FEATURE-7555 §6, the house release set. GenerateDocumentationFile
+       is set above with the build settings. Version moves in lockstep with Enigma.Avalonia.Desktop:
+       one bare tag releases both packages, and they ship the same palette files.
+
+       GeneratePackageOnBuild is deliberately NOT set, and neither are IncludeSymbols,
+       SymbolPackageFormat, PublishRepositoryUrl or EmbedUntrackedSources — a release ships exactly
+       one file per package, the .nupkg. -->
+  <PropertyGroup>
+    <PackageId>Enigma.Avalonia.Mobile</PackageId>
+    <Version>1.3.0</Version>
+    <Title>Enigma.Avalonia.Mobile — the Enigma theme for Avalonia mobile apps</Title>
+    <Description>Enigma.Avalonia.Mobile gives Avalonia 12 mobile applications, Android first and iOS alike, the look of Enigma.Avalonia.Desktop: the same 31-colour palette in Dark and Light variants, the same 28 brushes that follow the active variant at runtime, and the same re-colouring of the framework TextBox and ComboBox, all merged from one resource dictionary. It ships no controls and no services, and it is compiled from the very files the desktop library uses, so both packages resolve identical keys and values at the same version.</Description>
+    <PackageTags>avalonia avaloniaui mobile android ios theme palette fluent dark light colors brushes ui dotnet</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/enigmalibs/Enigma.Avalonia</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/enigmalibs/Enigma.Avalonia</PackageProjectUrl>
+    <!-- Mirrors the top of RELEASENOTES.md; the closing sentence is fixed by the house standard and
+         must stay exactly "See RELEASENOTES.md for the full details." -->
+    <PackageReleaseNotes>The first release of Enigma.Avalonia.Mobile, versioned in lockstep with Enigma.Avalonia.Desktop 1.3.0. It gives Avalonia 12 mobile applications the Enigma palette, 31 colours in Dark and Light variants, 28 brushes that follow the active variant and the re-colouring of the framework TextBox and ComboBox, from one resource dictionary at avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml, compiled from the same files as the desktop library. It ships no controls and no services, targets net10.0, and depends on Avalonia and Avalonia.Themes.Fluent 12.1.4 only. See RELEASENOTES.md for the full details.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <!-- The package's own README (the root README.md is the desktop package's landing page) and the
+       repository's LICENSE.md. README.md is already a None item by the SDK's default glob, hence
+       Update rather than Include. -->
+  <ItemGroup>
+    <None Update="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- The entry point, addressable as avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Themes\**" />
+  </ItemGroup>
+
+  <!-- The palette is not copied: Desktop's two dictionaries are compiled into this assembly as linked
+       items, so both packages ship the same colours and brushes and an edit is made once. Link sets
+       the path inside this assembly, which is what the entry point's avares:// URIs address. -->
+  <ItemGroup>
+    <AvaloniaResource Include="..\Enigma.Avalonia.Desktop\Themes\Colors.axaml" Link="Themes\Colors.axaml" />
+    <AvaloniaResource Include="..\Enigma.Avalonia.Desktop\Themes\Brushes.axaml" Link="Themes\Brushes.axaml" />
+  </ItemGroup>
+
+  <!-- No Version= — Central Package Management (plan FEATURE-28E8 §2.3, §2.4.8). Avalonia.Themes.Fluent
+       because Brushes.axaml overrides FluentTheme's TextBox and ComboBox keys, and the consumer's
+       <FluentTheme /> is what those keys feed. -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+  </ItemGroup>
+
+</Project>

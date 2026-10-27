@@ -41,10 +41,17 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-0DB5 | Release 1.1.0 (routine)                                                   | DONE   | docs/plan/FEATURE-0DB5.md |
 | FEATURE-2501 | InfoBar pastel fills in the Dark variant                                  | DONE   | docs/plan/FEATURE-2501.md |
 | FEATURE-39BB | Release 1.2.0 (routine)                                                   | DONE   | docs/plan/FEATURE-39BB.md |
+| FEATURE-8763 | Avalonia 12.1.4 (coupled set bump)                                        | DONE   | docs/plan/FEATURE-8763.md |
+| FEATURE-7555 | Enigma.Avalonia.Mobile theme library                                      | DONE   | docs/plan/FEATURE-7555.md |
+| - PHASE01    | Project, linked palette & tests                                           | DONE   | (in FEATURE-7555.md)      |
+| - PHASE02    | Mobile guide & guides index                                               | DONE   | (in FEATURE-7555.md)      |
+| - PHASE03    | Packaging, packed README & runbook                                        | DONE   | (in FEATURE-7555.md)      |
+| FEATURE-D792 | Release 1.3.0 (Desktop + Mobile)                                          | DONE   | docs/plan/FEATURE-D792.md |
 
-`FEATURE-16A9`, `FEATURE-66EB`, `FEATURE-726D`, `FEATURE-5ED6`, `FEATURE-0DB5`, `FEATURE-2501` and
-`FEATURE-39BB` are single-phase items — no phase rows. Everything above `FEATURE-16A9` is
-multi-phase: one branch, one commit and one `docs/done/<ID>-PHASENN.md` per phase.
+`FEATURE-16A9`, `FEATURE-66EB`, `FEATURE-726D`, `FEATURE-5ED6`, `FEATURE-0DB5`, `FEATURE-2501`,
+`FEATURE-39BB`, `FEATURE-8763` and `FEATURE-D792` are single-phase items — no phase rows. Everything
+above `FEATURE-16A9`, and `FEATURE-7555`, is multi-phase: one branch, one commit and one
+`docs/done/<ID>-PHASENN.md` per phase.
 
 `FEATURE-66EB` is the one row `/build` must **skip** until the 1.0.0 line is published: it is
 deliberately deferred, and picking it up early would break the 1:1 port contract that

@@ -7,7 +7,10 @@
 
        Both variants define the same 31 keys. That is what makes runtime theme switching total: a key
        present in one variant but not the other would resolve to nothing after a switch, and the
-       DynamicResource in Brushes.axaml would silently fall back to an unset brush. -->
+       DynamicResource in Brushes.axaml would silently fall back to an unset brush.
+
+       Enigma.Avalonia.Mobile compiles this very file as a linked resource, so an edit here ships in
+       both packages. -->
 
   <ResourceDictionary.ThemeDictionaries>
 

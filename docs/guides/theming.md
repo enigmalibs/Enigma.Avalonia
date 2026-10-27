@@ -76,6 +76,9 @@ inside `ResourceDictionary.ThemeDictionaries`. `Brushes.axaml` turns **28** of t
 per key, outside any theme dictionary; the three input-background colours have no `Enigma*` brush of
 their own and feed the FluentTheme override keys in the next section.
 
+The same two dictionaries — these keys, these values — are also what the companion package
+`Enigma.Avalonia.Mobile` ships for mobile applications; see [mobile theme](mobile.md).
+
 Both variants define the same key set, which is what makes a variant switch total — a key present in one
 variant only would resolve to nothing after the switch, and the brush bound to it would silently stop
 updating. The table is in declaration order, so it diffs directly against the source.
