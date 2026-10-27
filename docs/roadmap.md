@@ -46,7 +46,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | - PHASE01    | Project, linked palette & tests                                           | DONE   | (in FEATURE-7555.md)      |
 | - PHASE02    | Mobile guide & guides index                                               | DONE   | (in FEATURE-7555.md)      |
 | - PHASE03    | Packaging, packed README & runbook                                        | DONE   | (in FEATURE-7555.md)      |
-| FEATURE-D792 | Release 1.3.0 (Desktop + Mobile)                                          | TODO   | docs/plan/FEATURE-D792.md |
+| FEATURE-D792 | Release 1.3.0 (Desktop + Mobile)                                          | DONE   | docs/plan/FEATURE-D792.md |
 
 `FEATURE-16A9`, `FEATURE-66EB`, `FEATURE-726D`, `FEATURE-5ED6`, `FEATURE-0DB5`, `FEATURE-2501`,
 `FEATURE-39BB`, `FEATURE-8763` and `FEATURE-D792` are single-phase items — no phase rows. Everything

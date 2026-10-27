@@ -1,6 +1,6 @@
 # FEATURE-D792 — Release 1.3.0 (Desktop + Mobile)
 
-**Status:** TODO
+**Status:** DONE
 **Type:** FEATURE
 **Branch:** `feature/feature-d792-release-1-3-0`
 **Run:** feature/2026-10-27-avalonia-mobile-release
@@ -56,13 +56,13 @@ or echoed.
 
 ## 5. Acceptance criteria
 
-- [ ] Both csproj `<Version>1.3.0</Version>`; both `PackageReleaseNotes` end with the fixed sentence.
-- [ ] `RELEASENOTES.md` top section is v1.3.0; the 1.2.0 section intact below.
-- [ ] README callout reads 1.3; `SECURITY.md` supports `1.3.x`.
-- [ ] Dependency transitions and held-back packages logged.
-- [ ] Release build 0 warnings; Release test suite green.
-- [ ] Pack-verify of both packages passed; scratch directory deleted.
-- [ ] Runbook printed, never run.
+- [x] Both csproj `<Version>1.3.0</Version>`; both `PackageReleaseNotes` end with the fixed sentence.
+- [x] `RELEASENOTES.md` top section is v1.3.0; the 1.2.0 section intact below.
+- [x] README callout reads 1.3; `SECURITY.md` supports `1.3.x`.
+- [x] Dependency transitions and held-back packages logged.
+- [x] Release build 0 warnings; Release test suite green.
+- [x] Pack-verify of both packages passed; scratch directory deleted.
+- [x] Runbook printed, never run.
 
 ## 6. Out of scope
 
