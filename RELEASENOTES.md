@@ -1,3 +1,67 @@
+# Enigma.Avalonia.Desktop and Enigma.Avalonia.Mobile v1.3.0 Release Notes
+
+A feature release that moves to Avalonia 12.1.4 and adds a second package. **Enigma.Avalonia.Mobile**
+is new: it brings the Enigma palette — the same colours, the same brushes, the same re-colouring of
+the framework's `TextBox` and `ComboBox` — to Avalonia mobile applications, so a phone screen and a
+desktop window built on these packages look the same. **Enigma.Avalonia.Desktop** is backward
+compatible with 1.2.0: no API, key or value changes, only its Avalonia floor.
+
+## New Features
+
+- **Enigma.Avalonia.Mobile — the Enigma theme for mobile apps (first release).**
+  - One resource dictionary, `avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml`, merged into
+    `Application.Resources` from `App.axaml` with a `ResourceInclude` — the same idiom, and the same
+    file name, as the desktop library's entry point.
+  - The desktop palette, exactly: the 31 `Enigma*Color` keys in both the `Dark` and `Light` variants,
+    the 28 `Enigma*Brush` keys that follow the active variant, and the 23 FluentTheme `TextControl*` /
+    `ComboBox*` keys the desktop theme redefines. The package is compiled from the desktop library's
+    own `Colors.axaml` and `Brushes.axaml`, so the two packages resolve identical keys and values at
+    the same version.
+  - No controls, no services and no control templates: every control on a mobile screen keeps its
+    FluentTheme template, painted from the palette.
+  - Platform-neutral `net10.0`: an Android or iOS head on `net10.0-android` / `net10.0-ios` consumes
+    it with no extra setup. It depends on `Avalonia` and `Avalonia.Themes.Fluent` only — not on
+    Enigma.Avalonia.Desktop, `CommunityToolkit.Mvvm` or `Enigma.Core`.
+  - Merge it from XAML. The package holds no C# type, so its assembly is loaded through the compiled
+    `App.axaml` that references it; a `ResourceInclude` constructed in C# throws
+    `XamlLoadException: No precompiled XAML found` when nothing else has loaded the assembly yet.
+  - New guide: `docs/guides/mobile.md` — installing, merging the theme, painting the main view,
+    following the device's dark mode, sharing views with a desktop app, and retheming.
+
+## Dependencies
+
+- The coupled Avalonia set **12.1.1 → 12.1.4**: `Avalonia` and `Avalonia.Themes.Fluent` (dependencies
+  of both packages), and, repository-only, `Avalonia.Desktop`, `Avalonia.Fonts.Inter` and
+  `Avalonia.Headless.XUnit`. `AvaloniaUI.DiagnosticsSupport` stays at **2.2.3**, its latest release.
+- Enigma.Avalonia.Desktop now brings `Avalonia` and `Avalonia.Themes.Fluent` **12.1.4**,
+  `CommunityToolkit.Mvvm` **8.4.2** and `Enigma.Core` **1.0.0**; Enigma.Avalonia.Mobile brings
+  `Avalonia` and `Avalonia.Themes.Fluent` **12.1.4**.
+- `Enigma.Core` is held back at **1.0.0** — 2.0.0 is a major version of a dependency that flows to
+  every consumer, which a minor release should not pull in.
+- Repository-only, not in either package: `Microsoft.Extensions.Hosting` (showcase) **10.0.12 →
+  10.0.14**; `xunit.v3` (tests) held back at **3.2.2** — 4.0.2 is out, and moving to 4.x is a
+  test-suite migration of its own.
+
+## Compatibility
+
+- Enigma.Avalonia.Desktop targets **.NET 8.0** and **.NET 10.0** — unchanged. .NET 8 reaches the end
+  of its support on 2026-11-10; the `net8.0` target stays for the 1.x line, and dropping it is
+  planned for the next major version.
+- Enigma.Avalonia.Desktop's Avalonia floor is now **12.1.4**. An application that pins `Avalonia` or
+  `Avalonia.Themes.Fluent` to an earlier 12.1.x directly must raise that pin, or NuGet reports a
+  package downgrade (`NU1605`).
+- Enigma.Avalonia.Mobile targets **.NET 10.0** and is built on Avalonia **12.1.4**.
+- In a solution that uses both packages, keep them on the same version: a palette change always ships
+  in both, in the same release.
+
+## Version
+
+- Released: Enigma.Avalonia.Desktop **1.3.0** — a minor release under Semantic Versioning: a
+  compatible dependency move, and the package line gains a companion package; nothing removed,
+  renamed or changed incompatibly.
+- Initial release: Enigma.Avalonia.Mobile **1.3.0** — numbered in lockstep with Enigma.Avalonia.Desktop
+  rather than from 1.0.0, because both packages ship the same palette files under one tag.
+
 # Enigma.Avalonia.Desktop v1.2.0 Release Notes
 
 A feature release for the Dark theme, backward compatible with 1.1.0. The `InfoBar` severity colours
