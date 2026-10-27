@@ -1,6 +1,6 @@
 # FEATURE-7555 — Enigma.Avalonia.Mobile theme library
 
-**Status:** IN PROGRESS
+**Status:** DONE
 **Type:** FEATURE
 **Branches:** `feature/feature-7555-phase01-mobile-library`, `feature/feature-7555-phase02-mobile-guide`, `feature/feature-7555-phase03-mobile-packaging`
 **Run:** feature/2026-10-27-avalonia-mobile-release
@@ -108,7 +108,7 @@ first), that ships the **same palette and the same restyling of the standard con
 
 ## 6. PHASE03 — Packaging, packed README & runbook
 
-**Status:** TODO
+**Status:** DONE
 
 ### Steps
 
@@ -132,11 +132,11 @@ first), that ships the **same palette and the same restyling of the standard con
 
 ### Acceptance criteria
 
-- [ ] Pack-verify: `Enigma.Avalonia.Mobile.1.3.0.nupkg` only (no `.snupkg`), non-empty `README.md`,
+- [x] Pack-verify: `Enigma.Avalonia.Mobile.1.3.0.nupkg` only (no `.snupkg`), non-empty `README.md`,
       `LICENSE.md`, nuspec version/title/license/readme correct, one `net10.0` dependency group with
       `Avalonia` and `Avalonia.Themes.Fluent` at 12.1.4, `lib/net10.0/` with DLL and XML doc.
-- [ ] `docs/RELEASE.md` describes both packages; nothing in it is run by the agent beyond pack-verify.
-- [ ] Release build 0 warnings; whole suite green.
+- [x] `docs/RELEASE.md` describes both packages; nothing in it is run by the agent beyond pack-verify.
+- [x] Release build 0 warnings; whole suite green.
 
 ## 7. Out of scope
 
