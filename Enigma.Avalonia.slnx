@@ -1,11 +1,13 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj" />
+    <Project Path="src/Enigma.Avalonia.Mobile/Enigma.Avalonia.Mobile.csproj" />
   </Folder>
   <Folder Name="/samples/">
     <Project Path="samples/Enigma.Avalonia.Desktop.Showcase/Enigma.Avalonia.Desktop.Showcase.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Enigma.Avalonia.Desktop.UnitTests/Enigma.Avalonia.Desktop.UnitTests.csproj" />
+    <Project Path="tests/Enigma.Avalonia.Mobile.UnitTests/Enigma.Avalonia.Mobile.UnitTests.csproj" />
   </Folder>
 </Solution>

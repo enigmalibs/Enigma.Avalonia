@@ -1,6 +1,6 @@
 # FEATURE-7555 — Enigma.Avalonia.Mobile theme library
 
-**Status:** TODO
+**Status:** IN PROGRESS
 **Type:** FEATURE
 **Branches:** `feature/feature-7555-phase01-mobile-library`, `feature/feature-7555-phase02-mobile-guide`, `feature/feature-7555-phase03-mobile-packaging`
 **Run:** feature/2026-10-27-avalonia-mobile-release
@@ -54,7 +54,7 @@ first), that ships the **same palette and the same restyling of the standard con
 
 ## 4. PHASE01 — Project, linked palette & tests
 
-**Status:** TODO
+**Status:** DONE
 
 ### Steps
 
@@ -77,11 +77,11 @@ first), that ships the **same palette and the same restyling of the standard con
 
 ### Acceptance criteria
 
-- [ ] `dotnet build Enigma.Avalonia.slnx` (after clean) — 0 warnings including `AVLN*`, 0 errors.
-- [ ] `dotnet test --solution Enigma.Avalonia.slnx` — the whole suite green, the new tests included.
-- [ ] The mobile assembly carries no copy of the palette in source (linked), or the recorded fallback.
-- [ ] No `PackageReference` with `Version=`; no shared property repeated in a csproj.
-- [ ] Desktop's public surface and theme URIs unchanged (its existing tests pass untouched).
+- [x] `dotnet build Enigma.Avalonia.slnx` (after clean) — 0 warnings including `AVLN*`, 0 errors.
+- [x] `dotnet test --solution Enigma.Avalonia.slnx` — the whole suite green, the new tests included.
+- [x] The mobile assembly carries no copy of the palette in source (linked), or the recorded fallback.
+- [x] No `PackageReference` with `Version=`; no shared property repeated in a csproj.
+- [x] Desktop's public surface and theme URIs unchanged (its existing tests pass untouched).
 
 ## 5. PHASE02 — Mobile guide & guides index
 

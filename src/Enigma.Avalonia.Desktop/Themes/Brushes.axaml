@@ -4,7 +4,10 @@
   <!-- The brushes every control template binds to. This dictionary is deliberately *not* theme-scoped:
        one brush instance per key, whose Color tracks the active variant through DynamicResource. That
        indirection is what makes runtime theme switching work — a StaticResource here would bake in
-       whichever variant happened to be active at load time and never update again. -->
+       whichever variant happened to be active at load time and never update again.
+
+       Enigma.Avalonia.Mobile compiles this very file as a linked resource, so an edit here ships in
+       both packages. -->
 
   <SolidColorBrush x:Key="EnigmaBackgroundBrush" Color="{DynamicResource EnigmaBackgroundColor}" />
   <SolidColorBrush x:Key="EnigmaSurfaceBrush" Color="{DynamicResource EnigmaSurfaceColor}" />
