@@ -16,8 +16,9 @@ dotnet test --solution Enigma.Avalonia.slnx
 # Run the showcase app — needs a real desktop session; a headless shell cannot show it
 dotnet run --project samples/Enigma.Avalonia.Desktop.Showcase
 
-# Pack the library (release time only — the full runbook is docs/RELEASE.md)
+# Pack the two libraries (release time only — the full runbook is docs/RELEASE.md)
 dotnet pack src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj -c Release
+dotnet pack src/Enigma.Avalonia.Mobile/Enigma.Avalonia.Mobile.csproj -c Release
 ```
 
 The SDK is pinned in `global.json` (10.0.100, `rollForward: latestFeature`), which also selects
@@ -71,9 +72,11 @@ startup, before the window is shown — `samples/…/App.axaml.cs` is the refere
   `<Version>` property — that is the package version and belongs in the library csproj (below). The
   Avalonia set is version-coupled — bump the whole set together, never one package. There is no
   `Avalonia.Diagnostics` package for Avalonia 12; never reintroduce that id.
-- **Packaging metadata lives in the library csproj**, in its own `PropertyGroup`: the twelve
-  release properties, including `<Version>`, plus the `ItemGroup` that packs the root `README.md`
-  and `LICENSE.md`. **A release ships exactly one file, the `.nupkg`** — never add
+- **Packaging metadata lives in each library csproj**, in its own `PropertyGroup`: the twelve
+  release properties, including `<Version>`, plus the `ItemGroup` that packs a `README.md` and the
+  root `LICENSE.md`. Desktop packs the root `README.md`; Mobile packs its own
+  `src/Enigma.Avalonia.Mobile/README.md`. **The two libraries are versioned in lockstep** — one bare
+  tag releases both, at the same `<Version>`. **A release ships exactly one file, the `.nupkg`** — never add
   `GeneratePackageOnBuild`, `IncludeSymbols`, `SymbolPackageFormat`, `PublishRepositoryUrl` or
   `EmbedUntrackedSources`, and never pass `--include-symbols` to `dotnet pack`. Packing is an
   explicit release step, not something a local build does.

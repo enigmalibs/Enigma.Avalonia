@@ -20,6 +20,36 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <!-- NuGet packaging metadata — plan FEATURE-7555 §6, the house release set. GenerateDocumentationFile
+       is set above with the build settings. Version moves in lockstep with Enigma.Avalonia.Desktop:
+       one bare tag releases both packages, and they ship the same palette files.
+       PackageReleaseNotes, the twelfth property of the set, is pending: it is written with the
+       1.3.0 release notes (plan FEATURE-D792).
+
+       GeneratePackageOnBuild is deliberately NOT set, and neither are IncludeSymbols,
+       SymbolPackageFormat, PublishRepositoryUrl or EmbedUntrackedSources — a release ships exactly
+       one file per package, the .nupkg. -->
+  <PropertyGroup>
+    <PackageId>Enigma.Avalonia.Mobile</PackageId>
+    <Version>1.3.0</Version>
+    <Title>Enigma.Avalonia.Mobile — the Enigma theme for Avalonia mobile apps</Title>
+    <Description>Enigma.Avalonia.Mobile gives Avalonia 12 mobile applications, Android first and iOS alike, the look of Enigma.Avalonia.Desktop: the same 31-colour palette in Dark and Light variants, the same 28 brushes that follow the active variant at runtime, and the same re-colouring of the framework TextBox and ComboBox, all merged from one resource dictionary. It ships no controls and no services, and it is compiled from the very files the desktop library uses, so both packages resolve identical keys and values at the same version.</Description>
+    <PackageTags>avalonia avaloniaui mobile android ios theme palette fluent dark light colors brushes ui dotnet</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/enigmalibs/Enigma.Avalonia</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/enigmalibs/Enigma.Avalonia</PackageProjectUrl>
+  </PropertyGroup>
+
+  <!-- The package's own README (the root README.md is the desktop package's landing page) and the
+       repository's LICENSE.md. README.md is already a None item by the SDK's default glob, hence
+       Update rather than Include. -->
+  <ItemGroup>
+    <None Update="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <!-- The entry point, addressable as avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml. -->
   <ItemGroup>
     <AvaloniaResource Include="Themes\**" />
