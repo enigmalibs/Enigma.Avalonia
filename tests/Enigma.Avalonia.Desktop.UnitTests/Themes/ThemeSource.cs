@@ -37,12 +37,19 @@ internal static class ThemeSource
     private static readonly Assembly Assembly = typeof(ThemeSource).Assembly;
 
     /// <summary>
+    /// Maps each embedded theme file's <c>/</c>-separated path to its actual manifest name. The
+    /// glob's <c>%(RecursiveDir)</c> carries the host's separator, so on Windows the manifest name of
+    /// a nested file holds backslashes; every lookup goes through this map to stay host-neutral.
+    /// </summary>
+    private static readonly Dictionary<string, string> ManifestNames = Assembly.GetManifestResourceNames()
+        .Where(name => name.StartsWith(Prefix, StringComparison.Ordinal))
+        .ToDictionary(name => name[Prefix.Length..].Replace('\\', '/'), name => name, StringComparer.Ordinal);
+
+    /// <summary>
     /// Gets every embedded theme file, as a path relative to <c>Themes/</c> — e.g.
     /// <c>Fluent.axaml</c>, <c>Controls/Ribbon/Ribbon.axaml</c>.
     /// </summary>
-    public static IReadOnlyList<string> AllFiles { get; } = Assembly.GetManifestResourceNames()
-        .Where(name => name.StartsWith(Prefix, StringComparison.Ordinal))
-        .Select(name => name[Prefix.Length..].Replace('\\', '/'))
+    public static IReadOnlyList<string> AllFiles { get; } = ManifestNames.Keys
         .OrderBy(path => path, StringComparer.Ordinal)
         .ToArray();
 
@@ -107,7 +114,7 @@ internal static class ThemeSource
     /// <returns>The file's contents.</returns>
     public static string Read(string path)
     {
-        using var stream = Assembly.GetManifestResourceStream(Prefix + path)
+        using var stream = (ManifestNames.TryGetValue(path, out var name) ? Assembly.GetManifestResourceStream(name) : null)
             ?? throw new InvalidOperationException(
                 $"'{path}' is not embedded. Embedded: {string.Join(", ", AllFiles)}");
         using StreamReader reader = new(stream);

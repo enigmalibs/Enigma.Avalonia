@@ -6,7 +6,8 @@ the NuGet package.
 ## Commands
 
 ```bash
-# Build the whole solution (library for net8.0 + net10.0, showcase, tests)
+# Build the whole solution (Desktop library for net8.0 + net10.0, Mobile library for net10.0,
+# showcase, tests)
 dotnet build Enigma.Avalonia.slnx
 
 # Run the whole test suite (xUnit v3 under Microsoft.Testing.Platform)
@@ -15,8 +16,9 @@ dotnet test --solution Enigma.Avalonia.slnx
 # Run the showcase app — needs a real desktop session; a headless shell cannot show it
 dotnet run --project samples/Enigma.Avalonia.Desktop.Showcase
 
-# Pack the library (release time only — the full runbook is docs/RELEASE.md)
+# Pack the two libraries (release time only — the full runbook is docs/RELEASE.md)
 dotnet pack src/Enigma.Avalonia.Desktop/Enigma.Avalonia.Desktop.csproj -c Release
+dotnet pack src/Enigma.Avalonia.Mobile/Enigma.Avalonia.Mobile.csproj -c Release
 ```
 
 The SDK is pinned in `global.json` (10.0.100, `rollForward: latestFeature`), which also selects
@@ -25,7 +27,7 @@ Microsoft.Testing.Platform as the test runner — hence `dotnet test --solution`
 
 ## Architecture
 
-Three projects, one direction of dependency:
+Five projects, one direction of dependency:
 
 ```
 src/Enigma.Avalonia.Desktop/            packable control library   (net8.0;net10.0)
@@ -38,9 +40,16 @@ src/Enigma.Avalonia.Desktop/            packable control library   (net8.0;net10
         │ ProjectReference           │ ProjectReference
 samples/Enigma.Avalonia.Desktop.Showcase/    non-packable desktop app (net10.0)
 tests/Enigma.Avalonia.Desktop.UnitTests/     xUnit v3 + Avalonia.Headless (net10.0)
+
+src/Enigma.Avalonia.Mobile/             packable theme library     (net10.0) — no C# at all
+  Themes/      Fluent.axaml, merging Desktop's Colors.axaml · Brushes.axaml (linked, not copied)
+        ▲
+        │ ProjectReference
+tests/Enigma.Avalonia.Mobile.UnitTests/      xUnit v3 + Avalonia.Headless (net10.0)
 ```
 
-Neither the showcase nor the tests are referenced by the library. The showcase is the place to see
+Neither the showcase nor the tests are referenced by a library, and the two libraries do not
+reference each other: Mobile shares Desktop's palette by compiling the same two files (gotcha 11). The showcase is the place to see
 every control working; the tests embed the library's theme XAML as `EmbeddedResource` (the XAML
 compiler makes it unreadable from the library assembly) and assert on it as text.
 
@@ -63,9 +72,11 @@ startup, before the window is shown — `samples/…/App.axaml.cs` is the refere
   `<Version>` property — that is the package version and belongs in the library csproj (below). The
   Avalonia set is version-coupled — bump the whole set together, never one package. There is no
   `Avalonia.Diagnostics` package for Avalonia 12; never reintroduce that id.
-- **Packaging metadata lives in the library csproj**, in its own `PropertyGroup`: the twelve
-  release properties, including `<Version>`, plus the `ItemGroup` that packs the root `README.md`
-  and `LICENSE.md`. **A release ships exactly one file, the `.nupkg`** — never add
+- **Packaging metadata lives in each library csproj**, in its own `PropertyGroup`: the twelve
+  release properties, including `<Version>`, plus the `ItemGroup` that packs a `README.md` and the
+  root `LICENSE.md`. Desktop packs the root `README.md`; Mobile packs its own
+  `src/Enigma.Avalonia.Mobile/README.md`. **The two libraries are versioned in lockstep** — one bare
+  tag releases both, at the same `<Version>`. **A release ships exactly one file, the `.nupkg`** — never add
   `GeneratePackageOnBuild`, `IncludeSymbols`, `SymbolPackageFormat`, `PublishRepositoryUrl` or
   `EmbedUntrackedSources`, and never pass `--include-symbols` to `dotnet pack`. Packing is an
   explicit release step, not something a local build does.
@@ -121,3 +132,12 @@ These cost real time when rediscovered. Read them before touching the correspond
     dev actually did. Read the plan before implementing, and update all three as the workflow
     requires. `docs/guides/` is the user-facing documentation and must stay in step with the public
     API.
+
+11. **The palette has one source and two packages.** `src/Enigma.Avalonia.Desktop/Themes/Colors.axaml`
+    and `Brushes.axaml` are compiled into `Enigma.Avalonia.Mobile` too, as linked `AvaloniaResource`
+    items — an edit there ships in both packages, and `Enigma.Avalonia.Mobile.UnitTests` checks the
+    mobile assembly against those source files. Never copy them into the mobile project. The mobile
+    assembly holds no C# type, so nothing loads it unless a compiled XAML file references it: a
+    `ResourceInclude` built in C# fails with "No precompiled XAML found" when nothing else has loaded
+    the assembly yet. Merge its dictionary from `App.axaml`, as its test fixture (`TestApp.axaml`)
+    does.

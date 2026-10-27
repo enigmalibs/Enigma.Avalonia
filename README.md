@@ -13,8 +13,9 @@ of the services drive a host control you place in your window and hand over at s
 the window's storage provider; past that, nothing in the library asks a ViewModel to know about a
 `Window`.
 
-> **What's new in 1.2** — softer, pastel info-bar severity colours in the Dark theme, with a
-> message line that stays readable on them. See [RELEASENOTES.md](RELEASENOTES.md).
+> **What's new in 1.3** — built on Avalonia 12.1.4, and a companion package,
+> `Enigma.Avalonia.Mobile`, that brings this palette to Avalonia mobile apps. See
+> [RELEASENOTES.md](RELEASENOTES.md).
 
 ## Features
 
@@ -51,7 +52,7 @@ the window's storage provider; past that, nothing in the library asks a ViewMode
 dotnet add package Enigma.Avalonia.Desktop
 ```
 
-Targets **.NET 8.0** and **.NET 10.0**; built on Avalonia 12.1.1.
+Targets **.NET 8.0** and **.NET 10.0**; built on Avalonia 12.1.4.
 
 The package brings `Avalonia`, `Avalonia.Themes.Fluent`, `CommunityToolkit.Mvvm` and `Enigma.Core`
 transitively. It deliberately does **not** bring the packages that turn those into a running
@@ -63,6 +64,11 @@ application — your app still references `Avalonia.Desktop` for the desktop bac
 `Base64Editor` and `HexadecimalEditor`, which encode and decode through `Enigma.Core`'s encoding
 services — so a project that never places either one still carries it, and there is no way to opt
 out short of not referencing the package.
+
+**Building a mobile app?** The companion package `Enigma.Avalonia.Mobile` carries this library's
+palette — the same colours and brushes, and the same `TextBox` / `ComboBox` re-colouring, without the
+desktop controls — for Avalonia mobile applications, released at the same version:
+`dotnet add package Enigma.Avalonia.Mobile`.
 
 ## Quick start
 
@@ -178,8 +184,8 @@ public class MainWindowViewModel : ObservableObject
 Per-category guides — each with the controls or operations the family offers, its key types, and
 copy-pasteable samples verified against the public API — live under `docs/guides/` in the
 repository, indexed by `docs/guides/README.md`. They cover theming, navigation, the ribbon, docking,
-the editors, settings cards, collection views, the dialog/overlay/info-bar trio, and the file and
-folder pickers.
+the editors, settings cards, collection views, the dialog/overlay/info-bar trio, the file and
+folder pickers, and the mobile theme.
 
 Start with the theming guide: nothing in this library renders correctly until its theme dictionary
 is merged, so every other guide assumes you have done that and does not repeat it.

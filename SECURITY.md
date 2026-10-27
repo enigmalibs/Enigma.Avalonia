@@ -15,7 +15,7 @@ newest release.
 
 | Version | Supported          |
 |---------|--------------------|
-| 1.2.x   | :white_check_mark: |
+| 1.3.x   | :white_check_mark: |
 
 ## Reporting a vulnerability
 
@@ -42,7 +42,9 @@ This keeps the report private between you and the maintainers while it is triage
 ## Scope
 
 Reports concerning the controls, the services, the theme dictionary and the public API surface of
-Enigma.Avalonia.Desktop are in scope.
+Enigma.Avalonia.Desktop are in scope, and so are reports concerning the theme dictionary of its
+companion package Enigma.Avalonia.Mobile — released from this repository at the same version, so the
+supported-versions table above covers both.
 
 Two boundaries are worth naming, because issues on the far side of them belong to another project's
 process:
