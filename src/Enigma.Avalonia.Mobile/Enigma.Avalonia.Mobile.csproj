@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared settings (LangVersion, Nullable, ImplicitUsings, TreatWarningsAsErrors,
+       EnforceCodeStyleInBuild, Authors, Copyright) are inherited from Directory.Build.props and must
+       never be repeated here — plan FEATURE-28E8 §2.4.4. -->
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <!-- Plan FEATURE-7555 §3: the house set for a new library, and platform-neutral on purpose. The
+         package is resource-only, so a net10.0-android or net10.0-ios app consumes the net10.0 asset
+         as-is, and building the solution needs no mobile workload. No net8.0: nothing new targets a
+         runtime whose support ends 2026-11-10. -->
+    <TargetFramework>net10.0</TargetFramework>
+
+    <!-- Kept in step with the Desktop library, although nothing here binds today: a {Binding} added
+         to a dictionary later is verified at build time instead of falling back to reflection. -->
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+
+    <!-- The house packaging set includes it; the library has no C# surface yet, so the file is
+         empty — and CS1591 still guards anything public added later. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- The entry point, addressable as avares://Enigma.Avalonia.Mobile/Themes/Fluent.axaml. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Themes\**" />
+  </ItemGroup>
+
+  <!-- The palette is not copied: Desktop's two dictionaries are compiled into this assembly as linked
+       items, so both packages ship the same colours and brushes and an edit is made once. Link sets
+       the path inside this assembly, which is what the entry point's avares:// URIs address. -->
+  <ItemGroup>
+    <AvaloniaResource Include="..\Enigma.Avalonia.Desktop\Themes\Colors.axaml" Link="Themes\Colors.axaml" />
+    <AvaloniaResource Include="..\Enigma.Avalonia.Desktop\Themes\Brushes.axaml" Link="Themes\Brushes.axaml" />
+  </ItemGroup>
+
+  <!-- No Version= — Central Package Management (plan FEATURE-28E8 §2.3, §2.4.8). Avalonia.Themes.Fluent
+       because Brushes.axaml overrides FluentTheme's TextBox and ComboBox keys, and the consumer's
+       <FluentTheme /> is what those keys feed. -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+  </ItemGroup>
+
+</Project>
