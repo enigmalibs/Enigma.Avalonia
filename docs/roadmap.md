@@ -41,7 +41,7 @@ Row order is the intended build order — `/build` surfaces the topmost `TODO` f
 | FEATURE-0DB5 | Release 1.1.0 (routine)                                                   | DONE   | docs/plan/FEATURE-0DB5.md |
 | FEATURE-2501 | InfoBar pastel fills in the Dark variant                                  | DONE   | docs/plan/FEATURE-2501.md |
 | FEATURE-39BB | Release 1.2.0 (routine)                                                   | DONE   | docs/plan/FEATURE-39BB.md |
-| FEATURE-8763 | Avalonia 12.1.4 (coupled set bump)                                        | TODO   | docs/plan/FEATURE-8763.md |
+| FEATURE-8763 | Avalonia 12.1.4 (coupled set bump)                                        | DONE   | docs/plan/FEATURE-8763.md |
 | FEATURE-7555 | Enigma.Avalonia.Mobile theme library                                      | TODO   | docs/plan/FEATURE-7555.md |
 | - PHASE01    | Project, linked palette & tests                                           | TODO   | (in FEATURE-7555.md)      |
 | - PHASE02    | Mobile guide & guides index                                               | TODO   | (in FEATURE-7555.md)      |

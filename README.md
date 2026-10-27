@@ -51,7 +51,7 @@ the window's storage provider; past that, nothing in the library asks a ViewMode
 dotnet add package Enigma.Avalonia.Desktop
 ```
 
-Targets **.NET 8.0** and **.NET 10.0**; built on Avalonia 12.1.1.
+Targets **.NET 8.0** and **.NET 10.0**; built on Avalonia 12.1.4.
 
 The package brings `Avalonia`, `Avalonia.Themes.Fluent`, `CommunityToolkit.Mvvm` and `Enigma.Core`
 transitively. It deliberately does **not** bring the packages that turn those into a running

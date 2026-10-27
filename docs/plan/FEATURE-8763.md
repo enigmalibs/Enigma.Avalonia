@@ -1,6 +1,6 @@
 # FEATURE-8763 — Avalonia 12.1.4 (coupled set bump)
 
-**Status:** TODO
+**Status:** DONE
 **Type:** FEATURE
 **Branch:** `feature/feature-8763-avalonia-12-1-4`
 **Run:** feature/2026-10-27-avalonia-mobile-release
@@ -36,11 +36,11 @@ release on nuget.org (2026-10-27; no newer prerelease exists), so the 1.3.0 rele
 
 ## 4. Acceptance criteria
 
-- [ ] All five coupled packages resolve to 12.1.4 (`dotnet list package` shows no 12.1.1).
-- [ ] No `PackageReference` gains a `Version=`; `AvaloniaUI.DiagnosticsSupport` stays 2.2.3.
-- [ ] Clean build: 0 warnings, 0 errors, `AVLN*` included.
-- [ ] Whole test suite green.
-- [ ] README's Avalonia version line reads 12.1.4.
+- [x] All five coupled packages resolve to 12.1.4 (`dotnet list package` shows no 12.1.1).
+- [x] No `PackageReference` gains a `Version=`; `AvaloniaUI.DiagnosticsSupport` stays 2.2.3.
+- [x] Clean build: 0 warnings, 0 errors, `AVLN*` included.
+- [x] Whole test suite green.
+- [x] README's Avalonia version line reads 12.1.4.
 
 ## 5. Out of scope
 

@@ -10,17 +10,17 @@
 
   <!-- Avalonia ecosystem — version-coupled: ALWAYS bumped together, never one package at a time.
        Mixing versions within the set breaks the build, so the whole group moves as a unit.
-       12.1.1 is the current stable release and satisfies Enigma.Icons.Avalonia 1.0.0's published
+       12.1.4 is the current stable release and satisfies Enigma.Icons.Avalonia 1.0.0's published
        floor of Avalonia 12.1.0.
        AvaloniaUI.DiagnosticsSupport is versioned independently of Avalonia but belongs to the same
        coupled set. There is NO Avalonia.Diagnostics package for Avalonia 12 — never reintroduce
        that id. -->
   <ItemGroup>
-    <PackageVersion Include="Avalonia" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.1" />
+    <PackageVersion Include="Avalonia" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.4" />
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
   </ItemGroup>
 
